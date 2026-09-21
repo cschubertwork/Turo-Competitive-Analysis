@@ -1,0 +1,564 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Turo x New Zealand: competitive analysis</title>
+<style>
+/*
+  Per-run choices, locked for this instance:
+  - Category hues borrowed from EV charging status lights (this analysis is about EV-heavy
+    car-share operators): green = available/healthy, red = fault/unavailable, amber = reserved.
+  - Accent is Turo's own "blurple" brand color, approximated: an exact public hex could not be
+    confirmed in research, so this is a labeled approximation, not a sourced value. Stated on
+    the page itself, not just here, since the accent is used prominently throughout.
+  - The "Outlier" card (Turo, no natural cluster) uses the accent as its top-border hue, the one
+    deliberate exception to "accent reserved outside the category palette": Turo has no cluster
+    to sit in, and the Outlier eyebrow plus hypothetical-entry framing carry the distinction.
+*/
+:root{
+  --paper:#F2F3EE; --raised:#FBFBF8; --ink:#171A16; --ink-2:#4A5049; --ink-3:#757C73;
+  --rule:#D6D9D0; --rule-strong:#B7BCB2;
+  --inferred:#6B7A8F;
+  --hue-stable:#3D7A52; --hue-fault:#B23A2E; --hue-reserved:#9A6B15;
+  --accent:#5E52D6;
+  --sans: "Helvetica Neue", Helvetica, "Segoe UI", system-ui, sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+:root[data-theme="dark"]{
+  --paper:#101310; --raised:#181C18; --ink:#E8EBE4; --ink-2:#A9B0A6; --ink-3:#7C8479;
+  --rule:#2A2F29; --rule-strong:#3C433B;
+  --inferred:#8FA2B8;
+  --hue-stable:#6FBF8C; --hue-fault:#E2705F; --hue-reserved:#D6A63C;
+  --accent:#8B7FF0;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#101310; --raised:#181C18; --ink:#E8EBE4; --ink-2:#A9B0A6; --ink-3:#7C8479;
+    --rule:#2A2F29; --rule-strong:#3C433B;
+    --inferred:#8FA2B8;
+    --hue-stable:#6FBF8C; --hue-fault:#E2705F; --hue-reserved:#D6A63C;
+    --accent:#8B7FF0;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.5;-webkit-font-smoothing:antialiased}
+.mono{font-family:var(--mono)}
+.eyebrow{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--ink-3)}
+h1,h2,h3{letter-spacing:-0.02em;font-weight:700;margin:0}
+a{color:var(--accent)}
+img{max-width:100%}
+
+/* shell */
+.shell{max-width:1040px;margin:0 auto;padding:0 20px}
+header.top{border-bottom:1px solid var(--rule);position:sticky;top:0;background:var(--paper);z-index:30}
+.top-row{display:flex;align-items:center;justify-content:space-between;padding:16px 0;gap:16px;flex-wrap:wrap}
+.brand{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;min-width:0}
+.brand .name{font-size:15px;font-weight:700}
+.brand .sub{font-family:var(--mono);font-size:11px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.1em}
+@media (max-width:360px){
+  .brand .sub{flex-basis:100%}
+}
+.controls{display:flex;gap:8px;align-items:center}
+button.themebtn{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.1em;background:none;border:1px solid var(--rule-strong);color:var(--ink-2);padding:7px 10px;border-radius:3px;cursor:pointer}
+button.themebtn:hover{border-color:var(--ink-3);color:var(--ink)}
+
+nav.tabs{display:flex;gap:2px;border-bottom:1px solid var(--rule)}
+nav.tabs button{font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.1em;background:none;border:none;border-bottom:2px solid transparent;color:var(--ink-3);padding:12px 4px;margin-right:24px;cursor:pointer}
+nav.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+
+section.tabpanel{padding:32px 0 80px}
+section.tabpanel[hidden]{display:none}
+
+/* headline block */
+.headline{padding:8px 0 28px;border-bottom:1px solid var(--rule);margin-bottom:32px}
+.headline h1{font-size:clamp(26px,4vw,38px);max-width:22ch}
+.headline .meta{margin-top:10px;font-family:var(--mono);font-size:11px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.1em}
+
+.block{margin:0 0 44px}
+.block > h2{font-size:20px;margin-bottom:14px}
+.block > .lede{color:var(--ink-2);max-width:64ch;margin-bottom:18px}
+
+/* exec summary: headline-led */
+.finding{padding:16px 0;border-top:1px solid var(--rule)}
+.finding:last-child{border-bottom:1px solid var(--rule)}
+.finding h3{font-size:16px;margin-bottom:6px}
+.finding p{margin:0;color:var(--ink-2);max-width:68ch}
+
+/* matrix */
+.matrix-wrap{overflow-x:auto;border:1px solid var(--rule);border-radius:4px;background:var(--raised)}
+table.matrix{border-collapse:collapse;width:100%;min-width:720px;font-size:13px}
+table.matrix th,table.matrix td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--rule);vertical-align:top}
+table.matrix thead th{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-3);border-bottom:1px solid var(--rule-strong);white-space:nowrap}
+table.matrix th.dim{position:sticky;left:0;background:var(--raised);font-family:var(--mono);font-size:11px;color:var(--ink-2);text-transform:uppercase;letter-spacing:.06em;z-index:2;border-right:1px solid var(--rule)}
+table.matrix td.subject{background:color-mix(in srgb, var(--accent) 8%, var(--raised));font-weight:600}
+.inf{border-bottom:1px dotted var(--inferred)}
+.inf sup{font-family:var(--mono)}
+.inf sup a{color:var(--inferred);text-decoration:none}
+.inf sup a:hover,.inf sup a:focus-visible{text-decoration:underline}
+.matrix-legend{display:flex;gap:18px;flex-wrap:wrap;padding:10px 12px;font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);border-top:1px solid var(--rule)}
+ol.fnlist{list-style:none;counter-reset:fn;margin:0;padding:10px 12px 4px;border-top:1px solid var(--rule);font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+ol.fnlist li{counter-increment:fn;padding:3px 0}
+ol.fnlist li::before{content:counter(fn) ". ";color:var(--inferred)}
+ol.fnlist li a{color:var(--ink-3);text-decoration:none;margin-left:4px}
+ol.fnlist li a:hover,ol.fnlist li a:focus-visible{color:var(--ink)}
+:target{scroll-margin-top:120px;outline:2px solid var(--inferred);outline-offset:3px}
+@media (max-width:640px){
+  table.matrix, table.matrix thead, table.matrix tbody, table.matrix th, table.matrix td, table.matrix tr{display:block}
+  table.matrix thead{display:none}
+  table.matrix tr{border-bottom:1px solid var(--rule-strong);padding:12px 0}
+  table.matrix th.dim{position:static;border-right:none;padding-bottom:4px}
+  table.matrix td{border-bottom:none;padding:4px 12px}
+  table.matrix td::before{content:attr(data-col);display:block;font-family:var(--mono);font-size:9px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:2px}
+}
+
+/* archetype cards, 2x2 */
+.archetypes{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:640px){.archetypes{grid-template-columns:1fr}}
+.card{border:1px solid var(--rule);border-radius:4px;padding:16px 18px;background:var(--raised);border-top:3px solid var(--hue)}
+.card.hue-stable{--hue:var(--hue-stable)}
+.card.hue-fault{--hue:var(--hue-fault)}
+.card.hue-reserved{--hue:var(--hue-reserved)}
+.card.hue-accent{--hue:var(--accent)}
+.card .eyebrow{margin-bottom:6px}
+.card h3{font-size:15px;margin-bottom:8px}
+.card .who{font-family:var(--mono);font-size:11px;color:var(--ink-2);margin-bottom:10px}
+.card p{margin:0 0 8px;color:var(--ink-2);font-size:13.5px}
+.card p:last-child{margin-bottom:0}
+.card .implication{border-top:1px solid var(--rule);margin-top:10px;padding-top:10px;font-size:13px}
+.card .implication b{color:var(--ink)}
+
+/* strength grid */
+.pos-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media (max-width:640px){.pos-grid{grid-template-columns:1fr}}
+.pos-col h3{font-size:13px;text-transform:uppercase;letter-spacing:.08em;font-family:var(--mono);color:var(--ink-3);margin-bottom:10px}
+.pos-row{display:flex;gap:10px;padding:9px 0;border-top:1px solid var(--rule);font-size:13.5px}
+.pos-row:last-child{padding-bottom:0}
+.pos-row .glyph{font-family:var(--mono);flex:0 0 16px}
+.strengths .glyph,.strengths .pos-row{color:var(--ink)}
+.gaps .glyph,.gaps .pos-row{color:var(--ink-2)}
+
+/* priority list */
+ol.priority{list-style:none;margin:0;padding:0;counter-reset:pr}
+ol.priority li{counter-increment:pr;display:flex;gap:14px;padding:14px 0;border-top:1px solid var(--rule)}
+ol.priority li::before{content:counter(pr,decimal-leading-zero);font-family:var(--mono);font-size:13px;color:var(--ink-3);flex:0 0 26px}
+ol.priority li .txt b{display:block;margin-bottom:3px}
+ol.priority li .txt span{color:var(--ink-2);font-size:13.5px}
+
+/* disclosure rows */
+.disclosure{border:1px solid var(--rule);border-radius:4px;overflow:hidden;background:var(--raised)}
+.drow{border-top:1px solid var(--rule)}
+.drow:first-child{border-top:none}
+.drow summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;padding:13px 16px;font-size:14px}
+.drow summary::-webkit-details-marker{display:none}
+.drow summary .name{display:flex;align-items:center;gap:10px}
+.drow summary .depth{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-3);border:1px solid var(--rule-strong);padding:2px 6px;border-radius:2px}
+.drow summary .chev{font-family:var(--mono);color:var(--ink-3);transition:transform .15s}
+.drow[open] summary .chev{transform:rotate(90deg)}
+.drow .body{padding:0 16px 16px;color:var(--ink-2);font-size:13.5px}
+.drow .body ul{margin:6px 0;padding-left:18px}
+
+/* confidence */
+.confidence-row{display:flex;gap:28px;flex-wrap:wrap;margin-bottom:14px}
+.confidence-stat{font-family:var(--mono)}
+.confidence-stat .num{font-size:28px;display:block;line-height:1}
+.confidence-stat .lbl{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-3)}
+.confidence-stat.observed .num{color:var(--ink)}
+.confidence-stat.inferred .num{color:var(--inferred)}
+
+/* go broader */
+.broader{border:1px dashed var(--rule-strong);border-radius:4px;padding:16px 18px;margin-top:10px}
+.broader h3{font-size:13px;text-transform:uppercase;font-family:var(--mono);letter-spacing:.08em;color:var(--ink-3);margin-bottom:10px}
+.broader .item{padding:10px 0;border-top:1px solid var(--rule);font-size:13.5px}
+.broader .item:first-of-type{border-top:none}
+.broader .item b{display:block;margin-bottom:2px}
+.broader .item span{color:var(--ink-2)}
+
+/* tab 2 */
+/* stepped rail: horizontal with connecting line, rotates vertical below 720px */
+.rail{display:grid;grid-template-columns:repeat(5,1fr);gap:18px;position:relative}
+.rail::before{content:"";position:absolute;top:11px;left:calc(10%/2);right:calc(10%/2);height:1px;background:var(--rule-strong)}
+.rail-step{position:relative;padding-top:32px}
+.rail-step .node{position:absolute;top:0;left:0;width:23px;height:23px;border-radius:50%;background:var(--paper);border:1px solid var(--rule-strong);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:10px;color:var(--ink-2)}
+.rail-step h3{font-size:14px;margin-bottom:5px}
+.rail-step p{margin:0;color:var(--ink-2);font-size:13px;max-width:32ch}
+@media (max-width:720px){
+  .rail{display:flex;flex-direction:column;gap:0}
+  .rail::before{top:0;bottom:0;left:11px;right:auto;width:1px;height:auto}
+  .rail-step{padding:0 0 22px 44px}
+  .rail-step:last-child{padding-bottom:0}
+  .rail-step .node{top:-2px}
+  .rail-step p{max-width:56ch}
+}
+.labelling{display:flex;gap:24px;flex-wrap:wrap;margin:14px 0}
+.labelex{font-family:var(--mono);font-size:12.5px;border:1px solid var(--rule);border-radius:4px;padding:10px 12px;background:var(--raised)}
+footer.foot{border-top:1px solid var(--rule);padding:22px 0 40px;color:var(--ink-3);font-size:12px}
+footer.foot a{color:var(--ink-2)}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="shell">
+    <div class="top-row">
+      <div class="brand">
+        <span class="name">Turo x New Zealand</span>
+        <span class="sub">Competitive analysis</span>
+      </div>
+      <div class="controls">
+        <button class="themebtn" id="themeToggle" type="button">Dark</button>
+      </div>
+    </div>
+    <div class="shell" style="padding:0">
+      <nav class="tabs" role="tablist" aria-label="Sections">
+        <button role="tab" aria-selected="true" id="tab-analysis" aria-controls="panel-analysis" type="button">Analysis</button>
+        <button role="tab" aria-selected="false" id="tab-how" aria-controls="panel-how" type="button">How this was built</button>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main class="shell">
+
+<section class="tabpanel" id="panel-analysis" role="tabpanel" aria-labelledby="tab-analysis">
+
+  <div class="headline">
+    <h1>Two collapses say more about a New Zealand launch than five competitors do</h1>
+    <div class="meta">Framing lens: New Zealand market entry, competitive tension, cultural fit, and sports partnerships &middot; Generated 2026-09-22</div>
+  </div>
+
+  <div class="block">
+    <h2>What this found</h2>
+    <div class="finding">
+      <h3>The pattern, not the fact</h3>
+      <p>Mevo, reported as Wellington's car-share leader, collapsed into voluntary administration in March 2026. Getaround, Turo's closest global peer, is mid-liquidation in the same year. One is local, one is global, and both say the same thing: fleet-owned or fleet-financed car sharing runs on thin margin and breaks under a single funding delay. Turo's no-fleet marketplace model is the structural answer to both failures.</p>
+    </div>
+    <div class="finding">
+      <h3>Five names, two owners</h3>
+      <p>Mevo and Zilch are both now owned by Carbn Group. Cityhop sits inside Toyota New Zealand. A Turo entry negotiates against two corporate owners in the direct car-share category, not three independent operators.</p>
+    </div>
+    <div class="finding">
+      <h3>Sports sponsorship is unclaimed ground</h3>
+      <p>No competitor profiled here, car-share or traditional rental, uses sport or events for brand-building. Every signal found runs through motoring bodies, energy companies, sustainability awards, or a parent's finance arm. That is open ground, not contested share.</p>
+    </div>
+    <div class="finding">
+      <h3>The trust bar is set locally</h3>
+      <p>GO Rentals, an NZ-owned rental company, is positioned ahead of international agency brands on customer satisfaction. A new entrant's credibility problem is proving trustworthy inside New Zealand; the international agencies are already losing that fight themselves.</p>
+    </div>
+    <div class="finding">
+      <h3>Nobody here competes for Turo's actual trip</h3>
+      <p>Every NZ-specific competitor is built for short, local, back-to-base or free-floating trips, or for agency-counter travel rental. None serve Turo's core case elsewhere: multi-day trips across a wide variety of individually owned vehicles. The lane is open, but so is the cost of building host supply from zero.</p>
+    </div>
+  </div>
+
+  <div class="block">
+    <h2>Comparison matrix</h2>
+    <p class="lede">Snapshot level. Cells marked <span class="inf">inferred<sup>i</sup></span> are assessments, not confirmed observations; see the verification note for what was checked against its source and what wasn't.</p>
+    <div class="matrix-wrap">
+      <table class="matrix" id="matrixTable">
+        <thead>
+          <tr>
+            <th class="dim">Dimension</th>
+            <th>Mevo</th>
+            <th>Cityhop</th>
+            <th>Zilch</th>
+            <th>GO Rentals</th>
+            <th>Getaround</th>
+            <th>Turo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th class="dim">Model</th>
+            <td data-col="Mevo">Free-floating, minute-to-day</td>
+            <td data-col="Cityhop">Back-to-base, hourly/daily</td>
+            <td data-col="Zilch">Back-to-base, subscription-leaning</td>
+            <td data-col="GO Rentals">Owned-fleet agency rental</td>
+            <td data-col="Getaround">Peer-to-peer marketplace</td>
+            <td data-col="Turo" class="subject">Peer-to-peer marketplace</td>
+          </tr>
+          <tr>
+            <th class="dim">NZ presence</th>
+            <td data-col="Mevo">Wellington, Queenstown</td>
+            <td data-col="Cityhop">Auckland, Wellington, Christchurch</td>
+            <td data-col="Zilch">5 cities</td>
+            <td data-col="GO Rentals">10 branches, 7 regions</td>
+            <td data-col="Getaround">None</td>
+            <td data-col="Turo" class="subject">None (entry hypothesis)</td>
+          </tr>
+          <tr>
+            <th class="dim">Ownership</th>
+            <td data-col="Mevo">Carbn Group (post-2026 collapse)</td>
+            <td data-col="Cityhop">Toyota NZ</td>
+            <td data-col="Zilch">Carbn Group</td>
+            <td data-col="GO Rentals">Independent, Enterprise brand licence</td>
+            <td data-col="Getaround">Dissolving (Delaware liquidation)</td>
+            <td data-col="Turo" class="subject">IAC (31% stake)</td>
+          </tr>
+          <tr>
+            <th class="dim">Fleet financing risk</th>
+            <td data-col="Mevo"><span class="inf">Collapsed once on it<sup><a href="#fn-1" id="fnref-1">1</a></sup></span></td>
+            <td data-col="Cityhop"><span class="inf">Absorbed by Toyota balance sheet<sup><a href="#fn-2" id="fnref-2">2</a></sup></span></td>
+            <td data-col="Zilch">Not disclosed</td>
+            <td data-col="GO Rentals">Not disclosed</td>
+            <td data-col="Getaround">Failed on it globally</td>
+            <td data-col="Turo" class="subject">None, hosts own the vehicles</td>
+          </tr>
+          <tr>
+            <th class="dim">Pricing structure</th>
+            <td data-col="Mevo">3-tier hourly/daily, 100km free</td>
+            <td data-col="Cityhop">Free or $10/mo tier, per-vehicle rates</td>
+            <td data-col="Zilch">Per-km plus weekly prebuy packages</td>
+            <td data-col="GO Rentals">Comprehensive included, excess undisclosed</td>
+            <td data-col="Getaround">35-40% commission (historical)</td>
+            <td data-col="Turo" class="subject">15-45% commission, avg ~25%</td>
+          </tr>
+          <tr>
+            <th class="dim">Sports sponsorship</th>
+            <td data-col="Mevo">None found</td>
+            <td data-col="Cityhop">None found</td>
+            <td data-col="Zilch">None found</td>
+            <td data-col="GO Rentals">None found</td>
+            <td data-col="Getaround"><span class="inf">Not applicable<sup><a href="#fn-3" id="fnref-3">3</a></sup></span></td>
+            <td data-col="Turo" class="subject">None found globally</td>
+          </tr>
+          <tr>
+            <th class="dim">EV positioning</th>
+            <td data-col="Mevo">EV/hybrid, shrunk from 4 cities to 2</td>
+            <td data-col="Cityhop"><span class="inf">Hybrid-leaning, not EV-first<sup><a href="#fn-4" id="fnref-4">4</a></sup></span></td>
+            <td data-col="Zilch">All-electric</td>
+            <td data-col="GO Rentals">EV/hybrid options within mixed fleet</td>
+            <td data-col="Getaround">n/a</td>
+            <td data-col="Turo" class="subject">n/a</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="matrix-legend">
+        <span>Dotted underline = inferred, not observed. Numbers link to the notes below.</span>
+        <span>Turo column tinted as the subject company</span>
+      </div>
+    </div>
+    <ol class="fnlist">
+      <li id="fn-1">Assessment, not a sourced figure. <a href="#fnref-1">&uarr;</a></li>
+      <li id="fn-2">Assessment, not a sourced figure. <a href="#fnref-2">&uarr;</a></li>
+      <li id="fn-3">Not researched at NZ level; Getaround never operated in New Zealand. <a href="#fnref-3">&uarr;</a></li>
+      <li id="fn-4">Fleet leans Toyota hybrid; not confirmed as EV-first against a sourced fleet breakdown. <a href="#fnref-4">&uarr;</a></li>
+    </ol>
+  </div>
+
+  <div class="block">
+    <h2>Competitor clusters</h2>
+    <p class="lede">Category hues borrowed from EV charging status lights, a code this field's own vehicles already carry: green for stable/backed, red for the collapsed-or-collapsing, amber for reserved-model traditional rental. Turo's own accent color approximates its brand "blurple"; an exact public hex could not be confirmed in research, so treat it as a labeled stand-in, not a sourced value.</p>
+    <div class="archetypes">
+      <div class="card hue-stable">
+        <div class="eyebrow">Cluster</div>
+        <h3>Corporately-backed incumbents</h3>
+        <div class="who">Cityhop &middot; Zilch &middot; Mevo (post-relaunch)</div>
+        <p>All three NZ-specific car-share brands now sit inside a larger parent (Toyota NZ or Carbn Group) rather than standing alone on venture or crowdfunded capital. Brand-building runs through infrastructure and finance partnerships, not consumer sponsorship.</p>
+        <div class="implication"><b>For Turo:</b> the "independent local disruptor" position is already unavailable inside NZ car-share. Turo's edge isn't independence, it's the marketplace model itself.</div>
+      </div>
+      <div class="card hue-fault">
+        <div class="eyebrow">Cluster</div>
+        <h3>The cautionary tale</h3>
+        <div class="who">Pre-relaunch Mevo &middot; Getaround (global)</div>
+        <p>Both were fleet-financed or fleet-dependent car-share operators that grew fast, raised real capital, and still ran out of runway.</p>
+        <div class="implication"><b>For Turo:</b> the strongest evidence here that a zero-fleet model sits in a different risk category entirely. Lead an NZ narrative with this contrast.</div>
+      </div>
+      <div class="card hue-reserved">
+        <div class="eyebrow">Cluster</div>
+        <h3>Traditional rental incumbent</h3>
+        <div class="who">GO Rentals</div>
+        <p>Owned fleet, agency counters, trust built on tourism-industry awards and a global brand licence (Enterprise, National, Alamo) rather than community partnerships.</p>
+        <div class="implication"><b>For Turo:</b> competes for the same traveler dollar on a different axis: guaranteed availability and simplicity versus selection and price. Read it as the trust benchmark a new entrant has to clear, more than as a product rival.</div>
+      </div>
+      <div class="card hue-accent">
+        <div class="eyebrow">Outlier</div>
+        <h3>Turo itself</h3>
+        <div class="who">No current NZ presence</div>
+        <p>The only asset-light marketplace in the set, and the only participant with no operating history in this market. Every comparison here is against a hypothetical entry.</p>
+        <div class="implication"><b>Reading it:</b> every strength below is a structural claim about the model, not a track record in this market yet.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="block">
+    <h2>Turo's position against this field</h2>
+    <div class="pos-grid">
+      <div class="pos-col strengths">
+        <h3>Strengths</h3>
+        <div class="pos-row"><span class="glyph">+</span><span>Zero fleet-financing exposure, the exact failure mode that broke Mevo and Getaround</span></div>
+        <div class="pos-row"><span class="glyph">+</span><span>Proven variable, demand-based commission (March 2026 US pilots) that could tune for a small market</span></div>
+        <div class="pos-row"><span class="glyph">+</span><span>Far broader vehicle variety and trip-length flexibility than any NZ car-share operator offers</span></div>
+      </div>
+      <div class="pos-col gaps">
+        <h3>Gaps</h3>
+        <div class="pos-row"><span class="glyph">&minus;</span><span>Missing the NZ insurance, ACC, parking, and council relationships every profiled competitor already has in some form</span></div>
+        <div class="pos-row"><span class="glyph">&minus;</span><span>Zero local host supply on day one, a cold-start problem none of the fleet-owning competitors face</span></div>
+        <div class="pos-row"><span class="glyph">&minus;</span><span>Nothing yet to signal trust, in a market where an NZ-owned incumbent already outperforms international brands on reputation</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="block">
+    <h2>Recommendations</h2>
+    <ol class="priority">
+      <li><div class="txt"><b>Lead with the asset-light story first.</b><span>Mevo's collapse and Getaround's dissolution are recent, sourceable, and locally legible. Use them directly: "no fleet to run out of money on" is a stronger opener than "more cars."</span></div></li>
+      <li><div class="txt"><b>Solve host supply before marketing to guests.</b><span>Every incumbent here already owns or leases its fleet. Turo's chicken-and-egg problem is the one none of them have, and it's the real entry bottleneck, not a marketing question.</span></div></li>
+      <li><div class="txt"><b>Sponsor tourism and events before rugby.</b><span>Turo's real NZ customer looks like a traveler booking a car for a few days rather than a season-ticket holder. Queenstown ski season, marathon and cycling events, and wine-region road trips reach that buyer directly, at a fraction of national rugby's cost and clutter.</span></div></li>
+      <li><div class="txt"><b>Replicate the infrastructure deals before competing on them.</b><span>Cityhop's Z Energy parking tie and Mevo's AA partnership are table stakes; a new entrant needs some version of each before it can compete on anything else.</span></div></li>
+      <li><div class="txt"><b>Target the multi-day trip.</b><span>No NZ-specific competitor profiled serves multi-day, wide-selection travel rental well. That is Turo's actual global strength and the one lane genuinely open here.</span></div></li>
+    </ol>
+  </div>
+
+  <div class="block">
+    <h2>Competitor detail</h2>
+    <div class="disclosure">
+      <details class="drow" open>
+        <summary><span class="name">Mevo <span class="depth mono">Depth: full</span></span><span class="chev">&rsaquo;</span></summary>
+        <div class="body">
+          <p>Collapsed into voluntary administration 30 March 2026, weeks after an over-subscribed NZ$3.28M crowdfunding raise, when a separate NZ$1.7M investor commitment fell through. Relaunched in Wellington by Carbn Group with a smaller, cheaper Suzuki Swift fleet. Now shares an owner with Zilch. No sports or event sponsorship found; brand-building runs through AA and Meridian Energy partnerships.</p>
+        </div>
+      </details>
+      <details class="drow">
+        <summary><span class="name">Cityhop <span class="depth mono">Depth: full</span></span><span class="chev">&rsaquo;</span></summary>
+        <div class="body">
+          <p>Founded 2007, Toyota NZ-owned since 2018. The most corporately stable of the three NZ car-share brands. No public figures more recent than 2020 found. No visible link to Toyota's own significant motorsport sponsorship portfolio (the GR86 Championship), despite sharing a parent.</p>
+        </div>
+      </details>
+      <details class="drow">
+        <summary><span class="name">Zilch (formerly Yoogo Share) <span class="depth mono">Depth: full</span></span><span class="chev">&rsaquo;</span></summary>
+        <div class="body">
+          <p>Launched Christchurch 2018, rebranded to Zilch, acquired by Carbn Group in December 2023 (later also acquiring Mevo out of administration). Widest footprint of any NZ-specific competitor at 5 cities, 17 hubs. Business-fleet and sustainability-award brand identity; subscription-leaning pricing rather than per-trip.</p>
+        </div>
+      </details>
+      <details class="drow">
+        <summary><span class="name">GO Rentals <span class="depth mono">Depth: light</span></span><span class="chev">&rsaquo;</span></summary>
+        <div class="body">
+          <p>NZ-owned traditional rental incumbent, licenced to run Enterprise, National, and Alamo in New Zealand since 2022. Positioned ahead of international agency brands on customer satisfaction in market coverage. No sponsorship activity found beyond tourism-industry awards.</p>
+        </div>
+      </details>
+      <details class="drow">
+        <summary><span class="name">Getaround <span class="depth mono">Depth: light</span></span><span class="chev">&rsaquo;</span></summary>
+        <div class="body">
+          <p>Turo's closest global peer-to-peer model. Exited the US in 2025, sold its European business to GoMore in April 2026, and its board approved dissolution and liquidation in June 2026. Never operated in New Zealand; relevant here purely as a global model comparison.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <div class="block">
+    <h2>Data confidence</h2>
+    <div class="confidence-row">
+      <div class="confidence-stat observed"><span class="num">~57%</span><span class="lbl">Observed</span></div>
+      <div class="confidence-stat inferred"><span class="num">~43%</span><span class="lbl">Inferred</span></div>
+    </div>
+    <p class="lede">Ratio is highest in the three full-depth profiles after the citation-verification pass downgraded anything that couldn't be re-checked against its source. GO Rentals and Getaround, at survey depth, carry proportionally more gaps since only the core framing sections were researched on them.</p>
+  </div>
+
+  <div class="block">
+    <h2>Open questions</h2>
+    <p class="lede">Data gaps this pass surfaced but didn't resolve: current fleet and membership figures for Mevo, Cityhop, and Zilch (all NZ-specific competitors, most recent public numbers are 2020 or earlier); GO Rentals' actual insurance excess, published nowhere found; and the specific mechanical reason Getaround's unit economics failed where Turo's held.</p>
+    <div class="broader">
+      <h3>What going broader adds</h3>
+      <div class="item"><b>GO Rentals, taken deep</b><span>Would pin its actual fleet size and insurance excess, neither published, and confirm whether any sponsorship or brand activity exists beyond tourism awards.</span></div>
+      <div class="item"><b>Getaround, taken deep</b><span>Would identify the specific mechanical reason its unit economics failed where Turo's held (commission structure, insurance cost, or geographic overreach), and whether former European hosts or guests migrated to Turo in the UK or France.</span></div>
+    </div>
+  </div>
+
+</section>
+
+<section class="tabpanel" id="panel-how" role="tabpanel" aria-labelledby="tab-how" hidden>
+
+  <div class="headline">
+    <h1>How this repo was built, and what it can't tell you</h1>
+    <div class="meta">A worked example of an AI-run competitive research process</div>
+  </div>
+
+  <div class="block">
+    <h2>The process</h2>
+    <div class="rail">
+      <div class="rail-step"><span class="node">01</span><h3>Setup</h3><p>Product positioning for Turo drafted from public sources; competitor list and comparison template proposed and approved.</p></div>
+      <div class="rail-step"><span class="node">02</span><h3>Light pass</h3><p>Every competitor researched at survey depth: a snapshot plus the sections core to this analysis's framing lens.</p></div>
+      <div class="rail-step"><span class="node">03</span><h3>Deep dive</h3><p>Mevo, Cityhop, and Zilch researched at full depth, taken together because they compete directly in the same local market and the light pass surfaced findings worth triangulating.</p></div>
+      <div class="rail-step"><span class="node">04</span><h3>Citation check</h3><p>Every Observed claim in the deep profiles re-fetched from its cited URL. Unsupported sources were downgraded to Inferred, visibly.</p></div>
+      <div class="rail-step"><span class="node">05</span><h3>Analysis and dashboard</h3><p>Cross-competitor analysis generated on the framing lens, then rendered into this page directly from the profiles.</p></div>
+    </div>
+  </div>
+
+  <div class="block">
+    <h2>The labelling discipline</h2>
+    <p class="lede">Every factual claim in every profile carries one of two labels. Unlabelled claims are treated as inferred by default.</p>
+    <div class="labelling">
+      <div class="labelex">- Observed: [claim] (https://source-url)</div>
+      <div class="labelex">- Inferred (assumption): [claim]</div>
+    </div>
+    <p class="lede">Sourced claims are re-checked against the pages they cite, not verified true. A vendor's own marketing figure that its own page supports is still a vendor claim, and stays marked as one.</p>
+  </div>
+
+  <div class="block">
+    <h2>What counts as material</h2>
+    <p class="lede">A finding that contradicts an existing Observed claim is material. A finding that contradicts an Inferred one is minor, since it was already flagged as uncertain. New information is classified by how much it changes the competitive picture; when uncertain, the process leans toward over-flagging rather than under-flagging.</p>
+  </div>
+
+  <div class="block">
+    <h2>Trust boundary</h2>
+    <p class="lede">All content retrieved by web search or page fetch is treated as untrusted external data: facts get extracted from it, but instructions embedded in it are never followed. No such attempt was encountered while building this repo.</p>
+  </div>
+
+  <div class="block">
+    <h2>What this method cannot tell you</h2>
+    <p class="lede">This is desk research from public sources, produced on 2026-09-22. There are no win/loss interviews, customer calls, or analyst briefings behind it. Published announcements are a lagging and partial view of what any company actually has running with customers, so nothing here should be read as an audit of a competitor's internal capability. Fleet sizes and membership counts for the NZ-specific competitors are, in most cases, the most recent figures any public source disclosed, not necessarily current.</p>
+  </div>
+
+  <div class="block">
+    <h2>Re-running this</h2>
+    <p class="lede">The same skills that produced this repo ship with it, in <code class="mono">.claude/skills/</code>. Point them at a different company to run the same process elsewhere.</p>
+  </div>
+
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="shell">Not affiliated with Turo or any company named here. All trademarks belong to their owners.</div>
+</footer>
+
+<script>
+(function(){
+  var root = document.documentElement;
+  var btn = document.getElementById('themeToggle');
+  function apply(mode){
+    if(mode === 'light' || mode === 'dark'){ root.setAttribute('data-theme', mode); }
+    else { root.removeAttribute('data-theme'); }
+    var effectiveDark = mode === 'dark' || (mode !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    btn.textContent = effectiveDark ? 'Light' : 'Dark';
+  }
+  var stored = null;
+  try { stored = localStorage.getItem('theme'); } catch(e){}
+  apply(stored);
+  btn.addEventListener('click', function(){
+    var current = root.getAttribute('data-theme');
+    var effectiveDark = current === 'dark' || (!current && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    var next = effectiveDark ? 'light' : 'dark';
+    try { localStorage.setItem('theme', next); } catch(e){}
+    apply(next);
+  });
+})();
+
+(function(){
+  var tabAnalysis = document.getElementById('tab-analysis');
+  var tabHow = document.getElementById('tab-how');
+  var panelAnalysis = document.getElementById('panel-analysis');
+  var panelHow = document.getElementById('panel-how');
+  function show(which){
+    var toAnalysis = which === 'analysis';
+    tabAnalysis.setAttribute('aria-selected', toAnalysis ? 'true' : 'false');
+    tabHow.setAttribute('aria-selected', toAnalysis ? 'false' : 'true');
+    panelAnalysis.hidden = !toAnalysis;
+    panelHow.hidden = toAnalysis;
+  }
+  tabAnalysis.addEventListener('click', function(){ show('analysis'); });
+  tabHow.addEventListener('click', function(){ show('how'); });
+})();
+</script>
+</body>
+</html>
