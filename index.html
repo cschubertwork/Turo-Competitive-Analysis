@@ -15,6 +15,11 @@
   - The "Outlier" card (Turo, no natural cluster) uses the accent as its top-border hue, the one
     deliberate exception to "accent reserved outside the category palette": Turo has no cluster
     to sit in, and the Outlier eyebrow plus hypothetical-entry framing carry the distinction.
+  - Moat bar axes are redefined for this instance (financial stability / NZ footprint band)
+    rather than ProcurePro's original margin/corpus-breadth reading. Same component, different
+    subject; that's expected per run, not a deviation.
+  - Section numbers reset per tab (counter-reset on .tabpanel, not main), so "How this was built"
+    starts at 01 rather than continuing the Analysis tab's count.
 */
 :root{
   --paper:#F2F3EE; --raised:#FBFBF8; --ink:#171A16; --ink-2:#4A5049; --ink-3:#757C73;
@@ -75,15 +80,35 @@ section.tabpanel[hidden]{display:none}
 .headline h1{font-size:clamp(26px,4vw,38px);max-width:22ch}
 .headline .meta{margin-top:10px;font-family:var(--mono);font-size:11px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.1em}
 
-.block{margin:0 0 44px}
+.tabpanel{counter-reset:section}
+.block{margin:0 0 44px;counter-increment:section}
 .block > h2{font-size:20px;margin-bottom:14px}
+.block > h2::before{content:counter(section,decimal-leading-zero);display:block;font-family:var(--mono);font-size:12px;color:var(--ink-3);letter-spacing:.06em;margin-bottom:4px}
 .block > .lede{color:var(--ink-2);max-width:64ch;margin-bottom:18px}
 
-/* exec summary: headline-led */
+/* headline stat strip */
+.stat-strip{display:flex;gap:0;flex-wrap:wrap;margin-top:14px}
+.stat-chip{font-family:var(--mono);padding:0 18px;border-left:1px solid var(--rule)}
+.stat-chip:first-child{border-left:none;padding-left:0}
+.stat-chip .n{font-size:18px;display:block}
+.stat-chip .l{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-3)}
+@media (max-width:480px){
+  .stat-strip{flex-direction:column;gap:10px}
+  .stat-chip{border-left:none;border-top:1px solid var(--rule);padding:10px 0 0}
+  .stat-chip:first-child{border-top:none;padding-top:0}
+}
+
+/* exec summary: hero pullquote + grid */
+.pullquote{font-size:clamp(20px,3vw,26px);line-height:1.3;max-width:36ch;padding:4px 0 4px 20px;border-left:3px solid var(--ink-3);margin:4px 0 24px}
+.findings-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media (max-width:640px){.findings-grid{grid-template-columns:1fr}}
 .finding{padding:16px 0;border-top:1px solid var(--rule)}
-.finding:last-child{border-bottom:1px solid var(--rule)}
+.findings-grid .finding:nth-last-child(-n+2){border-bottom:1px solid var(--rule)}
 .finding h3{font-size:16px;margin-bottom:6px}
 .finding p{margin:0;color:var(--ink-2);max-width:68ch}
+
+/* owner tags, used inline in prose */
+.owner-tag{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.06em;border:1px solid var(--rule-strong);border-radius:10px;padding:2px 8px;color:var(--ink-2);white-space:nowrap}
 
 /* matrix */
 .matrix-wrap{overflow-x:auto;border:1px solid var(--rule);border-radius:4px;background:var(--raised)}
@@ -128,20 +153,32 @@ ol.fnlist li a:hover,ol.fnlist li a:focus-visible{color:var(--ink)}
 .card .implication{border-top:1px solid var(--rule);margin-top:10px;padding-top:10px;font-size:13px}
 .card .implication b{color:var(--ink)}
 
-/* strength grid */
-.pos-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-@media (max-width:640px){.pos-grid{grid-template-columns:1fr}}
-.pos-col h3{font-size:13px;text-transform:uppercase;letter-spacing:.08em;font-family:var(--mono);color:var(--ink-3);margin-bottom:10px}
-.pos-row{display:flex;gap:10px;padding:9px 0;border-top:1px solid var(--rule);font-size:13.5px}
-.pos-row:last-child{padding-bottom:0}
-.pos-row .glyph{font-family:var(--mono);flex:0 0 16px}
-.strengths .glyph,.strengths .pos-row{color:var(--ink)}
-.gaps .glyph,.gaps .pos-row{color:var(--ink-2)}
+/* moat bar: right edge = stability, width = NZ footprint band */
+.moat-row{display:grid;grid-template-columns:110px 1fr;align-items:center;gap:14px;padding:10px 0;border-top:1px solid var(--rule)}
+.moat-row:first-child{border-top:none}
+.moat-row .label{font-family:var(--mono);font-size:11px;color:var(--ink-2)}
+.moat-track{position:relative;height:20px;background:var(--rule);border-radius:2px}
+.moat-bar{position:absolute;top:0;bottom:0;border-radius:2px;background:var(--hue);left:max(0%, calc((var(--pos) - var(--w)) * 1%));width:calc(var(--w) * 1%)}
+.moat-bar.hollow{background:none;border:1px solid var(--hue)}
+.moat-axis{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);margin-top:8px;padding-left:124px}
+
+/* strength/gap grid: ink-density blocks, hue never used here */
+.density-cols{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media (max-width:640px){.density-cols{grid-template-columns:1fr}}
+.density-col h3{font-size:13px;text-transform:uppercase;letter-spacing:.08em;font-family:var(--mono);color:var(--ink-3);margin-bottom:10px}
+.density-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.density-block{border:1px solid var(--rule);border-radius:4px;padding:14px 16px;background:color-mix(in srgb, var(--ink) var(--density,10%), var(--raised))}
+.density-block.hero{grid-column:1/-1;--density:22%}
+.density-block .glyph{font-family:var(--mono);font-size:11px;color:var(--ink-3);display:block;margin-bottom:4px}
+.density-block .term{font-weight:700;font-size:15px;margin:0 0 4px;letter-spacing:-0.01em}
+.density-block .note{font-size:13px;color:var(--ink-2);margin:0}
 
 /* priority list */
 ol.priority{list-style:none;margin:0;padding:0;counter-reset:pr}
 ol.priority li{counter-increment:pr;display:flex;gap:14px;padding:14px 0;border-top:1px solid var(--rule)}
 ol.priority li::before{content:counter(pr,decimal-leading-zero);font-family:var(--mono);font-size:13px;color:var(--ink-3);flex:0 0 26px}
+ol.priority li:first-child{background:var(--raised);border:1px solid var(--rule);border-radius:4px;padding:16px 18px;margin-bottom:6px}
+ol.priority li:first-child::before{font-size:18px}
 ol.priority li .txt b{display:block;margin-bottom:3px}
 ol.priority li .txt span{color:var(--ink-2);font-size:13.5px}
 
@@ -158,13 +195,12 @@ ol.priority li .txt span{color:var(--ink-2);font-size:13.5px}
 .drow .body{padding:0 16px 16px;color:var(--ink-2);font-size:13.5px}
 .drow .body ul{margin:6px 0;padding-left:18px}
 
-/* confidence */
-.confidence-row{display:flex;gap:28px;flex-wrap:wrap;margin-bottom:14px}
-.confidence-stat{font-family:var(--mono)}
-.confidence-stat .num{font-size:28px;display:block;line-height:1}
-.confidence-stat .lbl{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-3)}
-.confidence-stat.observed .num{color:var(--ink)}
-.confidence-stat.inferred .num{color:var(--inferred)}
+/* confidence: proportion bar, texture not color for the inferred segment */
+.confidence-bar{display:flex;height:40px;border:1px solid var(--rule);border-radius:4px;overflow:hidden;margin-bottom:10px}
+.confidence-bar .seg{display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:13px;flex-basis:0;flex-grow:var(--grow);min-width:0}
+.confidence-bar .seg.observed{background:var(--ink);color:var(--paper)}
+.confidence-bar .seg.inferred{color:var(--ink);background-color:var(--raised);background-image:repeating-linear-gradient(45deg, var(--inferred) 0 2px, transparent 2px 8px)}
+.confidence-legend{display:flex;gap:18px;flex-wrap:wrap;font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3)}
 
 /* go broader */
 .broader{border:1px dashed var(--rule-strong);border-radius:4px;padding:16px 18px;margin-top:10px}
@@ -192,6 +228,21 @@ ol.priority li .txt span{color:var(--ink-2);font-size:13.5px}
 }
 .labelling{display:flex;gap:24px;flex-wrap:wrap;margin:14px 0}
 .labelex{font-family:var(--mono);font-size:12.5px;border:1px solid var(--rule);border-radius:4px;padding:10px 12px;background:var(--raised)}
+
+/* tab 2: mechanism cards for "this compounds" */
+.mechanism-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:640px){.mechanism-grid{grid-template-columns:1fr}}
+.mechanism-card{border:1px solid var(--rule);border-top:2px solid var(--rule-strong);border-radius:4px;padding:14px 16px;background:var(--raised)}
+.mechanism-card .cmd{display:block;margin-bottom:8px;color:var(--ink-3)}
+.mechanism-card h3{font-size:14.5px;margin-bottom:6px}
+.mechanism-card p{margin:0;color:var(--ink-2);font-size:13px}
+
+/* tab 2: compact caveat panel, replaces three flat blocks */
+.caveat-panel{border:1px solid var(--rule);border-radius:4px;padding:4px 20px;background:var(--raised)}
+.caveat-row{padding:16px 0;border-top:1px solid var(--rule)}
+.caveat-row:first-child{border-top:none}
+.caveat-row .eyebrow{margin-bottom:6px}
+.caveat-row p{margin:0;color:var(--ink-2);font-size:13.5px}
 footer.foot{border-top:1px solid var(--rule);padding:22px 0 40px;color:var(--ink-3);font-size:12px}
 footer.foot a{color:var(--ink-2)}
 </style>
@@ -224,29 +275,35 @@ footer.foot a{color:var(--ink-2)}
   <div class="headline">
     <h1>Two collapses say more about a New Zealand launch than five competitors do</h1>
     <div class="meta">Framing lens: New Zealand market entry, competitive tension, cultural fit, and sports partnerships &middot; Generated 2026-09-22</div>
+    <div class="stat-strip">
+      <div class="stat-chip"><span class="n">5</span><span class="l">Competitors evaluated</span></div>
+      <div class="stat-chip"><span class="n">2</span><span class="l">Collapsed or dissolving</span></div>
+      <div class="stat-chip"><span class="n">2</span><span class="l">Corporate owners behind them</span></div>
+      <div class="stat-chip"><span class="n">0</span><span class="l">Sports sponsors found</span></div>
+    </div>
   </div>
 
   <div class="block">
     <h2>What this found</h2>
-    <div class="finding">
-      <h3>Fleet-owned car sharing keeps failing the same way</h3>
-      <p>Mevo, reported as Wellington's car-share leader, collapsed into voluntary administration in March 2026. Getaround, Turo's closest global peer, is mid-liquidation the same year. One is a small local operator, the other an international one, and they ran into the same wall: this business runs on thin margin, and it breaks the moment a funding round slips. Turo never carries that exposure in the first place, since it doesn't own a fleet.</p>
-    </div>
-    <div class="finding">
-      <h3>This field has fewer owners than the five names suggest</h3>
-      <p>Mevo and Zilch are both now owned by Carbn Group. Cityhop sits inside Toyota New Zealand. Turo would really be negotiating against two corporate owners in the direct car-share category, and everything each of them controls, from parking deals to insurance terms, comes down to a decision made somewhere inside Carbn or Toyota.</p>
-    </div>
-    <div class="finding">
-      <h3>Nobody sponsors sport here</h3>
-      <p>Not one competitor profiled, car-share or traditional rental, uses sport or events for brand-building. Every signal found runs through motoring bodies, energy companies, sustainability awards, or a parent's own finance arm. Whoever moves first on this gets it uncontested.</p>
-    </div>
-    <div class="finding">
-      <h3>The trust bar is set locally</h3>
-      <p>GO Rentals, an NZ-owned rental company, is positioned ahead of international agency brands on customer satisfaction. A new entrant's credibility problem is proving itself trustworthy inside New Zealand; the international agencies are already losing that fight on their own.</p>
-    </div>
-    <div class="finding">
-      <h3>None of these five sell the trip Turo is built for</h3>
-      <p>Every NZ-specific competitor here is built for short, local, back-to-base or free-floating trips, or for agency-counter travel rental. None of them serve Turo's real case elsewhere: multi-day trips across a wide variety of individually owned vehicles. The lane is open. Building host supply from zero to fill it is the hard part.</p>
+    <p class="lede">Mevo, reported as Wellington's car-share leader, collapsed into voluntary administration in <span class="mono">March 2026</span>. Getaround, Turo's closest global peer, is mid-liquidation the same year. One is a small local operator, the other an international one, and they ran into the same wall.</p>
+    <blockquote class="pullquote">This business runs on thin margin, and it breaks the moment a funding round slips. Turo never carries that exposure, since it doesn't own a fleet.</blockquote>
+    <div class="findings-grid">
+      <div class="finding">
+        <h3>This field has fewer owners than the five names suggest</h3>
+        <p>Mevo and Zilch are both now owned by <span class="owner-tag">Carbn Group</span>. Cityhop sits inside <span class="owner-tag">Toyota NZ</span>. Turo would really be negotiating against two corporate owners in the direct car-share category, and everything each of them controls, from parking deals to insurance terms, comes down to a decision made somewhere inside Carbn or Toyota.</p>
+      </div>
+      <div class="finding">
+        <h3>Nobody sponsors sport here</h3>
+        <p>Not one competitor profiled, car-share or traditional rental, uses sport or events for brand-building. Every signal found runs through motoring bodies, energy companies, sustainability awards, or a parent's own finance arm. Whoever moves first on this gets it uncontested.</p>
+      </div>
+      <div class="finding">
+        <h3>The trust bar is set locally</h3>
+        <p>GO Rentals, an NZ-owned rental company, is positioned ahead of international agency brands on customer satisfaction. A new entrant's credibility problem is proving itself trustworthy inside New Zealand; the international agencies are already losing that fight on their own.</p>
+      </div>
+      <div class="finding">
+        <h3>None of these five sell the trip Turo is built for</h3>
+        <p>Every NZ-specific competitor here is built for short, local, back-to-base or free-floating trips, or for agency-counter travel rental. None of them serve Turo's real case elsewhere: multi-day trips across a wide variety of individually owned vehicles. The lane is open. Building host supply from zero to fill it is the hard part.</p>
+      </div>
     </div>
   </div>
 
@@ -353,7 +410,7 @@ footer.foot a{color:var(--ink-2)}
         <div class="eyebrow">Cluster</div>
         <h3>Corporately-backed incumbents</h3>
         <div class="who">Cityhop &middot; Zilch &middot; Mevo (post-relaunch)</div>
-        <p>All three NZ-specific car-share brands now sit inside a larger parent, Toyota NZ or Carbn Group, rather than standing alone on venture or crowdfunded capital. Their brand-building runs through infrastructure and finance partnerships instead: Toyota Financial Services, the AA, an energy company's own marketing budget.</p>
+        <p>All three NZ-specific car-share brands now sit inside a larger parent, <span class="owner-tag">Toyota NZ</span> or <span class="owner-tag">Carbn Group</span>, rather than standing alone on venture or crowdfunded capital. Their brand-building runs through infrastructure and finance partnerships instead: Toyota Financial Services, the AA, an energy company's own marketing budget.</p>
         <div class="implication"><b>For Turo:</b> there's no scrappy-independent position left to claim here, since every current player already has a well-capitalised parent behind it. What Turo would be selling is the marketplace model itself, and that has to carry the whole pitch.</div>
       </div>
       <div class="card hue-fault">
@@ -367,7 +424,7 @@ footer.foot a{color:var(--ink-2)}
         <div class="eyebrow">Cluster</div>
         <h3>Traditional rental incumbent</h3>
         <div class="who">GO Rentals</div>
-        <p>Owned fleet, agency counters, trust built on tourism-industry awards and a global brand licence (Enterprise, National, Alamo) rather than community partnerships.</p>
+        <p>Owned fleet, agency counters, trust built on tourism-industry awards and a global brand licence (<span class="owner-tag">Enterprise</span> <span class="owner-tag">National</span> <span class="owner-tag">Alamo</span>) rather than community partnerships.</p>
         <div class="implication"><b>For Turo:</b> it competes for the same traveler dollar, just on a different axis: guaranteed availability and simplicity against selection and price. Think of GO Rentals less as a product rival and more as the trust bar a new entrant has to clear.</div>
       </div>
       <div class="card hue-accent">
@@ -381,19 +438,68 @@ footer.foot a{color:var(--ink-2)}
   </div>
 
   <div class="block">
-    <h2>Turo's position against this field</h2>
-    <div class="pos-grid">
-      <div class="pos-col strengths">
-        <h3>Strengths</h3>
-        <div class="pos-row"><span class="glyph">+</span><span>Zero fleet-financing exposure, the exact failure mode that broke Mevo and Getaround</span></div>
-        <div class="pos-row"><span class="glyph">+</span><span>Proven variable, demand-based commission (March 2026 US pilots) that could tune for a small market</span></div>
-        <div class="pos-row"><span class="glyph">+</span><span>Far broader vehicle variety and trip-length flexibility than any NZ car-share operator offers</span></div>
+    <h2>Stability and New Zealand footprint, side by side</h2>
+    <p class="lede">Right edge is financial stability, read from what each profile discloses: further right means more structurally sound. Width is New Zealand footprint, banded into four ordinal levels rather than counted precisely, since city counts, branch counts, and hub counts aren't the same unit. Both are judgment calls, not measurements.</p>
+    <div class="moat">
+      <div class="moat-row" aria-label="Mevo: the pre-collapse operation was unstable across an established four-city footprint; the Carbn Group relaunch is more stable but covers only a light two-city footprint">
+        <span class="label">Mevo</span>
+        <div class="moat-track">
+          <span class="moat-bar" style="--hue:var(--hue-fault);--pos:40;--w:38"></span>
+          <span class="moat-bar" style="--hue:var(--hue-stable);--pos:68;--w:18"></span>
+        </div>
       </div>
-      <div class="pos-col gaps">
+      <div class="moat-row" aria-label="Cityhop: stable, Toyota-backed, established three-city footprint">
+        <span class="label">Cityhop</span>
+        <div class="moat-track">
+          <span class="moat-bar" style="--hue:var(--hue-stable);--pos:88;--w:38"></span>
+        </div>
+      </div>
+      <div class="moat-row" aria-label="Zilch: stable, Carbn Group-backed, broad five-city footprint, the widest of any NZ-specific competitor">
+        <span class="label">Zilch</span>
+        <div class="moat-track">
+          <span class="moat-bar" style="--hue:var(--hue-stable);--pos:78;--w:58"></span>
+        </div>
+      </div>
+      <div class="moat-row" aria-label="GO Rentals: stable, independent, broad ten-branch footprint">
+        <span class="label">GO Rentals</span>
+        <div class="moat-track">
+          <span class="moat-bar" style="--hue:var(--hue-reserved);--pos:82;--w:58"></span>
+        </div>
+      </div>
+      <div class="moat-row" aria-label="Getaround: dissolving, no New Zealand footprint">
+        <span class="label">Getaround</span>
+        <div class="moat-track">
+          <span class="moat-bar" style="--hue:var(--hue-fault);--pos:6;--w:3"></span>
+        </div>
+      </div>
+      <div class="moat-row" aria-label="Turo: structurally the most stable by design, since it carries no fleet-financing risk, but with no current New Zealand footprint at all, shown hollow as a hypothetical entrant">
+        <span class="label">Turo</span>
+        <div class="moat-track">
+          <span class="moat-bar hollow" style="--hue:var(--accent);--pos:97;--w:3"></span>
+        </div>
+      </div>
+    </div>
+    <div class="moat-axis"><span>Less stable</span><span>More stable</span></div>
+  </div>
+
+  <div class="block">
+    <h2>What Turo brings, and what it still has to build</h2>
+    <div class="density-cols">
+      <div class="density-col strengths">
+        <h3>Strengths</h3>
+        <div class="density-grid">
+          <div class="density-block hero"><span class="glyph">+</span><p class="term">Zero fleet-financing exposure</p><p class="note">the exact failure mode that broke Mevo and Getaround</p></div>
+          <div class="density-block"><span class="glyph">+</span><p class="term">Variable, demand-based commission</p><p class="note">already piloted in the US, could tune for a small market</p></div>
+          <div class="density-block"><span class="glyph">+</span><p class="term">Vehicle variety and trip length</p><p class="note">far broader than any NZ car-share operator offers</p></div>
+        </div>
+      </div>
+      <div class="density-col gaps">
         <h3>Gaps</h3>
-        <div class="pos-row"><span class="glyph">&minus;</span><span>Missing the NZ insurance, ACC, parking, and council relationships every profiled competitor already has in some form</span></div>
-        <div class="pos-row"><span class="glyph">&minus;</span><span>Zero local host supply on day one, a cold-start problem none of the fleet-owning competitors face</span></div>
-        <div class="pos-row"><span class="glyph">&minus;</span><span>Nothing yet to signal trust, in a market where an NZ-owned incumbent already outperforms international brands on reputation</span></div>
+        <div class="density-grid">
+          <div class="density-block hero"><span class="glyph">&minus;</span><p class="term">No NZ insurance, ACC, parking, or council relationships</p><p class="note">every profiled competitor already has some version of these</p></div>
+          <div class="density-block"><span class="glyph">&minus;</span><p class="term">Zero local host supply</p><p class="note">a cold-start problem none of the fleet-owning competitors face</p></div>
+          <div class="density-block"><span class="glyph">&minus;</span><p class="term">No trust signal yet</p><p class="note">an NZ-owned incumbent already beats international brands on reputation</p></div>
+        </div>
       </div>
     </div>
   </div>
@@ -404,7 +510,7 @@ footer.foot a{color:var(--ink-2)}
       <li><div class="txt"><b>Lead with the asset-light story first.</b><span>Mevo's collapse and Getaround's dissolution are recent, sourceable, and locally legible. Use them directly: "no fleet to run out of money on" is a stronger opener than "more cars."</span></div></li>
       <li><div class="txt"><b>Solve host supply before marketing to guests.</b><span>Every incumbent here already owns or leases its fleet, so none of them has Turo's problem: finding people willing to list their own car before there's a single guest to book it. That's the real bottleneck this launch hits first.</span></div></li>
       <li><div class="txt"><b>Sponsor tourism and events before rugby.</b><span>Turo's real NZ customer looks like a traveler booking a car for a few days rather than a season-ticket holder. Queenstown ski season, marathon and cycling events, and wine-region road trips reach that buyer directly, at a fraction of national rugby's cost and clutter.</span></div></li>
-      <li><div class="txt"><b>Replicate the infrastructure deals before competing on them.</b><span>Cityhop's Z Energy parking tie and Mevo's AA partnership are table stakes; a new entrant needs some version of each before it can compete on anything else.</span></div></li>
+      <li><div class="txt"><b>Replicate the infrastructure deals before competing on them.</b><span>Cityhop's <span class="owner-tag">Z Energy</span> parking tie and Mevo's <span class="owner-tag">AA</span> partnership are table stakes; a new entrant needs some version of each before it can compete on anything else.</span></div></li>
       <li><div class="txt"><b>Target the multi-day trip.</b><span>No NZ-specific competitor profiled serves multi-day, wide-selection travel rental well. That's the strength Turo already has everywhere else, and here, nobody's contesting it.</span></div></li>
     </ol>
   </div>
@@ -415,25 +521,25 @@ footer.foot a{color:var(--ink-2)}
       <details class="drow" open>
         <summary><span class="name">Mevo <span class="depth mono">Depth: full</span></span><span class="chev">&rsaquo;</span></summary>
         <div class="body">
-          <p>Collapsed into voluntary administration 30 March 2026, weeks after an over-subscribed NZ$3.28M crowdfunding raise, when a separate NZ$1.7M investor commitment fell through. Relaunched in Wellington by Carbn Group with a smaller, cheaper Suzuki Swift fleet. Now shares an owner with Zilch. No sports or event sponsorship found; brand-building runs through AA and Meridian Energy partnerships.</p>
+          <p>Collapsed into voluntary administration <span class="mono">30 March 2026</span>, weeks after an over-subscribed <span class="mono">NZ$3.28M</span> crowdfunding raise, when a separate <span class="mono">NZ$1.7M</span> investor commitment fell through. Relaunched in Wellington by <span class="owner-tag">Carbn Group</span> with a smaller, cheaper Suzuki Swift fleet. Now shares an owner with Zilch. No sports or event sponsorship found; brand-building runs through AA and Meridian Energy partnerships.</p>
         </div>
       </details>
       <details class="drow">
         <summary><span class="name">Cityhop <span class="depth mono">Depth: full</span></span><span class="chev">&rsaquo;</span></summary>
         <div class="body">
-          <p>Founded 2007, Toyota NZ-owned since 2018. The most corporately stable of the three NZ car-share brands. No public figures more recent than 2020 found. No visible link to Toyota's own significant motorsport sponsorship portfolio (the GR86 Championship), despite sharing a parent.</p>
+          <p>Founded <span class="mono">2007</span>, <span class="owner-tag">Toyota NZ</span>-owned since <span class="mono">2018</span>. The most corporately stable of the three NZ car-share brands. No public figures more recent than 2020 found. No visible link to Toyota's own significant motorsport sponsorship portfolio (the GR86 Championship), despite sharing a parent.</p>
         </div>
       </details>
       <details class="drow">
         <summary><span class="name">Zilch (formerly Yoogo Share) <span class="depth mono">Depth: full</span></span><span class="chev">&rsaquo;</span></summary>
         <div class="body">
-          <p>Launched Christchurch 2018, rebranded to Zilch, acquired by Carbn Group in December 2023 (later also acquiring Mevo out of administration). Widest footprint of any NZ-specific competitor at 5 cities, 17 hubs. Business-fleet and sustainability-award brand identity; subscription-leaning pricing rather than per-trip.</p>
+          <p>Launched Christchurch <span class="mono">2018</span>, rebranded to Zilch, acquired by <span class="owner-tag">Carbn Group</span> in <span class="mono">December 2023</span> (later also acquiring Mevo out of administration). Widest footprint of any NZ-specific competitor at <span class="mono">5 cities, 17 hubs</span>. Business-fleet and sustainability-award brand identity; subscription-leaning pricing rather than per-trip.</p>
         </div>
       </details>
       <details class="drow">
         <summary><span class="name">GO Rentals <span class="depth mono">Depth: light</span></span><span class="chev">&rsaquo;</span></summary>
         <div class="body">
-          <p>NZ-owned traditional rental incumbent, licenced to run Enterprise, National, and Alamo in New Zealand since 2022. Positioned ahead of international agency brands on customer satisfaction in market coverage. No sponsorship activity found beyond tourism-industry awards.</p>
+          <p>NZ-owned traditional rental incumbent, licenced to run <span class="owner-tag">Enterprise</span> <span class="owner-tag">National</span> <span class="owner-tag">Alamo</span> in New Zealand since <span class="mono">2022</span>. Positioned ahead of international agency brands on customer satisfaction in market coverage. No sponsorship activity found beyond tourism-industry awards.</p>
         </div>
       </details>
       <details class="drow">
@@ -446,12 +552,16 @@ footer.foot a{color:var(--ink-2)}
   </div>
 
   <div class="block">
-    <h2>Data confidence</h2>
-    <div class="confidence-row">
-      <div class="confidence-stat observed"><span class="num">~57%</span><span class="lbl">Observed</span></div>
-      <div class="confidence-stat inferred"><span class="num">~43%</span><span class="lbl">Inferred</span></div>
+    <h2>Just over half of this is confirmed</h2>
+    <div class="confidence-bar">
+      <div class="seg observed" style="--grow:57">57% Observed</div>
+      <div class="seg inferred" style="--grow:43">43% Inferred</div>
     </div>
-    <p class="lede">Ratio is highest in the three full-depth profiles after the citation-verification pass downgraded anything that couldn't be re-checked against its source. GO Rentals and Getaround, at survey depth, carry proportionally more gaps since only the core framing sections were researched on them.</p>
+    <div class="confidence-legend">
+      <span>Solid fill: Observed, sourced</span>
+      <span>Hatch: Inferred, a judgment call</span>
+    </div>
+    <p class="lede" style="margin-top:14px">Ratio is highest in the three full-depth profiles after the citation-verification pass downgraded anything that couldn't be re-checked against its source. GO Rentals and Getaround, at survey depth, carry proportionally more gaps since only the core framing sections were researched on them.</p>
   </div>
 
   <div class="block">
@@ -487,21 +597,27 @@ footer.foot a{color:var(--ink-2)}
   <div class="block">
     <h2>This gets more valuable every time you run it</h2>
     <p class="lede">Nothing here is a one-time snapshot. The profiles, the competitor list, and the analysis are all meant to be revisited and built on as this market changes.</p>
-    <div class="finding">
-      <h3>Profiles build on what's already there</h3>
-      <p><code class="mono">/competitive-update</code> re-researches a tracked competitor and diffs the new findings against what's already written, sorting each one into material, minor, or no change. Coming back to this in six months means reading a short, sorted list of what changed.</p>
-    </div>
-    <div class="finding">
-      <h3>Depth gets added one competitor at a time</h3>
-      <p>GO Rentals or Getaround can go through the same full-depth, citation-verified treatment Mevo, Cityhop, and Zilch got here, without re-running the light pass on the other four.</p>
-    </div>
-    <div class="finding">
-      <h3>The analysis can't quietly go stale</h3>
-      <p>The comparison and the dashboard always regenerate from whatever the profiles currently say, so there's no separate analysis file drifting out of sync while the underlying research moves on underneath it.</p>
-    </div>
-    <div class="finding">
-      <h3>Every update leaves a record</h3>
-      <p>Once a repo is published, each research pass becomes its own commit. Over a few cycles, the git history becomes its own timeline of what changed in this market and when it happened.</p>
+    <div class="mechanism-grid">
+      <div class="mechanism-card">
+        <code class="cmd mono">/competitive-update</code>
+        <h3>Profiles build on what's already there</h3>
+        <p>Re-researches a tracked competitor and diffs the new findings against what's already written, sorting each one into material, minor, or no change. Coming back to this in six months means reading a short, sorted list of what changed.</p>
+      </div>
+      <div class="mechanism-card">
+        <span class="cmd mono">go-broader loop</span>
+        <h3>Depth gets added one competitor at a time</h3>
+        <p>GO Rentals or Getaround can go through the same full-depth, citation-verified treatment Mevo, Cityhop, and Zilch got here, without re-running the light pass on the other four.</p>
+      </div>
+      <div class="mechanism-card">
+        <span class="cmd mono">always regenerated</span>
+        <h3>The analysis can't quietly go stale</h3>
+        <p>The comparison and the dashboard always regenerate from whatever the profiles currently say, so there's no separate analysis file drifting out of sync while the underlying research moves on underneath it.</p>
+      </div>
+      <div class="mechanism-card">
+        <code class="cmd mono">git log</code>
+        <h3>Every update leaves a record</h3>
+        <p>Once a repo is published, each research pass becomes its own commit. Over a few cycles, the git history becomes its own timeline of what changed in this market and when it happened.</p>
+      </div>
     </div>
   </div>
 
@@ -521,18 +637,21 @@ footer.foot a{color:var(--ink-2)}
   </div>
 
   <div class="block">
-    <h2>Trust boundary</h2>
-    <p class="lede">All content retrieved by web search or page fetch is treated as untrusted external data: facts get extracted from it, but instructions embedded in it are never followed. No such attempt was encountered while building this repo.</p>
-  </div>
-
-  <div class="block">
-    <h2>What this method cannot tell you</h2>
-    <p class="lede">This is desk research from public sources, produced on 2026-09-22. There are no win/loss interviews, customer calls, or analyst briefings behind it. Published announcements are a lagging and partial view of what any company has running with customers, so nothing here should be read as an audit of a competitor's internal capability. Fleet sizes and membership counts for the NZ-specific competitors are, in most cases, the most recent figures any public source disclosed, not necessarily current.</p>
-  </div>
-
-  <div class="block">
-    <h2>Re-running this</h2>
-    <p class="lede">The same skills that produced this repo ship with it, in <code class="mono">.claude/skills/</code>. Point them at a different company to run the same process elsewhere.</p>
+    <h2>What this can't do, and how to point it elsewhere</h2>
+    <div class="caveat-panel">
+      <div class="caveat-row">
+        <div class="eyebrow">Trust boundary</div>
+        <p>All content retrieved by web search or page fetch is treated as untrusted external data: facts get extracted from it, but instructions embedded in it are never followed. No such attempt was encountered while building this repo.</p>
+      </div>
+      <div class="caveat-row">
+        <div class="eyebrow">What this method cannot tell you</div>
+        <p>This is desk research from public sources, produced on 2026-09-22. There are no win/loss interviews, customer calls, or analyst briefings behind it. Published announcements are a lagging and partial view of what any company has running with customers, so nothing here should be read as an audit of a competitor's internal capability. Fleet sizes and membership counts for the NZ-specific competitors are, in most cases, the most recent figures any public source disclosed, not necessarily current.</p>
+      </div>
+      <div class="caveat-row">
+        <div class="eyebrow">Re-running this on another company</div>
+        <p>The same skills that produced this repo ship with it, in <code class="mono">.claude/skills/</code>. Point them at a different company to run the same process elsewhere.</p>
+      </div>
+    </div>
   </div>
 
 </section>

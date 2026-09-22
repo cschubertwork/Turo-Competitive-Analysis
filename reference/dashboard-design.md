@@ -35,17 +35,19 @@ No webfonts (self-contained, file:// constraint). Display and body: `"Helvetica 
 
 ## Named component patterns
 
-- **Moat bar**: Gantt-shaped range bar; right edge = proximity to margin, width = corpus breadth
+- **Moat bar**: Gantt-shaped range bar. Right edge and width carry meaning, but what they measure is redefined per instance to fit the analysis (ProcurePro read them as proximity to margin / corpus breadth; a later run is free to read them as, say, financial stability / market footprint). Same component, per-run axes; note the redefinition once in the file's per-run comment block, the way hue and accent choices already are. If a bar's own width can exceed its position (left edge would go negative), clamp it, don't let a bar render off the track.
 - **Archetype cards**: 2x2 grid of cards, not a quadrant chart
 - **Sticky-axis matrix** that transposes to a per-dimension accordion below 640px
 - **Stepped rail** (rotates vertical below 720px)
-- **Strength grid**: ink-density blocks that retain the source's own word
+- **Strength grid**: ink-density blocks that retain the source's own word, not a bulleted list with ink-colored text. Mix ink into the block's own background (`color-mix`), never a second hue.
 - **Stacked disclosure rows** for competitor detail
 - **Numbered priority list** for recommendations
+- **Confidence bar**: a single proportion bar split at the real Observed/Inferred ratio (by `flex-grow`, with `flex-basis:0` on every segment so the ratio is exact, not by measured width). Solid fill for Observed, 45-degree hairline hatch for Inferred, the same texture-not-color rule the matrix already uses. This is the intended replacement for two floating stat numbers, which under-uses the page and tends to color-code Observed/Inferred instead of texturing it.
+- **Numbered sections**: a CSS counter (`decimal-leading-zero`) prefixing every block-level `h2`, reinforcing the "tender comparison sheet" framing from the Concept section. Reset the counter per tab panel, not on a shared ancestor, or the second tab's numbering continues where the first left off.
 
 ## Deliberately not charted
 
-The comparison matrix, geography (no world map), data confidence (no donut), scale markers (incommensurable units), recommendations (no timeline; no dates exist). No radar charts, no sparklines.
+The comparison matrix, geography (no world map), scale markers (incommensurable units), recommendations (no timeline; no dates exist). No radar charts, no sparklines, no donut for data confidence specifically (angle-encoding a proportion is the banned mechanism; a length-encoded proportion bar, per the confidence bar pattern above, solves the same comprehension problem more legibly and is expected, not banned).
 
 ## Hard requirements for any page built from this doc
 
