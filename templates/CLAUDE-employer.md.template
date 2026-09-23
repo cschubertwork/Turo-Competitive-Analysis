@@ -11,7 +11,7 @@ This repo is destined to be **public**. Write everything accordingly.
 3. **One claim, one fact.** Split compound bullets so each fact carries its own label and can be verified on its own.
 4. Analysis files represent **current state**: regenerate in place, never append dated update sections.
 5. Never hand-edit `index.html`; rebuild it with `/build-dashboard`.
-6. The `.gitignore` here is publish-mode (three lines). It must never ignore `profiles/`, `analysis/`, or `reference/` content; that content is the product.
+6. The `.gitignore` here is publish-mode (four lines, the last being `assets/`). It must never ignore `profiles/`, `analysis/`, or `reference/` content; that content is the product.
 7. No em dashes anywhere, whether typed directly or written out as an HTML entity. No absolute local paths. Nothing about any job application or the repo's audience.
 8. Verification wording: sourced claims are **re-checked against the pages they cite**, never "verified true".
 9. Before anything ships: `python3 check.py` must exit 0. Do not weaken a check to get past it.

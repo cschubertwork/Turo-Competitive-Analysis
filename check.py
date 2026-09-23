@@ -22,6 +22,8 @@ ALLOWED_FILES = {
     ".gitignore",
     "check.py",
     "CLAUDE.md",
+    "assets.py",
+    "derive_tokens.py",
 }
 ALLOWED_DIR_PREFIXES = (
     "reference/",
@@ -55,7 +57,17 @@ EXTERNAL_ASSET_PATTERNS = [
     (re.compile(r"<iframe[^>]*\ssrc\s*=", re.I), "iframe"),
     (re.compile(r"@import\b", re.I), "CSS @import"),
     (re.compile(r"url\(\s*[\"']?(https?:)?//", re.I), "external url() in CSS"),
+    # Anything else that fetches: srcset, poster, <source>, an <image> or <use> inside inline SVG.
+    # Links (<a href>) are expected and excluded.
+    (re.compile(r"<(?!a\b)[a-z][^>]*\s(?:src|href|xlink:href|srcset|poster|data)\s*=\s*[\"']?(https?:)?//", re.I),
+     "external reference"),
 ]
+# A page that still points at assets/ was not run through `assets.py embed`.
+UNEMBEDDED_RE = re.compile(r"""(?:src|href|srcset|poster)\s*=\s*["']?assets/|url\(\s*["']?assets/""", re.I)
+# Embedded image and font payloads. Base64 has no quotes, spaces, < > or parens, so stripping
+# exactly this can never hide prose or markup from the scans, only binary from assets/.
+DATA_URI_RE = re.compile(r"data:(?:image/(?:png|jpeg|webp|gif)|font/woff2);base64,[A-Za-z0-9+/]+=*")
+PAGE_WARN_BYTES, PAGE_MAX_BYTES = 2_000_000, 2_500_000
 
 EMAIL_RE = re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}")
 PLACEHOLDER_RE = re.compile(r"\{\{[A-Z0-9_]+\}\}")
@@ -160,6 +172,8 @@ def check_git_tracked(root):
 
 def scan_text(rel, path):
     text = path.read_text(encoding="utf-8", errors="replace")
+    if rel.endswith(".html"):
+        text = DATA_URI_RE.sub("data:embedded", text)
     lines = text.splitlines()
     exempt_placeholders = rel.startswith(PLACEHOLDER_EXEMPT)
     for i, line in enumerate(lines, 1):
@@ -210,10 +224,18 @@ def check_self_contained(root):
     index = root / "index.html"
     if not index.exists():
         return
-    for i, line in enumerate(index.read_text(encoding="utf-8", errors="replace").splitlines(), 1):
+    text = DATA_URI_RE.sub("data:embedded", index.read_text(encoding="utf-8", errors="replace"))
+    for i, line in enumerate(text.splitlines(), 1):
         for pat, name in EXTERNAL_ASSET_PATTERNS:
             if pat.search(line):
                 fail("index.html", "self-contained", name, i)
+        if UNEMBEDDED_RE.search(line):
+            fail("index.html", "self-contained", "references assets/ directly; run `python3 assets.py embed`", i)
+    size = index.stat().st_size
+    if size > PAGE_MAX_BYTES:
+        fail("index.html", "page-weight", f"{size / 1e6:.2f} MB is over the {PAGE_MAX_BYTES / 1e6:.1f} MB limit")
+    elif size > PAGE_WARN_BYTES:
+        warn("index.html", "page-weight", f"{size / 1e6:.2f} MB is over the {PAGE_WARN_BYTES / 1e6:.1f} MB warning line")
 
 
 def main():

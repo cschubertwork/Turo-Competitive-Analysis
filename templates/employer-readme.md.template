@@ -2,7 +2,7 @@
 
 A worked example of an AI-run competitive research process, applied to [{{COMPANY_NAME}}]({{COMPANY_URL}}). {{N_COMPETITORS}} competitors surveyed, one taken deep, framed on **{{FRAMING_LENS}}**.
 
-**Start here: [the dashboard]({{PAGES_URL}}).** Two tabs: the analysis, and an explainer of how the process works. It is a single self-contained HTML file ([`index.html`](index.html)) with no external dependencies, so it also works offline if you clone the repo.
+**Start here: [the dashboard]({{PAGES_URL}}).** One page: the analysis first, with each competitor's homepage and the exhibits behind every finding, then how the process works. It is a single self-contained HTML file ([`index.html`](index.html)) with no external dependencies, so it also works offline if you clone the repo.
 
 The profiles and analysis were produced by running the skills in [`.claude/skills/`](.claude/skills), and the dashboard is rendered from them by the `build-dashboard` skill. You can run the same process on your own company.
 
@@ -39,7 +39,7 @@ Roughly {{OBSERVED_PCT}}% of this analysis is Observed and {{INFERRED_PCT}}% Inf
 reference/          product positioning, competitor list, profile template, design system
 profiles/           one profile per competitor ({{N_LIGHT}} survey depth, 1 full)
 analysis/           the cross-competitor analysis and the verification note
-index.html          the two-tab visual dashboard, self-contained
+index.html          the dashboard, one self-contained page
 .claude/skills/     the skills that produced all of the above
 templates/          scaffolding used by /setup for a new company
 check.py            the publish gate this repo passed before going public

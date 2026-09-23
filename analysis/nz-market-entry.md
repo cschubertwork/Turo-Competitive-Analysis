@@ -61,8 +61,8 @@ None of the five competitors profiled use sport to build trust, which means the 
 
 ## Data Confidence
 
-- **Observed (sourced) claims:** roughly 55-60% across the three full-depth profiles, after the citation-verification pass downgraded unverifiable claims. GO Rentals and Getaround (survey depth) run lower, since only the core framing sections were researched.
-- **Inferred (assumption) claims:** roughly 40-45%, concentrated in the Differentiators, Risks, and Opportunities sections of every profile, which are comparative judgment by design, plus every claim in the deep profiles that a source fetch could not verbatim-confirm (see `analysis/verification-note.md`).
+- **Overall:** 125 labelled claims across the five profiles, 65 Observed (52%) and 60 Inferred (48%).
+- **Where the inference sits:** the three full-depth profiles are 45 to 49% Observed (Mevo 19 of 39, Cityhop 15 of 33, Zilch 15 of 33). Their Differentiators, Risks, and Opportunities sections are comparative judgement by design, and the citation check downgraded every claim a source fetch could not verbatim-confirm (see `analysis/verification-note.md`). GO Rentals (9 of 12) and Getaround (7 of 8) run higher because only the core framing sections were researched at survey depth.
 - **Profiles with limited data for this topic:** GO Rentals (no insurance excess figures published anywhere found; no sponsorship data); Getaround (New Zealand sections are not applicable, since it never operated there).
 
 ## What going broader adds

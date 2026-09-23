@@ -49,7 +49,7 @@ Follow the `generate-analysis` skill's method on the framing lens, with employer
 
 ## Phase 6: dashboard
 
-Run the `build-dashboard` skill, including its check.py pass and the samantha design review (required for the first two runs of this system).
+Run the `build-dashboard` skill end to end: asset capture and the look at every image, brand tokens, the build, `assets.py embed`, check.py, the rendered-pixel checks, and the samantha design review (required for the first two runs on the v2 design system). Capture needs Google Chrome installed and network access.
 
 ## Phase 7: README
 
@@ -64,7 +64,7 @@ Write `README.md` from `templates/employer-readme.md.template`, filling every pl
    - Create a **private** GitHub repo named `<Company>-Competitive-Analysis`; push `main`.
    - Review the repo on GitHub as the employer would: README, every profile, the dashboard file, no strays.
    - Flip to public. Enable Pages (deploy from `main`, root).
-   - Verify the live URL: dashboard renders, both tabs, both themes, README links resolve.
+   - Verify the live URL: dashboard renders with every screenshot and logo, both themes, phone width, README links resolve.
 
 ## The go-broader loop
 
