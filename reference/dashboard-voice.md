@@ -18,12 +18,16 @@ The writing standard for every HTML dashboard this project produces, alongside `
 
 **Compressed contrasts instead of dramatised ones.** "Brand-building runs through partnerships, not sponsorship" tells the reader there's a contrast. "Brand-building runs through Toyota Financial Services and an energy company's marketing budget" shows it, and reads like something a person actually found rather than a template filling in a blank.
 
+**Sentences that are too short.** This is the clearest single difference between copy that reads generated and copy that reads written. A stack of short declaratives, each landing its own beat, is deck grammar: "The lane is open. The hard part is filling it." Aim for a mean past 90 characters a sentence across the page, with subordinate clauses and conjunctions doing the joining. Three things to look for: verbless fragments ("Founded in Auckland in 2007." or "Credible, crowded, and aimed past the buyer."), which should hang off a real subject and verb; related sentences sitting side by side without an "and", "so" or semicolon between them; and punchy codas, a short thumping line added after a paragraph that had already landed ("That is the story a launch can tell in one line."), which should be cut or folded in.
+
+**Chains, when lengthening.** The fix for clipped prose has its own failure mode: every sentence turning into ", so ..., and ..." or three matching clauses ("owns its fleet, works from agency counters, and has built trust on..."). Join where the ideas are connected, and leave two unrelated facts as two sentences. Re-read anything you lengthened for a claim that shifted in the joining; a merged sentence can quietly say something the source doesn't.
+
 ## What to do instead
 
 - Name the specific thing instead of the abstract category. "The lane is open, but building host supply from zero is the hard part" beats "this is a genuine opportunity."
 - Let a plain phrase repeat if it's carrying real information (the "trust bar" concept recurring across two sections is fine; it's a thread, not a tic).
 - Vary sentence length on purpose. A stack of short declaratives each landing its own beat is deck grammar; real prose runs a mix, with some sentences going past a comma and a subordinate clause.
-- Read the whole page as prose once, out loud if useful, before calling it done. If a line would sound strange said to a colleague, rewrite it.
+- Read the whole page as prose once, out loud if useful, before calling it done. If the workspace's `voice-check.py` is available, run it over the page's prose too; it counts sentence length and the contrast patterns, which a read-through tends to miss. If a line would sound strange said to a colleague, rewrite it.
 
 ## Where this applies
 
