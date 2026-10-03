@@ -26,10 +26,10 @@
    tiles:         turo bleed (og tile); mevo bleed (app icon); cityhop bleed (app icon); zilch bleed (app icon);
                   camplify plate #FFFFFF (app icon, transparent); go-rentals bleed on plate #E21266 (app icon,
                   transparent corners); getaround fit on plate #B11AA7 (og tile)
-   exhibits:      F1 E8 scale against margin (new type: log revenue x, net margin y, one dot per company-year),
-                  F2 E6 figure pair (Camplify FY25 growth), F3 E2 ownership map (wide-finding, 5 groups), F4 E4
-                  screenshot (Camplify eligibility-list crop), F5 E3 presence grid (sport gap column), options
-                  E6 figure pair (tourism spend)
+   exhibits:      F1 E1 event rail (5 lanes, true time scale, 2012-2027), F2 E6 figure pair (Camplify FY25
+                  growth), F3 E2 ownership map (wide-finding, 5 groups), F4 E4 screenshot (Camplify
+                  eligibility-list crop), F5 E3 presence grid (sport gap column), options E6 figure pair
+                  (tourism spend)
    captured:      2026-09-23 (Mevo, Cityhop, Zilch, GO Rentals, Getaround, Turo); Camplify 2026-10-03;
                   turo.com served as AU site
    deviation:     matrix header is not sticky: sticky inside an overflow-x container sticks to the container,
@@ -133,6 +133,7 @@ h4{font-size:18px;line-height:24px;font-weight:650;letter-spacing:-.005em}
 .trust ul{display:grid;gap:6px}
 .trust li{font-size:13px;line-height:20px}
 .trust .fine{font-size:13px;color:var(--ink-3)}
+.nw{white-space:nowrap}
 .trust-fig{font-size:44px;line-height:48px;font-weight:700;letter-spacing:-0.02em;color:var(--ink)}
 .trust-cap{font-size:13px;line-height:20px;color:var(--ink-2);margin-top:2px}
 .cast-head{display:flex;justify-content:space-between;align-items:baseline;margin:48px 0 16px;gap:16px}
@@ -177,31 +178,39 @@ h4{font-size:18px;line-height:24px;font-weight:650;letter-spacing:-.005em}
 .finding.wide .f-side{grid-column:8/13;display:grid;gap:12px;align-content:start}
 .finding.wide .exhibit{grid-column:1/13;margin-top:24px}
 
-/* E8 scale against margin: log revenue x, net margin y, one dot per company-year */
-.e8{display:block;width:100%;height:auto;overflow:visible}
-.e8-wide{max-width:640px}
-.e8-narrow{display:none;max-width:400px}
-@media (max-width:719px){.e8-wide{display:none}.e8-narrow{display:block}}
-.e8 text{paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round}
-.e8-grid{stroke:var(--rule);stroke-width:1}
-.e8-zero{stroke:var(--ink-2);stroke-width:1}
-.e8-tick{stroke:var(--rule-strong);stroke-width:1}
-.e8-glabel{font:400 11px var(--font-mono);fill:var(--ink-3);font-variant-numeric:tabular-nums;text-anchor:end}
-.e8-xlabel{font:400 11px var(--font-mono);fill:var(--ink-3);font-variant-numeric:tabular-nums;text-anchor:middle}
-.e8-axis-title{font:500 10.5px var(--font-mono);letter-spacing:.08em;fill:var(--ink-3)}
-.e8-dot{fill:var(--ink)}
-.e8-dot.target{fill:var(--accent-fill)}
-.e8-arrow-shaft{stroke:var(--accent-fill);stroke-width:2}
-.e8-arrow-head{fill:var(--accent-fill)}
-.e8-name{font:650 13px var(--font-brand);fill:var(--ink)}
-.e8-name.target{fill:var(--accent)}
-.e8-data{font:400 11.5px var(--font-mono);fill:var(--ink-2);font-variant-numeric:tabular-nums}
-.e8-alertmark{fill:var(--alert)}
-.e8-alerttext{font:500 10.5px var(--font-mono);fill:var(--alert)}
-.e8-narrow .e8-glabel,.e8-narrow .e8-xlabel{font-size:10.5px}
-.e8-narrow .e8-name{font-size:12.5px}
-.e8-narrow .e8-data{font-size:11px}
-.e8-note{margin-top:16px}
+/* E1 event rail: one lane per company, true time scale, shared axis (2012-2027) */
+.erail{display:grid;margin-top:4px}
+.erail-row{display:grid;grid-template-columns:120px 1fr;column-gap:12px;border-top:1px solid var(--rule);padding:18px 0}
+.erail-row:first-child{border-top:0;padding-top:0}
+.erail-row.b-tall{padding-bottom:54px}
+.erail-who{display:grid;gap:2px;align-content:center;min-width:0}
+.erail-who b{font-size:13px;line-height:18px;font-weight:650;color:var(--ink)}
+.erail-who .ftag{font:400 10px/13px var(--font-mono);color:var(--ink-3)}
+.erail-track{position:relative;height:104px;min-width:0}
+.erail-line{position:absolute;top:52px;height:2px;background:var(--ink-2);transform:translateY(-1px)}
+.erail-line.fade{background:linear-gradient(to right,transparent,var(--ink-2))}
+.erail-line.unknown{background:none;border-top:2px dashed var(--ink-3);height:0;top:51px}
+.erail-mark{position:absolute;top:52px;width:8px;height:8px;border-radius:50%;background:var(--ink-2);transform:translate(-50%,-50%)}
+.erail-mark.alert{border-radius:1px;background:var(--alert);transform:translate(-50%,-50%) rotate(45deg)}
+.erail-arrow{position:absolute;top:52px;width:0;height:0;border-style:solid;border-width:5px 0 5px 7px;border-color:transparent transparent transparent var(--ink-2);transform:translate(-1px,-50%)}
+.erail-tag{position:absolute;width:126px;display:grid;gap:1px}
+.erail-tag.c{transform:translateX(-50%);text-align:center}
+.erail-tag.l{text-align:left}
+.erail-tag.r{transform:translateX(-100%);text-align:right}
+.erail-tag.above{bottom:62px}
+.erail-tag.below{top:62px}
+.erail-tag .when{font:400 10px/13px var(--font-mono);color:var(--ink-3);text-transform:uppercase}
+.erail-tag .what{font-size:11.5px;line-height:15px;color:var(--ink-2)}
+.erail-tag .chip{margin-top:3px;height:18px;padding:0 6px;font-size:9.5px}
+.erail-tag.stack{width:180px;gap:4px}
+.erail-tag.stack .eline{display:grid;grid-template-columns:68px 1fr;column-gap:8px;align-items:baseline;text-align:left}
+.erail-tag.stack .eline .when{font:400 10px/13px var(--font-mono);color:var(--ink-3);text-transform:uppercase}
+.erail-tag.stack .eline .what{font-size:11.5px;line-height:14px;color:var(--ink-2)}
+.erail-tag.stack .eline .chip{grid-column:2;width:fit-content;margin-top:2px;height:16px;padding:0 6px;font-size:9px}
+.erail-axis{display:grid;grid-template-columns:120px 1fr;column-gap:12px;margin-top:2px;padding-top:10px;border-top:1px solid var(--rule-strong)}
+.erail-ticks{position:relative;height:16px}
+.erail-ticks span{position:absolute;top:0;transform:translateX(-50%);font:400 10.5px/1 var(--font-mono);color:var(--ink-3)}
+.erail-ticks span:first-child{transform:translateX(0)}
 
 /* E6 figure pair */
 .fpair{display:flex;gap:40px;flex-wrap:wrap}
@@ -448,6 +457,14 @@ footer .data{font-size:11px;line-height:18px;color:var(--ink-3)}
   .cast-card.subject{grid-column:auto}
   .fstrip{grid-template-columns:1fr 1fr}
   .exhibit{padding:16px}
+  .erail-row{grid-template-columns:1fr;row-gap:10px}
+  .erail-row.b-tall{padding-bottom:18px}
+  .erail-track{height:auto;padding-top:26px}
+  .erail-tag{position:static;width:auto;transform:none;text-align:left;margin-top:8px}
+  .erail-tag.c,.erail-tag.r,.erail-tag.l{transform:none;text-align:left}
+  .erail-tag.stack{width:auto}
+  .erail-axis{grid-template-columns:1fr}
+  .erail-ticks .p-hide{display:none}
   .owners{grid-template-columns:1fr;gap:24px}
   .group.subject{width:auto}
   .roster{grid-template-columns:1fr}
@@ -504,8 +521,8 @@ footer .data{font-size:11px;line-height:18px;color:var(--ink-3)}
     <div class="hero-grid">
       <div class="hero-text">
         <p class="label">Independent analysis · Turo × New Zealand entry · 3 Oct 2026</p>
-        <h1>Owning no fleet didn't save Getaround, so <em>Turo in New Zealand turns on finding hosts</em></h1>
-        <p class="lede">Getaround ran the same marketplace as Turo and lost more than its revenue, and both of New Zealand's earlier peer-to-peer car platforms have closed. Camplify has made the model work here for campervans, which makes it the closest template a Turo entry has.</p>
+        <h1>New Zealand's <span class="nw">peer-to-peer</span> car platforms have gone, so <em>Turo starts with no hosts</em></h1>
+        <p class="lede">YourDrive closed in 2020 and MyCarYourRental's site no longer loads, while Getaround ran the same marketplace as Turo and lost more than its revenue. Camplify runs the model here for campervans and is growing, which makes it the closest working example.</p>
       </div>
       <aside class="trust" aria-label="How far to trust this">
         <p class="label">How far to trust this</p>
@@ -554,7 +571,7 @@ footer .data{font-size:11px;line-height:18px;color:var(--ink-3)}
 
     <div class="fstrip">
       <div class="fcell"><p class="fig-num">US$113.9m</p><p class="flabel">Getaround's 2023 net loss, on about US$72.7m of revenue</p><span class="data">sec.gov (10-K 2023) · <a href="#finding-1">Finding 1</a></span></div>
-      <div class="fcell"><p class="fig-num">2,000+</p><p class="flabel">Kiwi-owned campervans and motorhomes on Camplify; <span class="inf">no peer-to-peer car platform is still running</span></p><span class="data">camplify.co.nz · <a href="#finding-2">Finding 2</a></span></div>
+      <div class="fcell"><p class="fig-num">2,000+</p><p class="flabel">Kiwi-owned campervans and motorhomes on Camplify; <span class="inf">neither earlier peer-to-peer car platform is still online</span></p><span class="data">camplify.co.nz · <a href="#finding-2">Finding 2</a></span></div>
       <div class="fcell"><p class="fig-num">4th of 7</p><p class="flabel">GO Rentals in Canstar Blue's 2026 hire-car ranking; Toyota-owned Ezi is 1st</p><span class="data">canstar.co.nz · <a href="#finding-3">Finding 3</a></span></div>
       <div class="fcell"><p class="fig-num">1.56m</p><p class="flabel">Australian visitor arrivals, year to March 2026, out of 3.63m</p><span class="data">stats.govt.nz · <a href="#position">Position, open ground</a></span></div>
     </div>
@@ -562,121 +579,114 @@ footer .data{font-size:11px;line-height:18px;color:var(--ink-3)}
     <article class="finding" id="finding-1">
       <div class="f-text">
         <p class="label">Finding 1 of 5</p>
-        <h3>Turo is the only marketplace here to report a profit, at more than ten times Getaround's revenue, and its margin fell to 1.7% in 2023</h3>
-        <p>Getaround ran Turo's model without owning a car and still lost US$113.9m on US$72.7m of revenue in 2023 before voting to dissolve, while Mevo, which financed its own fleet, went into administration in March 2026. Turo's net income fell from US$154.7m to US$14.7m between FY2022 and FY2023 while its revenue grew 18%. YourDrive and MyCarYourRental, New Zealand's earlier peer-to-peer platforms, have closed and published no accounts.</p>
-        <div class="for"><p class="label acc">For Turo</p><p>Turo's protection is making money at scale, and a 1.7% margin leaves little to spend on a small market, so the launch case rests on whether New Zealand gives it enough local density.</p></div>
-        <p class="src">Observed and inferred · SEC and ASX filings · <a href="#player-getaround">Getaround</a>, <a href="#player-camplify">Camplify</a>, <a href="#player-mevo">Mevo</a> profiles, Turo write-up</p>
+        <h3>Both peer-to-peer car platforms that tried New Zealand are gone, and Getaround shows that owning no cars doesn't protect a marketplace</h3>
+        <p>YourDrive, half-owned by Jucy, signed up more than 25,000 owners and renters before it stopped trading in March 2020, when the border closure removed its tourist bookings. MyCarYourRental, founded in 2015, advertised over 300 cars in 2025 and its site no longer loads. Mevo, which owned its fleet, went into administration in March 2026 and was relaunched by Carbn with 12 cars. Getaround ran Turo's model and lost US$113.9m on US$72.7m of revenue in 2023.</p>
+        <div class="for"><p class="label acc">For Turo</p><p>A Turo launch would be the third attempt at peer-to-peer car hire here, and YourDrive's dependence on overseas tourists, which vanished when the border closed, is the closest local warning.</p></div>
+        <p class="src">Observed · SEC filings, <a href="https://github.com/cschubertwork/Turo-Competitive-Analysis/blob/main/reference/nz-context.md">NZ context sources</a>, <a href="#player-getaround">Getaround</a>, <a href="#player-mevo">Mevo</a>, <a href="#player-camplify">Camplify</a> profiles</p>
       </div>
       <figure class="exhibit" id="exhibit-1">
         <p class="label">Exhibit 1</p>
-        <p class="ex-title">Only Turo is above zero, and its margin fell from 20.7% to 1.7% as its revenue grew</p>
-        <svg class="e8 e8-wide" viewBox="0 0 560 392" role="img" aria-labelledby="e8w-title e8w-desc">
-          <title id="e8w-title">Only Turo is above zero, and its margin fell from 20.7% to 1.7% as its revenue grew</title>
-          <desc id="e8w-desc">Turo: +20.7% on US$746.6m revenue in FY2022, +1.7% on US$879.7m in FY2023. Camplify Holdings: −37.5% on A$42.1m in FY25. Getaround: −156.7% on US$72.7m in 2023.</desc>
-          <line class="e8-grid" x1="52" y1="28" x2="548" y2="28"/>
-          <line class="e8-zero" x1="52" y1="68" x2="548" y2="68"/>
-          <line class="e8-grid" x1="52" y1="108" x2="548" y2="108"/>
-          <line class="e8-grid" x1="52" y1="148" x2="548" y2="148"/>
-          <line class="e8-grid" x1="52" y1="188" x2="548" y2="188"/>
-          <line class="e8-grid" x1="52" y1="228" x2="548" y2="228"/>
-          <line class="e8-grid" x1="52" y1="268" x2="548" y2="268"/>
-          <line class="e8-grid" x1="52" y1="308" x2="548" y2="308"/>
-          <line class="e8-grid" x1="52" y1="348" x2="548" y2="348"/>
-          <text class="e8-glabel" x="44" y="32">+25%</text>
-          <text class="e8-glabel" x="44" y="72">0</text>
-          <text class="e8-glabel" x="44" y="112">−25%</text>
-          <text class="e8-glabel" x="44" y="152">−50%</text>
-          <text class="e8-glabel" x="44" y="192">−75%</text>
-          <text class="e8-glabel" x="44" y="232">−100%</text>
-          <text class="e8-glabel" x="44" y="272">−125%</text>
-          <text class="e8-glabel" x="44" y="312">−150%</text>
-          <text class="e8-glabel" x="44" y="352">−175%</text>
-          <line class="e8-tick" x1="95.67" y1="348" x2="95.67" y2="353"/>
-          <line class="e8-tick" x1="225.34" y1="348" x2="225.34" y2="353"/>
-          <line class="e8-tick" x1="343.67" y1="348" x2="343.67" y2="353"/>
-          <line class="e8-tick" x1="473.34" y1="348" x2="473.34" y2="353"/>
-          <text class="e8-xlabel" x="95.67" y="367">30m</text>
-          <text class="e8-xlabel" x="225.34" y="367">100m</text>
-          <text class="e8-xlabel" x="343.67" y="367">300m</text>
-          <text class="e8-xlabel" x="473.34" y="367">1bn</text>
-          <text class="e8-axis-title" x="0" y="14">NET RESULT ÷ REVENUE</text>
-          <text class="e8-axis-title" x="52" y="388">REVENUE · LOG SCALE</text>
-          <text class="e8-axis-title" x="548" y="62" text-anchor="end">PROFIT</text>
-          <text class="e8-axis-title" x="548" y="82" text-anchor="end">LOSS</text>
-          <line class="e8-arrow-shaft" x1="443.88" y1="38.31" x2="454.02" y2="55.81"/>
-          <polygon class="e8-arrow-head" points="457.53,61.87 451.00,57.57 457.05,54.06"/>
-          <circle class="e8-dot target" cx="441.87" cy="34.85" r="4"/>
-          <circle class="e8-dot target" cx="459.54" cy="65.33" r="4"/>
-          <circle class="e8-dot" cx="132.17" cy="128.05" r="4"/>
-          <circle class="e8-dot" cx="191.01" cy="318.67" r="4"/>
-          <text class="e8-name target" x="431.87" y="23.85" text-anchor="end">Turo</text>
-          <text class="e8-data" x="431.87" y="38.85" text-anchor="end">FY2022 · +20.7% · US$746.6m</text>
-          <text class="e8-data" x="444.7" y="62" text-anchor="end">FY2023 · +1.7% · US$879.7m</text>
-          <text class="e8-name" x="142.17" y="124.05">Camplify Holdings FY25</text>
-          <text class="e8-data" x="142.17" y="140.05">−37.5% · A$42.1m</text>
-          <text class="e8-name" x="201.01" y="314.67">Getaround 2023</text>
-          <text class="e8-data" x="201.01" y="330.67">−156.7% · US$72.7m</text>
-          <g transform="translate(201.01,341.67) rotate(45)"><rect class="e8-alertmark" x="-2.5" y="-2.5" width="5" height="5"/></g>
-          <text class="e8-alerttext" x="211.01" y="345.67">DISSOLVING 2026</text>
-        </svg>
-        <svg class="e8 e8-narrow" viewBox="0 0 320 392" role="img" aria-labelledby="e8n-title e8n-desc">
-          <title id="e8n-title">Only Turo is above zero, and its margin fell from 20.7% to 1.7% as its revenue grew</title>
-          <desc id="e8n-desc">Turo: +20.7% on US$746.6m revenue in FY2022, +1.7% on US$879.7m in FY2023. Camplify Holdings: −37.5% on A$42.1m in FY25. Getaround: −156.7% on US$72.7m in 2023.</desc>
-          <line class="e8-grid" x1="40" y1="28" x2="312" y2="28"/>
-          <line class="e8-zero" x1="40" y1="68" x2="312" y2="68"/>
-          <line class="e8-grid" x1="40" y1="108" x2="312" y2="108"/>
-          <line class="e8-grid" x1="40" y1="148" x2="312" y2="148"/>
-          <line class="e8-grid" x1="40" y1="188" x2="312" y2="188"/>
-          <line class="e8-grid" x1="40" y1="228" x2="312" y2="228"/>
-          <line class="e8-grid" x1="40" y1="268" x2="312" y2="268"/>
-          <line class="e8-grid" x1="40" y1="308" x2="312" y2="308"/>
-          <line class="e8-grid" x1="40" y1="348" x2="312" y2="348"/>
-          <text class="e8-glabel" x="32" y="32">+25%</text>
-          <text class="e8-glabel" x="32" y="72">0</text>
-          <text class="e8-glabel" x="32" y="112">−25%</text>
-          <text class="e8-glabel" x="32" y="152">−50%</text>
-          <text class="e8-glabel" x="32" y="192">−75%</text>
-          <text class="e8-glabel" x="32" y="232">−100%</text>
-          <text class="e8-glabel" x="32" y="272">−125%</text>
-          <text class="e8-glabel" x="32" y="312">−150%</text>
-          <text class="e8-glabel" x="32" y="352">−175%</text>
-          <line class="e8-tick" x1="63.95" y1="348" x2="63.95" y2="353"/>
-          <line class="e8-tick" x1="135.06" y1="348" x2="135.06" y2="353"/>
-          <line class="e8-tick" x1="199.95" y1="348" x2="199.95" y2="353"/>
-          <line class="e8-tick" x1="271.06" y1="348" x2="271.06" y2="353"/>
-          <text class="e8-xlabel" x="63.95" y="367">30m</text>
-          <text class="e8-xlabel" x="135.06" y="367">100m</text>
-          <text class="e8-xlabel" x="199.95" y="367">300m</text>
-          <text class="e8-xlabel" x="271.06" y="367">1bn</text>
-          <text class="e8-axis-title" x="0" y="14">NET RESULT ÷ REVENUE</text>
-          <text class="e8-axis-title" x="40" y="388">REVENUE · LOG SCALE</text>
-          <line class="e8-arrow-shaft" x1="255.01" y1="38.66" x2="260.16" y2="54.85"/>
-          <polygon class="e8-arrow-head" points="262.28,61.52 256.82,55.91 263.49,53.79"/>
-          <circle class="e8-dot target" cx="253.80" cy="34.85" r="4"/>
-          <circle class="e8-dot target" cx="263.49" cy="65.33" r="4"/>
-          <circle class="e8-dot" cx="83.96" cy="128.05" r="4"/>
-          <circle class="e8-dot" cx="116.23" cy="318.67" r="4"/>
-          <text class="e8-name target" x="243.80" y="23.85" text-anchor="end">Turo</text>
-          <text class="e8-data" x="243.80" y="38.85" text-anchor="end">FY2022 · +20.7% · US$746.6m</text>
-          <text class="e8-data" x="251.7" y="62" text-anchor="end">FY2023 · +1.7% · US$879.7m</text>
-          <text class="e8-name" x="93.96" y="124.05">Camplify Holdings FY25</text>
-          <text class="e8-data" x="93.96" y="140.05">−37.5% · A$42.1m</text>
-          <text class="e8-name" x="126.23" y="314.67">Getaround 2023</text>
-          <text class="e8-data" x="126.23" y="330.67">−156.7% · US$72.7m</text>
-          <g transform="translate(126.23,341.67) rotate(45)"><rect class="e8-alertmark" x="-2.5" y="-2.5" width="5" height="5"/></g>
-          <text class="e8-alerttext" x="136.23" y="345.67">DISSOLVING 2026</text>
-        </svg>
-        <p class="small e8-note">Not plotted, because they published no accounts: YourDrive (ceased March 2020), MyCarYourRental (site offline) and Mevo (collapsed 2026).</p>
-        <figcaption>Net result ÷ revenue, computed here from each company's filings: Turo's S-1/A (FY2022, FY2023), Getaround's 2023 10-K and Camplify Holdings' FY25 ASX results. Revenue is on a log scale in each company's reporting currency, and Camplify's A$42.1m is plotted unconverted because no exchange rate is sourced in these profiles. Camplify's figure covers the whole group, since New Zealand isn't reported separately, and includes an A$6.0m goodwill impairment. All inputs observed.</figcaption>
+        <p class="ex-title">Both peer-to-peer car platforms are gone, and only the campervan marketplace is still growing</p>
+        <div class="erail">
+          <div class="erail-row">
+            <div class="erail-who"><b>YourDrive</b><span class="ftag">P2P cars · NZ</span></div>
+            <div class="erail-track">
+              <span class="erail-line" style="left:3.61%;width:50.99%"></span>
+              <span class="erail-mark" style="left:3.61%"></span>
+              <span class="erail-tag l above" style="left:3.61%"><span class="when">Jul 2012</span><span class="what">Founded</span></span>
+              <span class="erail-mark" style="left:49.72%"></span>
+              <span class="erail-tag c below" style="left:49.72%"><span class="when">Jun 2019</span><span class="what">25,000 registered</span></span>
+              <span class="erail-mark alert" style="left:54.60%"></span>
+              <span class="erail-tag c above" style="left:54.60%"><span class="when">10 Mar 2020</span><span class="what">Ceased</span><span class="chip alert">Ceased 2020</span></span>
+            </div>
+          </div>
+          <div class="erail-row">
+            <div class="erail-who"><b>MyCarYourRental</b><span class="ftag">P2P cars · NZ</span></div>
+            <div class="erail-track">
+              <span class="erail-line" style="left:23.33%;width:67.50%"></span>
+              <span class="erail-line unknown" style="left:90.83%;width:7.78%"></span>
+              <span class="erail-mark" style="left:23.33%"></span>
+              <span class="erail-tag c above" style="left:23.33%"><span class="when">2015</span><span class="what">Founded</span></span>
+              <span class="erail-mark" style="left:90.83%"></span>
+              <span class="erail-tag c below" style="left:90.83%"><span class="when">Aug 2025</span><span class="what">300+ cars listed (archive)</span></span>
+              <span class="erail-mark alert" style="left:98.61%"></span>
+              <span class="erail-tag r above" style="left:98.61%"><span class="when">Oct 2026</span><span class="what">Site offline</span><span class="chip alert">Site offline</span></span>
+            </div>
+          </div>
+          <div class="erail-row">
+            <div class="erail-who"><b>Mevo</b><span class="ftag">Own fleet · NZ</span></div>
+            <div class="erail-track">
+              <span class="erail-line" style="left:16.67%;width:81.49%"></span>
+              <span class="erail-mark" style="left:16.67%"></span>
+              <span class="erail-tag c above" style="left:16.67%"><span class="when">2014</span><span class="what">Founded</span></span>
+              <span class="erail-mark" style="left:32.50%"></span>
+              <span class="erail-tag c below" style="left:32.50%"><span class="when">Late 2016</span><span class="what">Launched</span></span>
+              <span class="erail-mark" style="left:63.33%"></span>
+              <span class="erail-tag c above" style="left:63.33%"><span class="when">2021</span><span class="what">Hamilton</span></span>
+              <span class="erail-mark alert" style="left:94.95%"></span>
+              <span class="erail-mark" style="left:95.83%"></span>
+              <span class="erail-mark" style="left:98.16%"></span>
+              <span class="erail-tag stack r below" style="left:98.16%">
+                <span class="eline"><span class="when">30 Mar 2026</span><span class="what">Administration</span></span>
+                <span class="eline"><span class="when">May 2026</span><span class="what">Bought by Carbn</span></span>
+                <span class="eline"><span class="when">22 Sep 2026</span><span class="what">Relaunched, 12 cars</span></span>
+              </span>
+            </div>
+          </div>
+          <div class="erail-row b-tall">
+            <div class="erail-who"><b>Getaround</b><span class="ftag">P2P cars · global, never in NZ</span></div>
+            <div class="erail-track">
+              <span class="erail-line fade" style="left:83.61%;width:0.55%"></span>
+              <span class="erail-line" style="left:84.16%;width:12.01%"></span>
+              <span class="erail-mark" style="left:84.16%"></span>
+              <span class="erail-mark" style="left:87.35%"></span>
+              <span class="erail-mark" style="left:95.28%"></span>
+              <span class="erail-mark alert" style="left:96.17%"></span>
+              <span class="erail-tag stack r below" style="left:96.17%">
+                <span class="eline"><span class="when">16 Aug 2024</span><span class="what">NYSE delisting</span></span>
+                <span class="eline"><span class="when">7 Feb 2025</span><span class="what">US wind-down</span></span>
+                <span class="eline"><span class="when">Apr 2026</span><span class="what">Europe sold</span></span>
+                <span class="eline"><span class="when">5 Jun 2026</span><span class="what">Dissolution</span><span class="chip alert">Dissolving 2026</span></span>
+              </span>
+            </div>
+          </div>
+          <div class="erail-row">
+            <div class="erail-who"><b>Camplify</b><span class="ftag">P2P campervans · NZ</span></div>
+            <div class="erail-track">
+              <span class="erail-line" style="left:50%;width:50%"></span>
+              <span class="erail-mark" style="left:50%"></span>
+              <span class="erail-tag c above" style="left:50%"><span class="when">2019</span><span class="what">Entered NZ</span></span>
+              <span class="erail-mark" style="left:69.17%"></span>
+              <span class="erail-tag c below" style="left:69.17%"><span class="when">May 2022</span><span class="what">Bought Mighway, SHAREaCAMPER</span></span>
+              <span class="erail-mark" style="left:90.83%"></span>
+              <span class="erail-tag c above" style="left:90.83%"><span class="when">Aug 2025</span><span class="what">NZ fleet +26%</span></span>
+              <span class="erail-arrow" style="left:100%"></span>
+            </div>
+          </div>
+          <div class="erail-axis" aria-hidden="true">
+            <span></span>
+            <div class="erail-ticks">
+              <span style="left:0%">2012</span>
+              <span style="left:13.33%" class="p-hide">2014</span>
+              <span style="left:26.67%">2016</span>
+              <span style="left:40%" class="p-hide">2018</span>
+              <span style="left:53.33%">2020</span>
+              <span style="left:66.67%" class="p-hide">2022</span>
+              <span style="left:80%">2024</span>
+              <span style="left:93.33%" class="p-2026">2026</span>
+            </div>
+          </div>
+        </div>
+        <figcaption>Dates from the profiles and reference/nz-context.md. Getaround's earlier history isn't shown. MyCarYourRental's status between its last archived capture (August 2025) and October 2026 is unknown, so that stretch is dashed.</figcaption>
       </figure>
     </article>
 
     <article class="finding" id="finding-2">
       <div class="f-text">
         <p class="label">Finding 2 of 5</p>
-        <h3>Camplify already runs peer-to-peer hire in New Zealand for campervans, and nobody does it for cars any more</h3>
+        <h3>Camplify already runs peer-to-peer hire in New Zealand for campervans, and no peer-to-peer car platform is still online</h3>
         <p>Camplify lists more than 2,000 Kiwi-owned RVs and, since the Commerce Commission cleared its 2022 purchase of Mighway and SHAREaCAMPER from THL, owns every peer-to-peer RV platform in the country. New Zealand was its only market to grow on all four measures in FY25. It lists no cars, and both local attempts at cars have closed.</p>
-        <div class="for"><p class="label acc">For Turo</p><p>Camplify's trips, six to ten nights, six in ten booked from overseas, look more like Turo's than any car-share trip does, which makes it the nearest live template for a New Zealand host.</p></div>
+        <div class="for"><p class="label acc">For Turo</p><p>Camplify's trips run six to ten nights and six in ten are booked from overseas, which makes it the closest live picture of how New Zealand owners and travellers use a peer-to-peer marketplace.</p></div>
         <p class="src">Observed · 4 sources · <a href="#player-camplify">Camplify profile</a></p>
       </div>
       <figure class="exhibit" id="exhibit-2">
@@ -698,7 +708,7 @@ footer .data{font-size:11px;line-height:18px;color:var(--ink-3)}
           <p>Toyota Financial Services owns Cityhop through KINTO New Zealand and bought Ezi Car Rental in October 2023; Ezi leads Canstar Blue's 2026 satisfaction ranking, and GO Rentals, a four-time winner, is now fourth. Carbn Group owns Zilch and bought Mevo's assets in May 2026. Trade press says Carbn is becoming part of Custom Fleet, which the Companies Office register doesn't yet show.</p>
         </div>
         <div class="f-side">
-          <div class="for"><p class="label acc">For Turo</p><p>The trust benchmark and the car-share incumbents now sit inside the same two balance sheets, so Turo would be up against patient capital and existing council parking deals from the first day.</p></div>
+          <div class="for"><p class="label acc">For Turo</p><p>Toyota's finance arm owns a car-share brand and the best-rated rental brand, so a newcomer would be measured against a group that already covers short city trips and longer hires.</p></div>
           <p class="src">Observed · register, Canstar and press · <a href="#player-cityhop">Cityhop</a>, <a href="#player-zilch">Zilch</a>, <a href="#player-mevo">Mevo</a>, <a href="#player-camplify">Camplify</a>, <a href="#player-go">GO Rentals</a> profiles</p>
         </div>
       </div>
@@ -749,7 +759,7 @@ footer .data{font-size:11px;line-height:18px;color:var(--ink-3)}
     <article class="finding" id="finding-4">
       <div class="f-text">
         <p class="label">Finding 4 of 5</p>
-        <h3>Renting out a car in New Zealand needs a rental-service licence and a Certificate of Fitness, and that cost lands on hosts</h3>
+        <h3>Renting out a car in New Zealand needs a rental-service licence and a Certificate of Fitness, and who carries that on a peer-to-peer platform is unresolved</h3>
         <p>Hiring out a car for reward is a "rental service" under the Land Transport Act 1998, which needs a Transport Service Licence, and rental vehicles need a Certificate of Fitness in place of a Warrant of Fitness. Camplify's own owner promotion asks drivable vans for a rental Certificate of Fitness. The only known peer-to-peer car insurance here was built bespoke for MyCarYourRental, and ACC covers injury but not damage to the car.</p>
         <div class="for"><p class="label acc">For Turo</p><p>Whether NZTA treats Turo or each host as the operator is the first thing an entry has to settle, and this research couldn't confirm it from a primary source<span class="inf"></span>.</p></div>
         <p class="src">Observed and inferred · legislation.govt.nz, archived NZTA page, <a href="https://github.com/cschubertwork/Turo-Competitive-Analysis/blob/main/reference/nz-context.md">NZ context sources</a>, <a href="#player-camplify">Camplify profile</a></p>
@@ -771,8 +781,8 @@ footer .data{font-size:11px;line-height:18px;color:var(--ink-3)}
       <div class="f-text">
         <p class="label">Finding 5 of 5</p>
         <h3>No sports sponsorship turned up for any of the five competitors operating in New Zealand, and Turo has sponsored sport before</h3>
-        <p>Every brand-building tie this research found runs through a motoring body, an energy company, a parent, an insurer or awards. Turo became an official partner of Canada Basketball in March 2024. It was also asked about New Zealand when it announced Australia in October 2022 and had nothing to share.</p>
-        <div class="for"><p class="label acc">For Turo</p><p>Sport is unclaimed ground, and an entry would be into a market Turo has looked at and passed on once.</p></div>
+        <p>Every brand-building tie this research found runs through a motoring body, an energy company, a parent, an insurer or awards. Turo became an official partner of Canada Basketball in March 2024. When Turo announced Australia in October 2022 it had nothing to share about New Zealand.</p>
+        <div class="for"><p class="label acc">For Turo</p><p>Sport is unclaimed by the competitors here, and Turo has run a national sports partnership before.</p></div>
         <p class="src">Observed and inferred · all five NZ profiles and the Turo write-up</p>
       </div>
       <figure class="exhibit" id="exhibit-5">
@@ -971,7 +981,7 @@ footer .data{font-size:11px;line-height:18px;color:var(--ink-3)}
           <th scope="col" class="subject"><span class="label acc" style="display:block;margin-bottom:6px">Subject</span><span class="tile s t-turo" aria-hidden="true"></span>Turo</th>
         </tr></thead>
         <tbody>
-          <tr><th scope="row">Model</th><td>Back-to-base, hourly or daily</td><td>Free-floating, minute-to-day</td><td>Back-to-base EV, plus subscriptions</td><td>Peer-to-peer campervan marketplace</td><td>Peer-to-peer marketplace (dissolving)</td><td>Owned-fleet agency rental</td><td class="subject">Peer-to-peer marketplace</td></tr>
+          <tr><th scope="row">Model</th><td>Back-to-base, hourly or daily</td><td>Free-floating, hourly or daily</td><td>Back-to-base EV, plus subscriptions</td><td>Peer-to-peer campervan marketplace</td><td>Peer-to-peer marketplace (dissolving)</td><td>Owned-fleet agency rental</td><td class="subject">Peer-to-peer marketplace</td></tr>
           <tr><th scope="row">Fleet</th><td>Company-owned</td><td>Company-owned, relaunched with Suzuki Swifts</td><td>Company-owned EVs</td><td>Host-owned RVs</td><td>Host-owned</td><td>Company-owned</td><td class="subject">Host-owned</td></tr>
           <tr><th scope="row">NZ presence</th><td>Auckland, Wellington (cars); vans nationwide</td><td>Wellington, Queenstown</td><td>5 cities, 17 hubs</td><td>Nationwide</td><td class="infc">Never operated in NZ</td><td>10 branches</td><td class="subject infc">None (entry hypothesis)</td></tr>
           <tr><th scope="row">Owner</th><td>Toyota Financial Services, via KINTO NZ</td><td>Carbn Group, since the 2026 collapse</td><td>Carbn Group</td><td>Camplify Holdings (ASX)</td><td>Dissolving, Delaware liquidation</td><td>NZ shareholders, Enterprise licence</td><td class="subject">People Inc. (~33% stake)</td></tr>
@@ -982,7 +992,7 @@ footer .data{font-size:11px;line-height:18px;color:var(--ink-3)}
     </div>
     <div class="matrix-acc">
       <details open><summary>Model</summary>
-        <div class="r"><span class="tile s t-cityhop"></span><b>Cityhop</b><span>Back-to-base, hourly or daily</span></div><div class="r"><span class="tile s t-mevo"></span><b>Mevo</b><span>Free-floating, minute-to-day</span></div><div class="r"><span class="tile s t-zilch"></span><b>Zilch</b><span>Back-to-base EV, plus subscriptions</span></div><div class="r"><span class="tile s t-camplify"></span><b>Camplify</b><span>Peer-to-peer campervan marketplace</span></div><div class="r"><span class="tile s fit t-getaround"></span><b>Getaround</b><span>Peer-to-peer marketplace (dissolving)</span></div><div class="r"><span class="tile s t-go"></span><b>GO Rentals</b><span>Owned-fleet agency rental</span></div><div class="r subject"><span class="tile s t-turo"></span><b>Turo</b><span>Peer-to-peer marketplace</span></div>
+        <div class="r"><span class="tile s t-cityhop"></span><b>Cityhop</b><span>Back-to-base, hourly or daily</span></div><div class="r"><span class="tile s t-mevo"></span><b>Mevo</b><span>Free-floating, hourly or daily</span></div><div class="r"><span class="tile s t-zilch"></span><b>Zilch</b><span>Back-to-base EV, plus subscriptions</span></div><div class="r"><span class="tile s t-camplify"></span><b>Camplify</b><span>Peer-to-peer campervan marketplace</span></div><div class="r"><span class="tile s fit t-getaround"></span><b>Getaround</b><span>Peer-to-peer marketplace (dissolving)</span></div><div class="r"><span class="tile s t-go"></span><b>GO Rentals</b><span>Owned-fleet agency rental</span></div><div class="r subject"><span class="tile s t-turo"></span><b>Turo</b><span>Peer-to-peer marketplace</span></div>
       </details>
       <details><summary>Fleet</summary>
         <div class="r"><span class="tile s t-cityhop"></span><b>Cityhop</b><span>Company-owned</span></div><div class="r"><span class="tile s t-mevo"></span><b>Mevo</b><span>Company-owned, relaunched with Suzuki Swifts</span></div><div class="r"><span class="tile s t-zilch"></span><b>Zilch</b><span>Company-owned EVs</span></div><div class="r"><span class="tile s t-camplify"></span><b>Camplify</b><span>Host-owned RVs</span></div><div class="r"><span class="tile s fit t-getaround"></span><b>Getaround</b><span>Host-owned</span></div><div class="r"><span class="tile s t-go"></span><b>GO Rentals</b><span>Company-owned</span></div><div class="r subject"><span class="tile s t-turo"></span><b>Turo</b><span>Host-owned</span></div>
@@ -1008,12 +1018,12 @@ footer .data{font-size:11px;line-height:18px;color:var(--ink-3)}
   <div class="wrap">
     <div class="sec-head">
       <p class="label">Where Turo stands</p>
-      <h2>Turo would arrive with a profitable model and none of the local supply, licences or relationships it needs</h2>
+      <h2>Turo would arrive with a model that works at scale elsewhere and none of the local supply, licences or relationships it needs</h2>
     </div>
     <div class="board">
       <div>
         <p class="colh"><span>+</span><span class="label">Strengths</span></p>
-        <div class="item"><span>+</span><p>Profitable at a scale, about US$936 million of revenue in the year to September 2024, more than ten times Getaround's.</p></div>
+        <div class="item"><span>+</span><p>Far larger than any marketplace here, with about US$936 million of revenue in the year to September 2024, more than ten times Getaround's.</p></div>
         <div class="item"><span>+</span><p>No fleet financing of the kind that broke Mevo.</p></div>
         <div class="item"><span>+</span><p>A wider range of vehicles and longer trips than any car-share fleet here.</p></div>
         <div class="item"><span>+</span><p>Turo already runs in Australia, next door.</p></div>
@@ -1023,14 +1033,13 @@ footer .data{font-size:11px;line-height:18px;color:var(--ink-3)}
         <div class="item"><span>−</span><p>No hosts yet, in a country where the last two peer-to-peer car platforms closed.</p></div>
         <div class="item"><span>−</span><p>Licensing and a Certificate of Fitness on every rented car.</p></div>
         <div class="item"><span>−</span><p>Insurance would have to be built, because the only local peer-to-peer policy was bespoke and ACC doesn't cover the car.</p></div>
-        <div class="item"><span>−</span><p>Council parking deals would start from nothing, and Mevo has just spent eight months renegotiating its own.</p></div>
+        <div class="item"><span>−</span><p>Council parking deals would start from nothing; Mevo waited about eight months for Wellington City Council to re-approve its car parks before relaunching.</p></div>
       </div>
       <div>
         <p class="colh"><span class="o">○</span><span class="label">Open ground</span></p>
         <div class="item"><span class="o">○</span><p>Multi-day and out-of-town trips, which no car-share fleet is built for.</p></div>
-        <div class="item"><span class="o">○</span><p>Auckland, Hamilton and Nelson, which Mevo left.</p></div>
         <div class="item"><span class="o">○</span><p>Sport sponsorship, which none of the five New Zealand competitors has claimed.</p></div>
-        <div class="item"><span class="o">○</span><p>1.56 million Australian visitors a year, who <span class="inf">may already know Turo from home</span>.</p></div>
+        <div class="item"><span class="o">○</span><p>1.56 million Australian visitors a year, from the one nearby market where Turo already operates.</p></div>
       </div>
     </div>
   </div>
@@ -1041,20 +1050,20 @@ footer .data{font-size:11px;line-height:18px;color:var(--ink-3)}
   <div class="wrap">
     <div class="sec-head">
       <p class="label">Sport</p>
-      <h2>Event sport tied to travel reaches people who need a car for a few days, at a cost an entry budget can carry</h2>
+      <h2>Event sport tied to travel puts the brand in front of people who need a car for a few days</h2>
     </div>
     <div class="options">
       <div class="opt">
         <h4>Rugby, national or regional</h4>
         <div class="row"><span class="label">What it buys</span><p class="body-s">National reach, through the country's most heavily sponsored property.</p></div>
-        <div class="row"><span class="label">What it costs</span><p class="body-s">A share of a sponsorship and licensing market worth <a href="https://github.com/cschubertwork/Turo-Competitive-Analysis/blob/main/reference/nz-context.md">NZ$142.2m a year to NZ Rugby</a> alone in FY2025.</p></div>
-        <div class="row"><span class="label">Who it reaches</span><p class="body-s">A mostly domestic, city-based audience that already has car share.</p></div>
-        <p class="verdict body-s">Rugby would buy credibility, but it costs the most and reaches city people who already have car share.</p>
+        <div class="row"><span class="label">What it costs</span><p class="body-s">A seat among sponsors of a property that earned <a href="https://github.com/cschubertwork/Turo-Competitive-Analysis/blob/main/reference/nz-context.md">NZ Rugby NZ$142.2m</a> in sponsorship and licensing in FY2025.</p></div>
+        <div class="row"><span class="label">Who it reaches</span><p class="body-s">A broad national audience, most of whom aren't about to travel.</p></div>
+        <p class="verdict body-s">Rugby buys the widest reach at the highest price, and most of that audience isn't about to hire a car.</p>
       </div>
       <div class="opt rec">
         <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap"><h4>Event sport tied to travel</h4><span class="chip subject">Sharper first move</span></div>
         <div class="row"><span class="label">What it buys</span><p class="body-s">A place beside Queenstown's ski fields, Coronet Peak and The Remarkables, and the Queenstown Marathon each November.</p></div>
-        <div class="row"><span class="label">What it costs</span><p class="body-s">What a regional programme can sustain, well under rugby's scale.</p></div>
+        <div class="row"><span class="label">What it costs</span><p class="body-s"><span class="inf">Not priced in this research; event packages are usually sold at a much smaller scale than national rugby</span>.</p></div>
         <div class="row"><span class="label">Who it reaches</span><p class="body-s">People who fly or drive in and need a car for a few days once they arrive.</p></div>
         <p class="verdict body-s">Event sport costs less and reaches the person who books the car.</p>
       </div>
@@ -1091,7 +1100,7 @@ footer .data{font-size:11px;line-height:18px;color:var(--ink-3)}
       </div>
       <div class="bcard">
         <div class="head"><span class="tile mono dash" aria-hidden="true">EC</span><b>Ezi Car Rental</b><span class="chip survey" style="border-style:dashed">Not profiled</span></div>
-        <p class="body-s">Why the top-rated rental brand rates so well, and whether Toyota Financial Services runs it alongside Cityhop.</p>
+        <p class="body-s">Why the top-rated rental brand rates so well, and how Toyota Financial Services runs it alongside Cityhop.</p>
       </div>
       <div class="bcard">
         <div class="head"><span class="tile t-camplify" aria-hidden="true"></span><b>Camplify</b><span class="chip survey">Survey depth</span></div>
