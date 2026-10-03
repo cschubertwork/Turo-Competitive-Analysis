@@ -27,7 +27,7 @@ One slug per company, the target included (use the homepage URLs in `reference/c
 Then **look at every image** (Read each `home.jpg` and `logos.png`). The script can't judge:
 - **Screenshots:** a leftover modal, a half-loaded hero, a regional site (record the locale served; it goes in the caption bar), or anything personalised. A site the script marks BLOCKED gets the design doc's fallback frame. If you capture one by hand, use an isolated browser, never a signed-in one, and normalise it with `sips -Z 1200 -s format jpeg -s formatOptions 72 in.png --out assets/<slug>/home.jpg`.
 - **Logos:** pick one tile per company by the selection order and mandatory visual check in the design doc (section 8.4). Candidates regularly include other companies' badges, UI icons, mascots and broken SVGs. Record each choice and why in the per-run block.
-- **Exhibit crops** (design doc 8.3), when a finding's evidence is on a page below the fold: `python3 assets.py exhibit <name> <url> <crop_top> <crop_height>`, then look at it and adjust the crop.
+- **Exhibit crops** (design doc 8.3), when a finding's evidence is on a page below the fold: `python3 assets.py exhibit <name> <url> <top> <height> [<left> <width>]` (aspect between 16:10 and 3:1, cropped to just the part the finding cites), then look at it and adjust the crop.
 
 ## Step 2: derive the brand layer
 
@@ -56,7 +56,7 @@ python3 check.py
 Capture and read, using Chrome over the DevTools protocol with mobile emulation (the Chrome CLI's `--window-size` has a minimum width, so its phone-width shots are fake):
 - 1440x900 in light and dark: the 10-second test in design doc section 1. All four answers must be visible without scrolling.
 - Full page at 1440, at 768, and at 390 in light and dark.
-- `document.documentElement.scrollWidth` equals the viewport width at 390, 768, 1024 and 1440. No horizontal page scroll.
+- `document.documentElement.scrollWidth` equals the viewport width at 390, 768, 1024, 1100, 1280 and 1440. No horizontal page scroll. Check the matrix and any wide exhibit at 1100 and 1280 too; those are where seven-company layouts break.
 
 Check that nothing overlaps or truncates (chips, event-rail labels, ownership brackets), every tile is square and sharp, no screenshot shows a blocked page or broken image, and the target's wash reads in dark. Then read the whole page's copy straight through against `reference/dashboard-voice.md`: count contrastive-parallelism instances, check every headline is a sentence that says something, cut intensifier tics.
 
@@ -68,4 +68,4 @@ Check that nothing overlaps or truncates (chips, event-rail labels, ownership br
 
 ## Design review
 
-For the first two runs on the v2 system (Turo was the first), the dashboard gets a required review by samantha (product design lead) before it ships, covering both `dashboard-design.md` and `dashboard-voice.md`. Apply her must-fix findings and rebuild. After two runs with no structural findings, the review becomes optional. A structural fix that should apply to every run goes into the design doc and `templates/dashboard.html` in the engine, not only into this repo.
+Every dashboard gets a review by samantha (product design lead) before it ships, covering both `dashboard-design.md` and `dashboard-voice.md`. Apply her must-fix findings and rebuild. The review becomes optional after two consecutive runs with no structural findings. So far that bar hasn't been met: Turo and the ProcurePro rebuild (both 23 Sep 2026) each surfaced findings that changed the design doc (wide-card cropping, E3 glyph honesty, crop aspect, levelled cells), and the Turo re-validation rebuild (3 Oct 2026) added E7 signed ratio bars, the figure strip, compact player cards and the build-note caption gate. Ask her for a page plan before building when the analysis has changed shape, and for the review after; ask her to write both to a file; her hand-back text doesn't always reach the lead session. A structural fix that should apply to every run goes into the design doc and `templates/dashboard.html` in the engine, not only into this repo.

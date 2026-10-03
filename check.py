@@ -50,6 +50,9 @@ SECRET_PATTERNS = [
 
 EMDASH_PATTERNS = ("—", "&mdash;", "&#8212;", "&#x2014;")
 
+# A caption explains the data; it never talks to the builder (dashboard-design.md 9.8, D4).
+BUILD_NOTE_RE = re.compile(r"never alert|monogram tile|now sourced|sits above|per the current profiles", re.I)
+
 EXTERNAL_ASSET_PATTERNS = [
     (re.compile(r"<script[^>]*\ssrc\s*=\s*[\"']?(https?:)?//", re.I), "external script"),
     (re.compile(r"<link[^>]*\shref\s*=\s*[\"']?(https?:)?//", re.I), "external stylesheet/link"),
@@ -185,6 +188,10 @@ def scan_text(rel, path):
         for dash in EMDASH_PATTERNS:
             if dash in line:
                 fail(rel, "em-dash", f"em dash ({dash!r})", i)
+        if rel.endswith(".html"):
+            m = BUILD_NOTE_RE.search(line)
+            if m:
+                fail(rel, "caption", f"build note in reader-facing copy ({m.group(0)!r})", i)
         if not exempt_placeholders and PLACEHOLDER_RE.search(line):
             fail(rel, "placeholder", PLACEHOLDER_RE.search(line).group(0), i)
         if not exempt_placeholders and TODO_RE.search(line):

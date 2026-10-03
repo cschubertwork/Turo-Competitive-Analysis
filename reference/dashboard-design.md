@@ -45,13 +45,13 @@ Order and anchors:
 | 0 | Masthead (sticky) | | fixed |
 | 1 | Hero: eyebrow, headline, standfirst, trust panel, cast strip | `#top` | analysis summary, counts, asset manifest |
 | 2 | Findings, each paired with at most one exhibit | `#findings` | executive summary |
-| 3 | The field: clusters, each holding player cards | `#field` | clusters + profiles |
+| 3 | The field: a roster grid of player cards, each labelled with its cluster (D6); falls back to clusters, each holding player cards, only when most clusters hold more than one card | `#field` | clusters + profiles |
 | 4 | Comparison matrix | `#compare` | analysis matrix |
 | 5 | Where the target stands: strengths, gaps, open ground | `#position` | positioning section |
 | 6 | Lens deep-dive (optional; only when the analysis has one) | `#options` | e.g. "what a sports partnership could look like" |
-| 7 | Recommendations | `#recommendations` | analysis |
+| 7 | Recommendations (F8: optional, only when the analysis has a ranked recommendations section; drop its nav item when absent) | `#recommendations` | analysis |
 | 8 | Evidence: confidence bars, per-profile bars, verification line | `#evidence` | label counts + verification note |
-| 9 | Open questions and going broader (the call to action) | `#next` | analysis |
+| 9 | Open questions and going broader (F8: when the analysis has no separate open-questions list, it merges into this section instead of running twice) | `#next` | analysis |
 | 10 | Part 2 opener band | `#method` | fixed + repo state |
 | 11 | Process rail, why this compounds, labelling, material change, trust boundary, limits | `#process`, `#compounds`, `#labels`, `#material`, `#trust`, `#limits` | skills + README |
 | 12 | Footer and colophon | `#colophon` | fixed + per-run block |
@@ -73,6 +73,7 @@ Every piece of content the v1 structure covered is still here. Merges: v1's arch
 - Tablet (720 to 1099px): 6 columns, 20px gap.
 - Phone (under 720px): 4 columns, 16px gap. Nothing may cause horizontal page scroll. Only the matrix, the presence grid and the nav row scroll sideways, each inside its own `overflow-x: auto` container.
 - Full-bleed elements (Part 2 opener band only) break out with `margin-inline: calc(50% - 50vw)`.
+- **D5. No stretch drift.** Any grid or flex cell that sits in a stretched row and is itself an auto-row grid gets `align-content:start`. Otherwise the spare height spreads between its rows, and labels drift out of line with their neighbours (this happened twice on the first Turo run: the ownership map's children and the figure-pair cells).
 
 ### 4.2 Spacing scale
 
@@ -104,7 +105,7 @@ Two families per page:
 | `small` | 13px / 20px | 400 | 0 | exhibit annotations, fallbacks |
 | `label` | 11.5px / 16px, Plex Mono, uppercase | 500 | 0.1em | eyebrows, exhibit labels, row headers |
 | `data` | 13px / 20px, Plex Mono | 400 | 0 | figures, URLs, dates, commands; `tabular-nums` |
-| `figure` | 44px / 48px, brand face | 700 | -0.02em | the E6 figure only, `tabular-nums` |
+| `figure` | 44px / 48px, brand face | 700 | -0.02em | E6 figures and the figure strip (9.6a), `tabular-nums` |
 
 Headings take `text-wrap: balance`, paragraphs `text-wrap: pretty`. Bold inside body copy is 600, used at most once per paragraph.
 
@@ -324,7 +325,7 @@ Each component lists anatomy, then sizes, then states, then responsive behaviour
 - **Eyebrow**: `label`, `--ink-3`: `INDEPENDENT ANALYSIS · {TARGET} × {LENS, 2 TO 4 WORDS} · {DD MON YYYY}`. 16px above the headline.
 - **Headline**: `display-xl`, `--ink`, at most 3 lines at 1440 (about 85 characters). One phrase, the part about the target's move or advantage, is marked: in `ink` mode it is `--accent` text; in `highlighter` mode it is ink on a brand-fill marker (`background: linear-gradient(transparent 55%, var(--accent-fill) 55%)`, `box-decoration-break: clone`); in `neutral` mode it gets a 3px ink underline. Mark only a phrase about the target. Never mark a competitor's failure in accent.
 - **Standfirst**: `lede`, `--ink-2`, 2 or 3 sentences, 24px below.
-- **Trust panel**: 1px `--rule` left border, 24px left padding, no fill.
+- **Trust panel**: 1px `--rule` left border, 24px left padding, no fill. It leads with the share of **facts** that carry a re-checked source, as a 44px figure with a one-line caption giving the count (for example "99% · of facts carry a source checked against the page on {date} (106 of 107)"), because judgements can never be Observed and an all-claims ratio undersells the sourcing. Under it, the compact segmented bar of all labelled claims (sourced facts solid; judgements, logged negatives and unconfirmed facts hatched with gaps) and a `data` line with each count. Classify every Inferred line before building (see `reference/revalidation.md`).
   - `label` "HOW FAR TO TRUST THIS".
   - Confidence bar, compact version (9.16): height 10.
   - `data`: "{o}% observed · {i}% inferred" on one line and "{n} claims" on the next, so a wrap never strands a separator at a line end.
@@ -339,6 +340,7 @@ Each component lists anatomy, then sizes, then states, then responsive behaviour
 - Anatomy: screenshot (16:10, `--r-m`, 1px `--rule-strong` border, `.shot`). 12px below it, a row with tile S, 8px gap, and the name (15/20, 650, `--ink`). 8px below that, the status chip.
 - Grid: up to 6 companies in one row at desktop (`repeat(n, 1fr)`, 16px gap); 7 or 8 companies go 4-up in two rows. Tablet 3-up, phone 2-up. More than 8: show the 8 most relevant, then a `small` line "and {n} more in The field".
 - **Target placement encodes the truth.** If the target already operates in the lens market, it goes first. If the lens is a market entry (the target isn't there yet), it goes last, set apart by a 1px `--rule` vertical divider with 24px either side (phone: a full-width divider row). Its chip reads "Not in {market} yet".
+- **F1. Seven across.** 7 companies (6 plus the target) go in one row at 1280px and wider, not the 4-up-in-two-rows the 6-company case below implies; 8 or more still go 4-up in two rows. At 7-up each card is about 148px wide, so a chip can hold 15 characters with the alert glyph or 16 without; write ending chips as event plus year ("Collapsed 2026", "Dissolving 2026"). Use the same chip wording for a company everywhere it appears. Confirm on the 1280 capture that no chip wraps. Between 1100 and 1279px, drop to 4-up (the divider hides, same as tablet). Below 1100px, the existing tablet and phone rules apply unchanged.
 - States: hover turns the screenshot border `--ink-3` and underlines the name. Focus gets the outline. The target's screenshot border is 2px `--accent-fill`.
 - Screenshot unavailable: the fallback frame (9.10) at thumbnail scale, with the tile and domain only.
 
@@ -361,6 +363,13 @@ See 8.4. Class `.tile.tile-s` or `.tile.tile-m`, background from `--tile` and `-
 - `label` eyebrow (what the section is, e.g. "FINDINGS"), 12px gap, then the `h2` headline, which is a sentence that says something, max 30ch. Optionally, 16px below, a one-sentence `body` intro in `--ink-2`, max 60ch.
 - It sits in columns 1 to 8. Nothing sits beside it.
 
+### 9.6a Figure strip (F4)
+
+- A row of up to 4 figure cells directly under the Findings section head (9.6), above Finding 1. No cards and no accent: 1px `--rule` dividers between cells, the same construction as the position board (9.13), so it reads as a skim layer rather than four more tiles.
+- **F4.** Each cell: the figure (the `figure` type, 4.4), a label (14/20 `--ink-2`, 2 lines max), and a `data` 11px line giving the source domain plus a link to the finding it belongs to (or to another anchor, when the figure supports the positioning section instead of a single finding).
+- Figures are Observed, or "est." plus a superscript `i` under the same rule as E6 (9.9). A figure can carry one inferred clause in its label without losing its Observed status, provided the number itself is sourced.
+- Desktop 4-up, tablet and phone 2x2. Grid items need `min-width: 0`, or a cell whose label wraps to a long unbreakable word will force its column wider than its share and overflow the row at narrow widths.
+
 ### 9.7 Finding block
 
 - `<article id="finding-{n}">`. Desktop grid: text in columns 1 to 5, exhibit in columns 6 to 12, both aligned to the top. Findings are separated by 72px of space, with no rules.
@@ -371,6 +380,7 @@ See 8.4. Class `.tile.tile-s` or `.tile.tile-m`, background from `--tile` and `-
   - "What it means for {Target}": a `label` "FOR {TARGET}" in `--accent`, then one or two `body` sentences in `--ink`, 16px below.
   - Sources line: `data` 12px `--ink-3`, e.g. "Observed · 3 sources · Mevo and Getaround profiles", with the profile names as links to `#player-{slug}`.
 - **No exhibit available.** The text runs across columns 1 to 7. The "For {Target}" line moves to columns 9 to 12 as a pull line: 20/30, `--ink`, with a 2px `--accent-fill` left border and 16px padding. Never invent an exhibit to fill the space.
+- **F5. Wide-finding variant**, for an exhibit too wide for the 6 columns above (an ownership map (E2) with more than 3 groups, a presence grid (E3) with more than 5 categories): the text runs as a row above, headline and body in columns 1 to 6, the "For {Target}" line and sources in columns 8 to 12 (column 7 left as a gap), and the exhibit spans the full 12 columns below it, 24px below the text row. Use this only when the exhibit genuinely needs the width; a finding whose exhibit fits in 6 columns stays in the standard layout above.
 - Tablet and phone: text first, then the exhibit at full width, 24px apart.
 
 ### 9.8 Exhibit frame
@@ -378,6 +388,7 @@ See 8.4. Class `.tile.tile-s` or `.tile.tile-m`, background from `--tile` and `-
 - `<figure id="exhibit-{n}">`: `--surface` fill, 1px `--rule` border, `--r-l`, padding 24 (phone 16).
 - Header: `label` "EXHIBIT {n}" in `--ink-3`, then the title (15/22, 650, `--ink`) on the next line, 20px above the body.
 - `<figcaption>`: 20px above, 12px top padding, 1px `--rule` top border, `data` 11.5/18 in `--ink-3`. It holds the source(s), the Observed/Inferred status, and the legend if the exhibit uses a texture.
+- **D4. Captions are for readers.** A caption explains the data: what was computed, what's missing and why. It never states an encoding rule ("losses are ink"), a build fact ("gets monogram tiles", "is now sourced to"), or where something sits on the page ("the card sits above"). `check.py` greps for `never alert|monogram tile|now sourced|sits above|per the current profiles` and fails the build if a caption matches.
 - Exhibits are numbered in order of appearance across Part 1, and the text refers to them by number.
 - At most one exhibit per finding and six in total (the matrix and player cards don't count).
 - **Only the six exhibit types below exist.** A builder may not invent a new chart type. If none fits, the finding runs without one.
@@ -434,6 +445,16 @@ See 8.4. Class `.tile.tile-s` or `.tile.tile-m`, background from `--tile` and `-
 - An inferred figure is prefixed "est.", with a 2px dotted underline and a superscript `i`.
 - A pair is allowed only when the two numbers are in the same unit and mean the same kind of thing.
 
+**F2. E7 Signed ratio bars**: for a finding that rests on a ratio several companies report (margin, growth), where the ratio can be negative as well as positive and the honest picture needs them on one shared scale.
+- One shared percent axis running through zero, horizontal, with every tick labelled (no unlabelled ticks). The zero position is fixed for the whole exhibit; each row's bar runs from the zero line to the row's value, right for positive, left for negative.
+- Rows are grouped (for example "Still operating" then "Stopped"), each group introduced by a `label`.
+- **F2.** Each row is a label line (tile S, name, data tag, optional chip), then the track with the value in a 72px right-aligned column (`tabular-nums`), then the inputs line. The layout is the same at every width. Choose the axis domain so the outermost tick labels, centred on their values, stay inside the track at a 258px track width; centre every tick label. Monogram tiles use tile S like every other row. The alert chip marks an ending inside the research year; older or unconfirmed endings use the neutral chip. Inputs lines take one shape: "{amount} {profit|loss} on {revenue} revenue · {source}", or "No accounts published · {source}".
+- Only Observed inputs go in; the ratio itself is computed here, and the caption says so.
+- The target's bars are `--accent-fill`; every other company's bars are `--ink-2`. Losses are never alert colour, because alert is reserved for ending events, which the chip already carries.
+- A bar too thin to read (a result near zero) gets a `min-width` floor so it still shows as a bar with its label, not a sliver that vanishes.
+- Rows with no public result stay in the list with an en dash in the value position and "no accounts published" (or equivalent) in the inputs line, so survivorship isn't hidden by omission.
+- No other exhibit type may be used to show a ratio that goes negative for some companies and positive for others; that comparison belongs to E7 alone.
+
 ### 9.10 Player card and screenshot frame
 
 - `<article id="player-{slug}">`: `--surface`, 1px `--rule` border, `--r-l`, `overflow: hidden`. The target's card: 2px `--accent-fill` border.
@@ -446,24 +467,24 @@ See 8.4. Class `.tile.tile-s` or `.tile.tile-m`, background from `--tile` and `-
   - The summary, 12px below: `body-s` `--ink-2`, 2 to 4 sentences.
   - The depth row, 16px below: the depth chip, then a mini confidence bar (120 by 6, 9.16), then `data` "{o} observed · {i} inferred".
   - A disclosure, 16px below, with a 1px `--rule` top border and 12px padding: `<details>`, whose `<summary>` is "Key facts and sources" (14px, 600) with a CSS chevron. Inside is a list of 4 to 8 facts in `body-s`. Observed facts end with their source domain as a `data` link. Inferred facts get the dotted underline and a superscript `i`. The last line reads "Full profile: profiles/{slug}.md" and links to the GitHub blob.
-- **Wide variant** (a cluster with one card, or the last card of an odd set): a two-column card, with the screenshot column on the left at 58% and the body on the right. The screenshot column holds the caption bar and a 16:10 `.shot`, aligned to the top. Any height the body adds below the image is filled with `--surface-2` in the screenshot column, never by stretching the image. Under 1100px it becomes the normal stacked card.
+- **Wide variant, retired as the default (F3).** When the hero cast strip already shows every competitor's homepage at a glance (9.3), a second, larger capture per card is the same picture twice, so the player card no longer carries its own screenshot at the top. Instead: tile M, name and chip | role line | 2 to 4 sentence summary | depth chip, mini bar and counts | one `<details>` labelled "Homepage, key facts and sources", holding, in order, the caption-bar-framed 16:10 screenshot, 4 to 6 facts with source domains, then the profile link. Every card uses this one shape regardless of cluster size, so there is no wide card and no shot-col; a cluster's odd-one-out no longer needs special-casing. Keep the old two-column wide variant (screenshot column at 58%, body at right, screenshot always visible) only for a run with no hero cast strip to lean on.
 
-### 9.11 The field: cluster groups
+### 9.11 The field: roster grid
 
-- Clusters appear in the analysis's order. Each cluster: a 1px `--rule` top border with 24px padding above, and 72px between clusters.
-- Desktop grid: cluster text in columns 1 to 4, cards in columns 5 to 12 (2-up, 20px gap). One card uses the wide variant. An odd number above one: the last card goes wide.
-- Cluster text: the name (`h3`), then how it works (`body-s` `--ink-2`, 2 to 3 sentences, 12px below), then the `label` "FOR {TARGET}" in `--accent` and a `body-s` `--ink` sentence, 16px below.
-- Every company appears in exactly one cluster, its current one. Past membership (e.g. "Mevo, before its relaunch") is mentioned in the cluster text, not shown as a second card.
-- The target's own cluster (for example "Outlier") is last.
-- Tablet: the cluster text sits above its cards, which stay 2-up. Phone: 1-up.
+- **D6.** When most clusters would hold one card, drop the cluster rows: the field is one grid in cast-strip order (9.3), 3-up at desktop, 2-up from 720 to 1099px, 1-up below. Each card's first line, above its header, is its cluster as a `label` (e.g. "Corporate car share", "Peer-to-peer, NZ", "Stopped", "Traditional rental", "Subject" in `--accent` for the target). The section h2 carries the clustering thesis, since no cluster sentence is left to repeat it.
+- `align-items:start` on the grid, so opening one card's disclosure doesn't stretch its neighbours.
+- Every company appears once, under its current cluster label. Past membership (e.g. "Mevo, before its relaunch") is mentioned in its card body, not shown as a second card.
+- The target's card is last, carrying the "Subject" label, matching its divided slot in the hero cast strip.
+- **If a run's clusters are genuinely uneven** (most hold two or more cards, so the grid would bury the grouping), fall back to the older cluster-row layout: cluster text in columns 1 to 4, cards in columns 5 to 12 (2-up, 20px gap), 1px `--rule` top border and 72px between clusters, with a "FOR {TARGET}" line only where the cluster carries a point no finding already makes.
 
 ### 9.12 Comparison matrix
 
 - Wrapped in an `overflow-x: auto` container with the legend above it: `data` 11px, e.g. "Dotted underline and i mean inferred. A dash means not researched at this depth."
-- Table: the first column is 180px, with a `--bg` fill, sticky left only while its own container is scrolled sideways. The header row is **not** sticky: `position: sticky` inside an `overflow-x` container sticks to the container, not the page, so it can't work here.
+- **D7.** At 1100px and wider, the matrix fits its container: `table-layout:fixed`, a 120px dimension column (via `<colgroup>`), and the companies sharing the rest equally, with 10px cell padding and 13/19 body text from 1100 to 1279px. Below 1100px it scrolls in its container at a fixed minimum width (1000px for 7 companies; scale with the count). Never let the target's column be the one cut off at desktop width.
+- Table: the first column has a `--bg` fill, sticky left only while its own container is scrolled sideways. The header row is **not** sticky: `position: sticky` inside an `overflow-x` container sticks to the container, not the page, so it can't work here.
 - Header cells: tile S and the name (13/18, 650), aligned to the bottom, padding 12. The target's header has a 3px `--accent-fill` top border, with the `label` "SUBJECT" in `--accent` above the name.
 - Row headers: `label` `--ink-3`, wrapping.
-- Body cells: 14/21 `--ink`, padding 12px 14px, 1px `--rule` bottom border, each column at least 150px.
+- Body cells: 14/21 `--ink`, padding 12px 10px, 1px `--rule` bottom border.
 - The target's column: `--accent-wash` ground from top to bottom.
 - Inferred cell: the cell text gets a dotted underline (1px, `--ink-3`, 3px offset) plus a superscript `i` in `--ink-3`, per rule 3. No hatch strip: a 4px strip sits on the column boundary and reads as belonging to the neighbouring cell.
 - Not researched: an en dash in `--ink-3`, with `title="Not researched at this depth"`.
@@ -493,8 +514,13 @@ See 8.4. Class `.tile.tile-s` or `.tile.tile-m`, background from `--tile` and `-
 ### 9.16 Confidence bars (Evidence section)
 
 - **Main bar**: 16px tall, radius 3, as a flex row. Each segment has `flex: {count} 1 0` (flex-basis 0, so the ratio is exact). Observed is solid `--ink-2`. Inferred is `--hatch` on `--surface-2` with a 1px `--rule-strong` outline. Below each segment, a `data` 12px label: "{o}% OBSERVED · {n} CLAIMS" and "{i}% INFERRED · {m} CLAIMS".
+- **F6. Segmented inferred bar**: when the Inferred share breaks down into more than one kind of claim (judgements by design, logged negatives, facts that couldn't be confirmed), split the Inferred segment itself into one sub-segment per kind, each still `--hatch`, separated by a 2px `--bg` gap so the eye reads three bars rather than one. This is additive to the two-segment bar above, not a replacement; use it only when the breakdown is worth showing on its own.
+- **F6. Before-and-after pair**: two compact (10px) bars stacked, one per re-check date, each labelled with its date and ratio ("{date} · {pct}% of {n} claims"), and a one-line caption naming what changed the base (a competitor added, claims split or merged), so a reader doesn't read the shift as the research getting less rigorous.
 - **Per-profile rows**: tile S and name (168px), the depth chip (112px), a bar (8px tall, same construction), and `data` "{o} / {i}". Full profiles are listed first, then survey depth, alphabetical within each group.
-- **Verification line**: a `--surface-2` box, `--r-m`, padding 20, `body-s`, with the fixed wording: "Every sourced claim in the deep profiles was re-checked against the page it cites on {date}. Claims whose sources couldn't be reached or didn't support them were downgraded to inferred."
+- **F6. Evidence table** (replaces the per-profile rows above when a re-check note exists to join them to): one row per profile, combining the label bar (O/I, as above) with a second bar for the re-check result (solid `--ink-2` confirmed, solid `--ink-3` corrected or stale, `--hatch` could not confirm) and its "{n} checked" count, plus a count of judgements the re-check found resting on a wrong premise. A profile re-checked on a different schedule than the rest (for example, sourced with verbatim quotes on first pass rather than re-checked later) gets a row with its label bar and a one-line note in place of the re-check bar, not a fabricated re-check count.
+- **D8.** A header row names the three measures (labels, re-check, wrong premise); no per-row label repeats a column heading (the measure name goes in the header, not beside every value). The target row's wash stays inside the table edges, never a negative margin that bleeds past the container. On phone, each row stacks label bar then re-check bar, with the wrong-premise count written out beside the company name rather than hidden.
+- **D8.** The main bar's labels (9.16 above) sit under their own segments, not as one line to the side; the inferred breakdown stacks under the inferred part specifically, so the reading order matches the bar's left-to-right order.
+- **Verification line**: a `--surface-2` box, `--r-m`, padding 20, `body-s`. **F7.** The fixed wording parameterises its scope: "Every sourced claim in {scope} was re-checked against the page it cites on {date}. Claims whose sources couldn't be reached or didn't support them were corrected or downgraded to inferred." `{scope}` is "the deep profiles" when only the full-depth set was re-checked, or names the actual set when it differs (for example "all six profiles" or "five profiles ... Camplify sourced ... the same day"); the rule-10 wording itself ("re-checked against the pages they cite", never "verified true") never changes.
 - **Compact variant** (hero trust panel and player cards): the same construction at 10px or 6px, without the labels under the segments.
 - The section headline states the ratio as a sentence.
 
@@ -518,6 +544,7 @@ See 8.4. Class `.tile.tile-s` or `.tile.tile-m`, background from `--tile` and `-
   - The command in a code chip (`data` 13px, `--surface` fill, 1px `--rule`, `--r-s`, padding 4px 8px), only when the step is a real command the reader could run. A step that happens inside another command (the citation check runs within `/competitive-update`) gets a plain `label` instead, e.g. "INSIDE /COMPETITIVE-UPDATE".
   - What it does (15/22, 650).
   - What it produced in this repo, with real counts ("5 profiles written, 3 taken deep"), in 14/20 `--ink-2`.
+- **D10.** The command or label slot above each step title has a fixed minimum height (two chip rows, 66px), so titles line up across the rail even when one step carries a plain label, one a code chip, and another two stacked chips. Under 720px the slot's minimum height drops to 0, since the rail is vertical there and nothing needs to line up.
 - Under 720px it turns vertical, with the connector on the left.
 
 ### 9.20 Why this compounds
@@ -551,7 +578,7 @@ See 8.4. Class `.tile.tile-s` or `.tile.tile-m`, background from `--tile` and `-
 ## 11. Build and verify
 
 1. `python3 check.py`: the self-contained and em-dash gates, plus the size gate (warn at 2.0 MB, fail above 2.5 MB).
-2. Capture and look at: 1440x900 light, 1440x900 dark (the 10-second test, both themes); a full page at 1440 light; a full page at 1024; and a full page at 390 in light and dark. Use `?theme=` to force the theme.
+2. Capture and look at: 1440x900 light, 1440x900 dark (the 10-second test, both themes); a full page at 1440 light; a full page at 1280, 1100 and 1024 (**D9**: the F1 7-up minimum and the 4-up band and matrix-fit floor, both of which only show their bugs at these sizes); and a full page at 390 in light and dark. Use `?theme=` to force the theme.
 3. On the captures, check that nothing overlaps (event-rail labels, ownership brackets, chips wrapping), that every tile is square and sharp, that no screenshot shows a blocked page or broken image, and that the target column's wash reads in dark.
 4. Confirm the Observed/Inferred numbers in the hero, the evidence section and the README are the same count.
 5. Read the Part 1 copy straight through against `dashboard-voice.md`.

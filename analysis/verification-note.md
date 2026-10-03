@@ -1,5 +1,37 @@
 # Verification note
 
+## Re-check, 2026-10-03
+
+Every claim in all six profiles, Turo's own profile (`reference/product-info.md`) and the analysis was checked again, this time including the Inferred lines, the snapshot-table cells and the analysis's own statements. Each claim was sorted into a fact, a judgement or a negative. Facts needed a verbatim quote from a page fetched on 2026-10-03 (or a dated archive capture where the live page blocked automated access). Judgements were checked premise by premise. Negatives were checked with logged searches. Ownership claims were checked against the New Zealand Companies Office register, and Getaround and Turo figures against their SEC filings, replacing aggregator sources (Sacra, Tracxn, PitchBook, TipRanks, StockTitan) wherever a primary source existed.
+
+| Ledger | Facts checked | Confirmed | Corrected or stale | Could not confirm | Judgements with a wrong premise |
+|---|---|---|---|---|---|
+| Mevo | 32 | 20 | 8 | 0 | 1 (plus 2 softened) |
+| Cityhop | 28 | 13 | 14 | 1 | 3 |
+| Zilch and Carbn | 24 | 16 | 7 | 1 | 2 |
+| GO Rentals | 19 | 15 | 3 | 1 | 4 |
+| Getaround | 18 | 12 | 5 | 1 | 6 |
+| Turo | 24 | 17 | 6 | 1 | 0 |
+
+Counts are as each checker reported them; a few claims in the Mevo ledger were merged during checking, so its rows do not sum exactly. Every negative held except one: Turo has used sports sponsorship (Canada Basketball, official partner from March 2024).
+
+**Changes that altered a finding**
+- Getaround was not fleet-financed. Its 10-K describes a carsharing marketplace with net losses of US$113.9 million (2023) and US$136.1 million (2022) against about US$72.7 million of 2023 revenue, going-concern doubt and super-priority notes held by Mudrick Capital. The analysis no longer treats it as evidence that a no-fleet model is safe.
+- Cityhop is owned by Toyota Financial Services through KINTO New Zealand Limited (register: 100% Toyota Finance New Zealand), not by Toyota New Zealand. The same owner bought Ezi Car Rental in October 2023.
+- Carbn Group is 91.42% held by Mobility Holdings Limited per the register; the Government's NZGIF stake was bought out in September 2025. A June 2026 report that Carbn is becoming a Custom Fleet subsidiary is not yet reflected on the register.
+- GO Rentals no longer leads on customer satisfaction: Canstar Blue's 2026 ranking puts it fourth of seven, behind Ezi Car Rental, Budget and Hertz.
+- Turo's largest shareholder is People Inc. (formerly IAC) at about 33% per its June 2026 10-Q; the earlier 31% came from a 2023 figure.
+- The competitor set was missing Camplify, a live peer-to-peer campervan marketplace in New Zealand, now profiled at survey depth. Two earlier New Zealand peer-to-peer car platforms (YourDrive, MyCarYourRental) were also missed; neither is operating.
+
+**Two corrections from 2026-09-22 that were themselves wrong**
+- Zilch (then Yoogo Share) launched in February 2018 with Prime Minister Jacinda Ardern and Mayor Lianne Dalziel, per Autofile on 16 February 2018. The earlier pass had "corrected" this to March 2018 with no Prime Minister, on the strength of a later Metropol feature.
+- Mevo's free distance is 50km per trip on all three rate cards and in the FAQ. The earlier pass changed it to 100km, which appears only in the trip calculator on the same page; the page currently contradicts itself, and the profile says so.
+
+**Earlier gaps now closed:** Mevo's 2014 founding and founders, its Nelson exit, its pre-collapse insurance excess, Cityhop's excess (a flat NZ$2,500, from its fine schedule) and Z Energy partnership, Yoogo Share's ten launch hubs and twelve foundation members, and Genesis Energy's NZ$2 million for 40% (from Genesis's own release).
+
+Wording is unchanged: claims were re-checked against the pages they cite, not verified true.
+
+## First pass, 2026-09-22
 Date: 2026-09-22
 
 Every Observed claim in the three full-depth profiles (Mevo, Cityhop, Zilch) was re-checked against the page it cites. A claim passes only where a verbatim quote from the fetched page supports it. A fetch that returned a 404, a paywall, a certificate error, a robots block, or a page with no usable body content is unverifiable; those claims were downgraded to Inferred rather than silently kept. Claims that passed but turned out to be incomplete or slightly wrong were corrected in the profile, not just re-labelled. Wording throughout: claims were re-checked against the pages they cite, not verified true.

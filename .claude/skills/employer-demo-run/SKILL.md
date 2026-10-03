@@ -37,6 +37,7 @@ Run the `scan-competitors` skill across all competitors.
    - A fetch that returns a 404, a paywall, a consent wall, a robots block, or an empty JS shell is **unverifiable**. Unverifiable means downgrade, never silent retention: relabel the claim `- Inferred (assumption): [claim] (cited URL unverifiable on YYYY-MM-DD)`.
    - `analysis/verification-note.md` format: date, counts (checked / passed / downgraded), then one entry per claim: the claim, the verbatim quote, the URL.
    - Wording rule everywhere this is described: claims were **re-checked against the pages they cite**, not verified true. A vendor's marketing figure that its own page supports is still a vendor claim; keep it marked as one.
+4. **Re-check pass** before the analysis is published: follow `reference/revalidation.md`. It covers what the citation check doesn't (Inferred lines, table cells, the analysis's own claims, ownership against the company register, and whether the competitor set is complete). On Turo it overturned the lead finding after the citation check had passed.
 
 ## Phase 5: analysis
 

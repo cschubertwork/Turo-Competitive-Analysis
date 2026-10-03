@@ -1,71 +1,72 @@
 # New Zealand Market Entry: Cross-Competitor Analysis
 
-*Generated: 2026-09-22 | Based on 5 of 5 competitor profiles (full depth: Mevo, Cityhop, Zilch; survey depth: GO Rentals, Getaround)*
+*Generated: 2026-09-22 | Re-checked and revised: 2026-10-03 | Based on 6 competitor profiles (full depth: Mevo, Cityhop, Zilch; survey depth: GO Rentals, Getaround, Camplify)*
 
 ## Executive Summary
 
-- **The single biggest finding is a pattern, not a fact about one company.** Mevo, the reported Wellington car-share leader, collapsed into voluntary administration in March 2026. Getaround, Turo's closest global peer-to-peer rival, is mid-liquidation in the same year. One is local, one is global; both say the same thing about this business model: fleet-owned or fleet-financed car sharing runs on thin margin and breaks under a single funding delay or liquidity gap. Turo's asset-light, no-fleet marketplace model is the structural answer to both failures, which makes it a genuine differentiator in New Zealand, not just a talking point.
-- **New Zealand's car-share field is more consolidated than five names suggests.** Mevo and Zilch are both now owned by Carbn Group; Cityhop sits inside Toyota New Zealand. A Turo entry would really be negotiating against two corporate owners in the direct car-share category, not three independent operators.
-- **No competitor profiled here, car-share or traditional rental, uses sports sponsorship or event partnership for brand-building.** Every NZ-specific brand-building signal found runs through motoring bodies (AA), energy companies (Meridian, Z Energy), sustainability awards, or a parent company's own financial-services arm (Toyota Financial Services). That is open ground, not contested share.
-- **The trust bar is set by a local incumbent, not an international one.** GO Rentals, an NZ-owned rental company, is positioned in market coverage as beating international agency brands on customer satisfaction. A Turo entry's credibility problem is "prove you're trustworthy in New Zealand," not "beat the international agencies on price."
-- **Turo's marketplace model doesn't compete head-on with any NZ-specific player found here.** Cityhop and the Carbn Group brands are built for short, local, back-to-base or free-floating trips; GO Rentals is built for agency-counter travel rental. None of them serve Turo's actual core use case elsewhere: multi-day trips in a wide variety of individually owned vehicles. The open lane is real, but so is the cost of building host supply from zero in a market with no existing Turo hosts.
+- **Owning no fleet did not save Getaround, and Turo is the only marketplace in this set that has reported a profit.** Mevo financed its own fleet and went into voluntary administration in March 2026 when a NZ$1.7 million commitment fell through. Getaround owned no fleet at all, ran the same peer-to-peer marketplace model as Turo, and still lost more than its revenue every year (US$113.9 million on about US$72 million of revenue in 2023) until it sold its European business and voted to dissolve in 2026. New Zealand's own peer-to-peer car platforms have not lasted either: YourDrive stopped trading in March 2020 when its tourist bookings disappeared, and MyCarYourRental's site no longer loads. Camplify, the one peer-to-peer marketplace still trading here, reported a A$15.8 million group loss for FY25. Turo's advantage over all of them is that it has made money at scale, and the open question for New Zealand is whether a market this size can give it the density that makes the model pay.
+- **The lane for multi-day trips in privately owned vehicles is already occupied for campervans.** Camplify lists more than 2,000 Kiwi-owned campervans and motorhomes and, since the Commerce Commission cleared it to buy Mighway and SHAREaCAMPER from THL in 2022, owns every peer-to-peer RV platform in the country. New Zealand was its only market to grow on every measure it reports in FY25 (bookings up 9%, listed fleet up 26%). It lists no cars, and peer-to-peer car sharing is the part that is empty, because both local attempts at it have gone.
+- **Two corporate groups own most of New Zealand's car sharing, and one of them also owns the best-rated rental brand.** Toyota Financial Services owns Cityhop (through KINTO New Zealand) and, since October 2023, Ezi Car Rental, which tops Canstar Blue's 2026 hire-car satisfaction ranking. Carbn Group owns Mevo and Zilch; trade press reported in June 2026 that Carbn is becoming a subsidiary of the Australian fleet manager Custom Fleet, although the Companies Office register still shows it 91% held by a New Zealand holding company.
+- **The biggest structural cost of an entry is regulatory, and it lands on host supply.** Hiring out a car for reward is a "rental service" under the Land Transport Act 1998, which needs a Transport Service Licence, and rental vehicles need a Certificate of Fitness in place of the usual Warrant of Fitness. How a platform and its hosts carry that licence and inspection burden is the first thing a Turo entry would have to settle, and it is the question this research could least answer from public sources.
+- **Sport is still open ground in New Zealand, and Turo has used it before.** None of the five competitors operating in New Zealand turned up any sports or event sponsorship, while Turo became an official partner of Canada Basketball in March 2024. Turo was also asked about New Zealand when it announced Australia in October 2022 and had nothing to share, so an entry would be a market it has already looked at and passed on once.
 
 ## Comparison Matrix
 
-| Dimension | Mevo | Cityhop | Zilch | GO Rentals | Getaround | Turo |
-|---|---|---|---|---|---|---|
-| Model | Free-floating, minute-to-day | Back-to-base, hourly/daily | Back-to-base, subscription-leaning | Owned-fleet agency rental | Peer-to-peer marketplace | Peer-to-peer marketplace |
-| NZ presence | Wellington, Queenstown | Auckland, Wellington, Christchurch | 5 cities | 10 branches, 7 regions | None | None (entry hypothesis) |
-| Ownership | Carbn Group (post-2026 collapse) | Toyota NZ | Carbn Group | Independent (Enterprise Holdings brand licence) | Dissolving (Delaware liquidation) | IAC (31% stake) |
-| Fleet financing | Collapsed once on it (i) | Toyota balance sheet (i) | Not disclosed | Not disclosed | Failed on it globally | None - hosts own the vehicles |
-| Pricing structure | 3-tier hourly/daily, 100km free (Wellington) | Free or $10/mo tier, per-vehicle hourly/daily | Per-km + weekly prebuy packages | Comprehensive included, excess undisclosed | 35-40% commission (historical) | 15-45% commission, avg ~25% |
-| Sports sponsorship | None found | None found | None found | None found | Not researched at NZ level | None found globally |
-| EV positioning | EV/hybrid, shrunk from 4 cities to 2 | Hybrid-leaning, not EV-first (i) | All-electric | EV/hybrid options within mixed fleet | N/A | N/A |
+| Dimension | Mevo | Cityhop | Zilch | Camplify | GO Rentals | Getaround | Turo |
+|---|---|---|---|---|---|---|---|
+| Model | Free-floating car share, hourly/daily | Back-to-base car share, hourly/daily | Back-to-base EV car share plus subscriptions | Peer-to-peer campervan and motorhome marketplace | Owned-fleet agency rental | Peer-to-peer car marketplace | Peer-to-peer car marketplace |
+| NZ presence | Wellington, Queenstown | Cars in Auckland and Wellington; vans nationwide via Mitre 10 | 5 cities, 17 hubs listed | Nationwide | 10 locations | Never operated in NZ | None |
+| Owner | Carbn Group (bought the assets out of liquidation, 2026) | Toyota Financial Services, via KINTO NZ | Carbn Group | Camplify Holdings (ASX) | NZ private shareholders; Enterprise brand licence | Dissolving after 2026 liquidation vote | People Inc., formerly IAC (~33%) |
+| Fleet | Company-owned, relaunched with 12 Suzuki Swifts | Company-owned | Company-owned EVs | Owner-listed | Company-owned | Host-owned | Host-owned |
+| Pricing | NZ$19 to NZ$25/hr, first 50km free per rate card | Free or NZ$10/month plan, hourly/daily rates | Hourly and day rates, per-km, subscription packages | Owner-set rates; commission from 7% | Comprehensive cover included | Commission not published | Host keeps a share set by earnings plan |
+| Sports sponsorship | None found | None found | None found | None found | None found | Not researched | Canada Basketball partner from 2024 |
 
-*(i) marks inferred assessments, not confirmed observations. Getaround and GO Rentals rows reflect survey-depth data; cells with no NZ-specific finding are left blank rather than guessed.*
+*Cells summarise the profiles; see each profile for sources. "None found" means searches turned up nothing, which is weaker evidence than a confirmed absence.*
 
 ## Competitor Clusters
 
-### Corporately-backed incumbents
-- **Who:** Cityhop, Zilch (and now Mevo, post-relaunch)
-- **Approach:** All three NZ-specific car-share brands now sit inside a larger parent (Toyota NZ, or Carbn Group) rather than standing alone on venture or crowdfunded capital. All three also build brand through infrastructure and financial partnerships (Toyota Financial Services, AA, Meridian, Z Energy, PowerFinance) rather than consumer-facing sponsorship.
-- **Implication for Turo:** the "independent local disruptor" positioning is already unavailable within NZ car-share; every current player has a patient, well-capitalised backer. Turo's own advantage isn't independence, it's the marketplace model itself.
+### Corporate-owned car share
+- **Who:** Cityhop, Mevo, Zilch.
+- **Approach:** Every New Zealand car-share brand now sits inside a larger owner. Toyota Financial Services took Cityhop on in November 2018 and runs it alongside Ezi Car Rental, which it bought in October 2023. Carbn Group, a fleet-decarbonisation business registered in Christchurch, owns Zilch (since December 2023) and bought Mevo's brand and assets out of liquidation in May 2026. These operators build their brands through infrastructure and finance partners (AA, Meridian as an energy supplier, PowerFinance, councils for parking) and do no consumer sponsorship that this research could find.
+- **Implication for Turo:** a Turo entry would meet owners with patient capital and existing council parking deals, so the opening has to come from the trip types their fleets don't cover (multi-day, out-of-town, varied vehicles), since competing on short city trips would mean taking on Toyota and Carbn where they are strongest.
 
-### The cautionary tale (pre-relaunch Mevo, and Getaround globally)
-- **Who:** Mevo before its March 2026 collapse; Getaround internationally
-- **Approach:** Both were fleet-financed or fleet-dependent car-share operators that grew fast, raised real capital, and still ran out of runway.
-- **Implication for Turo:** this is the strongest evidence in the whole analysis that Turo's zero-fleet marketplace model is not just cheaper to run, it's a different risk category entirely. Any NZ launch narrative should lead with this contrast rather than treat it as a footnote.
+### Peer-to-peer in New Zealand
+- **Who:** Camplify (live), with YourDrive and MyCarYourRental as the earlier car attempts.
+- **Approach:** Camplify launched in New Zealand in 2019 and consolidated the whole peer-to-peer RV category in 2022. YourDrive, founded in 2012 and half-owned by Jucy, had more than 25,000 registered owners and renters in 2019 and stopped trading in March 2020. MyCarYourRental built the first bespoke New Zealand peer-to-peer rental insurance (underwritten by Ando) and its site no longer loads.
+- **Implication for Turo:** the model works in New Zealand for campervans, where trips run six to ten nights and six in ten are booked by international travellers, and has not survived for cars. A Turo entry would need to show why it would do better than YourDrive, whose dependence on inbound tourists is the clearest local warning.
 
-### Traditional rental incumbent
-- **Who:** GO Rentals
-- **Approach:** Owned fleet, agency counters, trust built through tourism-industry awards and a global brand licence (Enterprise, National, Alamo) rather than local car-share style community partnerships.
-- **Implication for Turo:** GO Rentals competes for the traveler dollar Turo would also want, but on a completely different axis (guaranteed availability and simplicity vs. selection and price). It is the closest thing to a trust benchmark a new entrant needs to clear, not a direct product competitor.
+### Two failures, two different causes
+- **Who:** Mevo before its 2026 collapse; Getaround globally.
+- **Approach:** The two failed for different reasons. Mevo's fleet-financed model broke on one short cash gap even after an over-subscribed crowdfunding raise. Getaround's marketplace model carried net losses larger than its revenue, going-concern doubt from late 2023, and super-priority debt to Mudrick Capital.
+- **Implication for Turo:** Mevo supports the asset-light argument and Getaround complicates it. The honest reading is that Turo's protection comes from being profitable at its scale (net income of US$154.7 million in 2022 and US$14.7 million in 2023), so a New Zealand launch has to be judged on whether it can reach local density, and the model's structure alone won't answer that.
 
-### Outlier
-- **Turo itself:** the only asset-light marketplace in the set, and the only one with no current NZ presence at all. Every comparison in this report is against a hypothetical entry, not an operating business.
+### Traditional rental
+- **Who:** GO Rentals (and, through Toyota, Ezi Car Rental).
+- **Approach:** Owned fleets, airport and city branches, trust built on service awards. GO Rentals won Canstar Blue's hire-car satisfaction award four times between 2018 and 2023 but now ranks fourth of seven, behind Ezi Car Rental, Budget and Hertz.
+- **Implication for Turo:** the trust benchmark for a visitor renting a car in New Zealand is now set by a Toyota-owned local brand, which ties the rental and car-share incumbents to the same owner.
 
 ## Turo Positioning
 
-Where a hypothetical New Zealand Turo sits relative to this landscape:
+- **Strengths:** a profitable marketplace at a scale (about US$936 million of revenue in the year to September 2024) more than ten times what Getaround reached; no fleet financing exposure of the kind that broke Mevo; a far wider vehicle range and longer trips than any New Zealand car-share fleet offers; an Australian operation next door.
+- **Gaps:** no host supply, in a country where the last two peer-to-peer car platforms closed; a rental-service licensing and Certificate of Fitness regime that sits on every rented car (Camplify's own owner promotion requires a rental Certificate of Fitness for drivable vans); no off-the-shelf New Zealand insurance product for peer-to-peer car rental (the one known policy was built bespoke for MyCarYourRental), with the further point that ACC covers injury but not damage to the vehicle; no council parking relationships, which Mevo has just renegotiated in Wellington.
+- **Opportunities:** multi-day and out-of-town car trips, which none of the car-share fleets are built for; the cities Mevo left (Auckland, Hamilton, Nelson); a sponsorship field no competitor has claimed; Australian visitors, who were 1.56 million of New Zealand's 3.63 million overseas arrivals in the year to March 2026 and may already know Turo from home.
 
-- **Strengths:** no fleet-financing exposure, the exact failure mode that broke Mevo and Getaround; proven ability to run variable, demand-based commission (its March 2026 US market pilots) that could be tuned for a small market; far broader vehicle variety and trip-length flexibility than any NZ car-share operator offers today.
-- **Gaps:** no NZ insurance, ACC, parking, or council relationships that every profiled competitor already has in some form; no local host supply on day one, which is a cold-start problem none of the fleet-owning competitors face; no trust signal yet in a market where an NZ-owned incumbent (GO Rentals) already outperforms international brands on reputation.
-- **Opportunities:** sports and event sponsorship is completely unclaimed across every competitor profiled, car-share and traditional rental alike; the multi-day, wide-selection, travel-oriented trip is not what any NZ-specific car-share brand is built for; Mevo's collapse is a concrete, recent, locally-known story Turo could use directly in its own positioning ("no fleet to run out of money on").
+### Brand-building: what a sports partnership could look like
 
-### Brand-building: what a sports partnership could actually look like
+No competitor operating in New Zealand uses sport, and Turo's Canada Basketball partnership shows it is willing to. Rugby is the obvious property and the most crowded one: New Zealand Rugby's sponsorship and licensing revenue was NZ$142.2 million in FY2025, more than the rest of the country's national sports bodies take combined, so an All Blacks-tier deal would cost a lot and compete with heavy existing sponsors. A Super Rugby franchise or provincial NPC team is the cheaper version of that play, though it still reaches a mostly domestic, city-based audience that already has car-share options.
 
-None of the five competitors profiled use sport to build trust, which means the question isn't "how do we compete with an incumbent's sponsorship," it's "what's the right first move on genuinely open ground." Two different targets are available, and they serve different goals:
-
-- **National reach, high cost, crowded attention: rugby.** Sponsoring All Blacks-tier rugby buys broad awareness but competes for attention with New Zealand's most heavily sponsored property, at a price point that likely doesn't suit a market-entry budget. A regional Super Rugby franchise or provincial NPC team is the realistic version of this play: real local credibility, a fraction of the cost, but still a mismatch with who actually books Turo.
-- **Matched to the actual customer, lower cost, genuinely open: tourism and event-based sport.** Turo's real New Zealand customer looks like a traveler needing a car for a few days, not a season-ticket holder. Queenstown, already one of Mevo's two remaining cities, is New Zealand's adventure-tourism and ski capital: partnering with ski season passes, marathon or cycling events (Queenstown and Wellington both have strong event-running calendars), or golf and wine-region road-trip events would put the brand in front of exactly the people who'd book a car for a trip, at a cost a regional operator could realistically sustain. This is the sharper first move: smaller, cheaper, and aimed at the actual buyer rather than a mass domestic TV audience.
+The better match is event sport tied to travel. Queenstown, where Mevo now runs, markets itself as the adventure capital of the world, is the access town for Coronet Peak and The Remarkables ski fields, and hosts the Queenstown Marathon each November. Putting the brand in front of people who travel for those events, and who need a car for a few days once they arrive, reaches Turo's likely customer at a cost a market-entry budget can carry. Domestic tourism spending (NZ$27.5 billion) is larger than international (NZ$16.9 billion), so the target should include Kiwis travelling within the country and not only overseas visitors.
 
 ## Data Confidence
 
-- **Overall:** 125 labelled claims across the five profiles, 65 Observed (52%) and 60 Inferred (48%).
-- **Where the inference sits:** the three full-depth profiles are 45 to 49% Observed (Mevo 19 of 39, Cityhop 15 of 33, Zilch 15 of 33). Their Differentiators, Risks, and Opportunities sections are comparative judgement by design, and the citation check downgraded every claim a source fetch could not verbatim-confirm (see `analysis/verification-note.md`). GO Rentals (9 of 12) and Getaround (7 of 8) run higher because only the core framing sections were researched at survey depth.
-- **Profiles with limited data for this topic:** GO Rentals (no insurance excess figures published anywhere found; no sponsorship data); Getaround (New Zealand sections are not applicable, since it never operated there).
+- **Overall:** 156 labelled claims across the six profiles, 106 Observed (68%) and 50 Inferred (32%).
+- **Facts against judgements:** of the 50 Inferred claims, 39 are judgements (the Differentiators, Risks and Opportunities sections, by design), 10 are negatives backed by logged searches, and 1 is a fact that could not be confirmed (a NZ$99/week Zilch subscription price quoted by secondary sources). So 106 of the 107 factual claims carry a source that was re-checked against the page on 3 October 2026. By profile: Mevo 29 of 43 Observed, Cityhop 19 of 32, Zilch 23 of 38, Camplify 14 of 16, GO Rentals 10 of 13, Getaround 11 of 14.
+- **What the re-check changed:** see `analysis/verification-note.md`. The largest changes were the reason Getaround failed, Cityhop's owner, Carbn's ownership, GO Rentals' satisfaction ranking, Turo's IAC stake (now about 33%, held by People Inc.), and the addition of Camplify.
+- **Limits:** New Zealand's transport regulator blocks automated access, so the licensing position comes from the Land Transport Act and an archived NZTA page; how NZTA treats a peer-to-peer platform specifically could not be confirmed from a primary source.
 
 ## What going broader adds
 
-- **GO Rentals, taken deep:** would answer its actual fleet size and insurance excess (neither is published), and whether it has any sponsorship or brand activity beyond tourism awards, since this research found none but did not do a full-depth pass to confirm the negative.
-- **Getaround, taken deep:** would answer the specific mechanical reason its unit economics failed where Turo's held (commission structure, insurance cost, or geographic overreach), and whether any of its former European hosts or guests migrated to Turo in the UK or France, which would be a direct, sourceable data point on customer switching.
+- **The licensing question, answered properly:** whether NZTA would treat Turo or each host as the rental-service operator, and what a Certificate of Fitness regime would cost a casual host. This decides whether host supply is viable at all.
+- **GO Rentals, taken deep:** fleet size and insurance excess (neither is published), and why it has slipped in the satisfaction rankings.
+- **Ezi Car Rental, profiled:** the top-rated rental brand, owned by the same group as Cityhop.
+- **Camplify, taken deep:** how it handles licensing, Certificates of Fitness and insurance for private owners, which is the closest live template for a Turo host in New Zealand.

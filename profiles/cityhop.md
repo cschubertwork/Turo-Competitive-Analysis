@@ -2,28 +2,29 @@
 
 ## Summary
 
-*Category: Direct (NZ car-share) | Depth: full | Researched: 2026-09-22*
+*Category: Direct (NZ car-share) | Depth: full | Researched: 2026-09-22 | Re-checked: 2026-10-03*
 
 | Dimension | Cityhop | Turo |
 |---|---|---|
 | Model | Back-to-base car share, hourly/daily | Peer-to-peer marketplace, host-owned cars |
-| Geography | Auckland, Wellington, Christchurch (NZ only) | US, Canada, UK, France, Australia |
-| Backer | Toyota New Zealand (since 2018) | IAC (31% stake) |
+| Geography | Auckland, Wellington (car-share); van rental nationwide (NZ only) | US, Canada, UK, France, Australia |
+| Backer | Toyota Financial Services, via KINTO NZ (since 2018) | IAC (31% stake) |
 
 ### 1) Snapshot
 
 - Observed: Cityhop is a back-to-base car and van share service founded in Auckland in 2007 by former Auckland City councillor Victoria Carter, in collaboration with Jucy Rentals. (https://en.wikipedia.org/wiki/Cityhop)
 - Observed: Prime Minister Helen Clark launched Cityhop with three vehicles. (https://en.wikipedia.org/wiki/Cityhop)
-- Observed: Toyota New Zealand acquired Cityhop in November 2018. (https://en.wikipedia.org/wiki/Cityhop)
-- Observed: Cityhop operates in Auckland, Wellington, and Christchurch. (https://en.wikipedia.org/wiki/Cityhop)
-- Observed: by 2020, Cityhop's fleet had grown to more than 150 cars and vans with over 10,000 members, up from about 6,000 members and 120 vehicles in 2019. (https://en.wikipedia.org/wiki/Cityhop)
-- Inferred (assumption): a company-filing aggregator lists 8 employees for Cityhop as of 1 July 2024; this could not be verbatim-confirmed against a primary fetched source in this research.
-- Inferred (assumption): no fleet or membership figures more recent than 2020 were found in this research; Cityhop does not appear to publish updated numbers as regularly as its NZ car-share peers.
+- Observed: Toyota Financial Services announced a "strategic partnership" with Cityhop in November 2018 that Stuff reported was, in substance, a buyout. (https://web.archive.org/web/2020/https://www.stuff.co.nz/motoring/news/112787851/rapid-expansion-for-cityhop-car-sharing-under-toyota-nz-ownership)
+- Observed: Cityhop trades under KINTO New Zealand Limited (renamed from TFNZ (Wholesale) Limited in October 2019), 100% owned by Toyota Finance New Zealand Limited, trading as Toyota Financial Services. (https://app.companiesoffice.govt.nz/companies/app/ui/pages/companies/35427/shareholdings; https://www.cityhop.co.nz/terms-and-conditions/)
+- Observed: Toyota Finance New Zealand Limited, Cityhop's owner, also bought Ezi Car Rental in October 2023. (https://www.toyota.co.nz/about-toyota/toyota-news/2023/october/toyota-acquires-large-kiwi-owned-and-operated-rental-car-business/)
+- Observed: Cityhop's car-share fleet is available in Auckland and Wellington; a separate van-rental line, run through Mitre 10 Mega stores, covers dozens of towns nationwide, including Christchurch. (https://www.cityhop.co.nz/)
+- Observed: Cityhop had close to 50,000 members and completed 200,000 trips across New Zealand in 2022, per Cityhop operations manager Alexandra Scott; the figure was still being cited by trade press as of October 2026. (https://www.rnz.co.nz/news/business/485385/growing-numbers-turn-to-car-share-services-in-wellington)
+- Inferred (assumption): employee count for Cityhop's operating company could not be confirmed; NZ company filings do not capture headcount, and aggregator estimates found range from 1-10 to 12 employees, inconsistent with each other.
 
 ### 2) NZ Regulatory & Insurance Environment
 
-- Inferred (assumption): Cityhop's support content describes tiered damage excess (a lower "Standard Liability" excess and a paid "Reduced Liability" option that lowers it further); this could not be verbatim-confirmed against a fetched page in this research (the support site blocked automated access), so specific dollar figures are held as unconfirmed rather than Observed.
-- Inferred (assumption): reporting describes a Cityhop parking partnership with Z Energy for additional spaces at service station forecourts; this could not be verbatim-confirmed against a fetched source in this research.
+- Observed: Cityhop's Standard Liability excess, included in hourly/daily rates, is a flat $2,500 per claim for all vehicles; for $4.50/hour capped at $27/day, the Reduced Liability option lowers the excess to $750 per claim. (https://www.cityhop.co.nz/fine-schedule/)
+- Observed: Cityhop had a parking partnership with Z Energy, with shared cars parked at named Z service stations in Auckland and Wellington as of 2018; the current Cityhop site no longer describes dedicated forecourt parking, though Z Energy remains one of three accepted fuel-card networks. (https://web.archive.org/web/20180625021747/http://z.co.nz/why/sustainability-kicking-the-car-habit/)
 - Observed: an "Excess Kilometers" charge of NZ$0.59/km applies once a booking passes 150km. (https://www.cityhop.co.nz/rates)
 
 ### 3) Brand-Building & Local Marketing Channels
@@ -34,16 +35,15 @@
 
 ### 4) Local Competitive Tension
 
-- Observed: Cityhop membership grew from about 6,000 in 2019 to over 10,000 by 2020, with the fleet growing from about 120 to over 150 vehicles over the same period. (https://en.wikipedia.org/wiki/Cityhop)
-- Inferred (assumption): Cityhop is the most corporately stable of the three NZ-specific car-share brands profiled here, since it sits inside Toyota New Zealand's balance sheet rather than depending on external crowdfunding or investor rounds the way Mevo did before its 2026 collapse.
-- Inferred (assumption): Cityhop's slower public-facing pace (older statistics, smaller marketing footprint than Mevo or Zilch) may reflect that it doesn't need to chase growth or press coverage the way a venture-funded competitor does; being owned by a large, patient parent removes some of the pressure that broke Mevo.
+- Observed: Cityhop had close to 50,000 members and 200,000 trips across New Zealand in 2022, per its own operations manager; the figure is still being cited by trade press as of October 2026, and no more recent public figure was found. (https://autofile.co.nz/car-sharing-on-the-rise-)
+- Inferred (assumption): Cityhop is the most corporately stable of the three NZ-specific car-share brands profiled here, since it sits inside Toyota Financial Services' balance sheet (via KINTO NZ) rather than depending on external crowdfunding or investor rounds the way Mevo did before its 2026 collapse.
 
 ### 5) Fleet, Coverage & EV Mix
 
-- Observed: Cityhop's fleet as of 2020 was over 150 cars and vans across Auckland and Wellington, with Christchurch also served. (https://en.wikipedia.org/wiki/Cityhop)
+- Observed: Cityhop's car-share fleet is based in Auckland and Wellington only; a separate van-rental line, launched through Mitre 10 Mega stores, covers dozens of towns nationwide, including Christchurch, Hamilton, Dunedin, Queenstown, and Invercargill. (https://www.cityhop.co.nz/)
 - Observed: Cityhop's vehicle lineup includes the Toyota Yaris, Corolla, RAV4, an Eclipse Cross PHEV, and a Hiace van. (https://www.cityhop.co.nz/rates)
-- Observed: Cityhop operates a back-to-base model, where vehicles must be returned to the same location they were collected from. (https://autofile.co.nz/car-sharing-revs-up-)
-- Inferred (assumption): Cityhop's fleet is not EV-first the way Mevo's and Zilch's are; its lineup leans on Toyota hybrids (RAV4, Eclipse Cross PHEV) rather than full battery-electric vehicles, consistent with it being a Toyota-owned fleet.
+- Observed: Cityhop requires every booking to be a return trip; vehicles must be returned to their home location by the end of the booking. (https://www.cityhop.co.nz/fine-schedule/)
+- Inferred (assumption): Cityhop's current named fleet is not EV-first; it leans on a Toyota hybrid (RAV4) and a Mitsubishi Eclipse Cross PHEV rather than full battery-electric vehicles, though at least one legacy full-BEV, a VW e-Golf, remains listed at an Auckland location.
 
 ### 6) Pricing & Packaging
 
@@ -55,23 +55,24 @@
 
 - Inferred (assumption): Turo is stronger than Cityhop on vehicle variety and trip length, since Turo's marketplace spans thousands of individually owned vehicles rather than one operator's owned fleet of standard models.
 - Inferred (assumption): Cityhop is stronger than Turo on predictability and simplicity for short local trips: a fixed base, fixed vehicle lineup, and bundled fuel/insurance/parking remove the trip-planning and host-coordination overhead that a marketplace model carries.
-- Inferred (assumption): Cityhop and Turo are roughly on par on insurance clarity, both publishing tiered excess options a user chooses before or during a trip.
-- Inferred (assumption): Cityhop's Toyota ownership gives it a financial stability advantage over Turo's marketplace-dependent host supply, at the cost of being limited to whatever fleet Toyota is willing to fund.
+- Inferred (assumption): Cityhop and Turo are roughly on par on insurance clarity; Cityhop offers two liability tiers a user chooses between, standard or a paid reduced-liability option, but the excess is flat across vehicle classes rather than varying by vehicle.
+- Inferred (assumption): Cityhop's backing by Toyota Finance New Zealand gives it a financial stability advantage over Turo's marketplace-dependent host supply, at the cost of being limited to largely Toyota-funded vehicles; one non-Toyota model, the Mitsubishi Eclipse Cross PHEV, remains a holdover in the current lineup.
 
 ### 8) Risks for Turo
 
-- Inferred (assumption): Cityhop's Toyota backing means it can absorb losses and expand patiently in a way that a bootstrapped or venture-funded new entrant, including Turo, would find harder to match if a price war broke out.
-- Inferred (assumption): Cityhop's existing Z Energy parking partnership is an infrastructure advantage a new entrant would need to replicate or work around.
+- Inferred (assumption): Cityhop's backing from Toyota Financial Services means it can absorb losses and expand patiently in a way that a bootstrapped or venture-funded new entrant, including Turo, would find harder to match if a price war broke out.
+- Inferred (assumption): Cityhop's Z Energy parking partnership, confirmed active circa 2016-2018, would be an infrastructure advantage if still in place; the live Cityhop site no longer describes dedicated forecourt parking, only a continuing fuel-card relationship, so current status needs a fresher check before treating it as a present-day moat.
 - Inferred (assumption): as the most stable and longest-running of the three NZ-specific competitors, Cityhop is the benchmark a new entrant's reliability and trust story would be measured against, not the more volatile Mevo or Zilch.
 
 ### 9) Opportunities for Turo
 
 - Inferred (assumption): Cityhop's back-to-base, standard-fleet model does not compete well for trip types Turo is built for: multi-day travel, unique or larger vehicles, and one-way or flexible pickup/drop-off, since Cityhop requires a return to the same location.
-- Inferred (assumption): Cityhop's outdated public statistics (last updated 2020) and slower marketing pace suggest it is not aggressively pursuing new customer segments right now, leaving room for a more actively marketed entrant.
-- Inferred (assumption): Toyota's own significant motorsport sponsorship portfolio (the GR86 Championship) appears unconnected to Cityhop's marketing; this is the same open ground identified for Mevo, no NZ car-share brand found in this research uses sports partnerships to build trust or awareness.
+- Inferred (assumption): Toyota New Zealand's motorsport sponsorship (the GR86 Championship) belongs to a different Toyota company from Cityhop's owner and appears unconnected to Cityhop's marketing; this is the same open ground identified for Mevo, no NZ car-share brand found in this research uses sports partnerships to build trust or awareness.
 
 ### 10) Open Questions
 
-- Current (2025-2026) membership and fleet size; the most recent public figures found are from 2020.
+- Current car-share fleet size (vehicle count); no updated figure was found since 2020.
+- Whether Cityhop plans to expand car-share cities beyond Auckland and Wellington, given the Mitre 10 van-rental partnership already reaches nationwide.
+- Whether the Z Energy forecourt parking partnership is still active today; only historical (2016-2018) confirmation was found.
+- Employee count for KINTO New Zealand Limited / Cityhop; NZ company filings do not capture headcount, and aggregator estimates disagree (1-10 vs. 12).
 - Whether Cityhop has any EV-specific fleet targets or incentives, distinct from Mevo's and Zilch's EV-only positioning.
-- Whether Toyota NZ plans to expand Cityhop beyond its current three cities, or connect it to any of Toyota's other NZ marketing and sponsorship activity.
