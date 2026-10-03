@@ -323,13 +323,20 @@ tr.subject .gl.none::before{border-color:var(--accent-fill)}
 
 /* evidence */
 .ev-main{display:grid;gap:8px;max-width:880px}
-.ev-main .cbar{height:16px;gap:2px}
+.ev-main .cbar{height:16px;gap:2px;display:flex}
 .ev-main .cbar .j{background:var(--hatch),var(--surface-2);box-shadow:inset 0 0 0 1px var(--rule-strong)}
 .ev-main .cbar .n{background:var(--hatch),var(--surface-2);box-shadow:inset 0 0 0 1px var(--rule-strong)}
 .ev-main .cbar .u{background:var(--hatch),var(--surface-2);box-shadow:inset 0 0 0 1px var(--rule-strong)}
 .ev-labels{display:flex;gap:2px;margin-top:6px;font:400 12px/16px var(--font-mono);text-transform:uppercase;color:var(--ink-2)}
 .ev-labels > span{min-width:0}
 .ev-labels small{display:block;font-size:11px;color:var(--ink-3);text-transform:none}
+.ev-groups{display:flex;gap:16px;align-items:start}
+.ev-group{min-width:0;display:grid;gap:4px}
+.ev-gl{font:400 12px/16px var(--font-mono);text-transform:uppercase;color:var(--ink-2);margin-top:6px}
+.ev-fig{font-size:28px;line-height:32px;font-weight:700;color:var(--ink)}
+.ev-sub{font:400 11px/16px var(--font-mono);color:var(--ink-3)}
+.ev-note{max-width:640px;margin-top:24px;font-size:14px;line-height:22px;color:var(--ink-3)}
+@media (max-width:720px){.ev-groups{flex-direction:column;gap:20px}.ev-group{width:100%}}
 .ev-ba{display:grid;gap:14px;max-width:560px;margin-top:32px}
 .ev-ba .row{display:grid;gap:4px}
 .ev-ba .cbar{height:10px}
@@ -1013,21 +1020,25 @@ footer .data{font-size:11px;line-height:18px;color:var(--ink-3)}
   <div class="wrap">
     <div class="sec-head">
       <p class="label">Evidence</p>
-      <h2>Two thirds of the claims are sourced, and every profile but Camplify's carries a re-checked citation</h2>
-      <p class="intro">Counted from the label on every claim in the six profiles when this page was built.</p>
+      <h2>106 of the 107 facts carry a source checked on 3 October, and the other 49 claims are judgements or searches that came back empty</h2>
+      <p class="intro">A fact needs a source. A judgement (a comparison, a risk, an opportunity) can't have one, so it stays labelled inferred however well it's argued. Counted from the label on every claim in the six profiles.</p>
     </div>
     <div class="ev-main">
-      <div class="cbar" role="img" aria-label="106 observed claims, 39 judgements, 10 logged negatives, 1 unconfirmed fact"><span class="o" style="flex-grow:106"></span><span class="j" style="flex-grow:39"></span><span class="n" style="flex-grow:10"></span><span class="u" style="flex-grow:1"></span></div>
-      <div class="ev-labels">
-        <span style="flex:106 1 0">68% observed · 106</span>
-        <span style="flex:50 1 0">32% inferred · 50<small>39 judgements</small><small>10 logged negatives</small><small>1 unconfirmed fact</small></span>
+      <div class="ev-groups" role="img" aria-label="Facts: 106 sourced, 1 unconfirmed. Other claims: 10 logged negatives, 39 judgements.">
+        <div class="ev-group" style="flex:107 1 0">
+          <div class="cbar"><span class="o" style="flex-grow:106"></span><span class="u" style="flex-grow:1"></span></div>
+          <p class="ev-gl">Facts · 107</p>
+          <p class="ev-fig">99% sourced</p>
+          <p class="ev-sub">106 checked against the page · 1 unconfirmed (Zilch's NZ$99 a week)</p>
+        </div>
+        <div class="ev-group" style="flex:49 1 0">
+          <div class="cbar"><span class="n" style="flex-grow:10"></span><span class="j" style="flex-grow:39"></span></div>
+          <p class="ev-gl">Not facts · 49</p>
+          <p class="ev-sub">39 judgements<br>10 searches that found nothing, logged</p>
+        </div>
       </div>
     </div>
-    <div class="ev-ba">
-      <div class="row"><span class="data">22 Sep · 52% of 125 claims</span><div class="cbar" role="img" aria-label="52 percent observed of 125 claims"><span class="o" style="flex-grow:65"></span><span class="i" style="flex-grow:60"></span></div></div>
-      <div class="row"><span class="data">3 Oct · 68% of 156 claims</span><div class="cbar" role="img" aria-label="68 percent observed of 156 claims"><span class="o" style="flex-grow:106"></span><span class="i" style="flex-grow:50"></span></div></div>
-      <p class="cap small" style="color:var(--ink-3)">Different bases: Camplify was added and compound claims were split.</p>
-    </div>
+    <p class="ev-note">On 22 Sep, 65 of 125 claims were labelled observed. The re-check sourced lines that had been inferred, split compound claims and added the Camplify profile, which took sourced facts to 106.</p>
     <div class="etable">
       <div class="erow ehead" aria-hidden="true"><span></span><span class="data">Labels · O / I</span><span class="data">Re-check · 3 Oct</span><span class="data">Wrong premise</span></div>
       <div class="erow"><span class="who"><span class="tile s t-cityhop" aria-hidden="true"></span>Cityhop</span><div class="lbar"><div class="cbar"><span class="o" style="flex-grow:19"></span><span class="i" style="flex-grow:13"></span></div><span class="data">19 / 13</span></div><div class="rbar"><div class="rebar"><span class="c" style="flex-grow:13"></span><span class="s" style="flex-grow:14"></span><span class="x" style="flex-grow:1"></span></div><span class="data">28 checked</span></div><span class="wp">3<span class="wp-l"> wrong premise</span></span></div>

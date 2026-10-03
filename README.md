@@ -31,7 +31,7 @@ Every claim in every profile carries one of two labels:
 - `- Observed: [claim] ([URL])` is a fact with a source attached
 - `- Inferred (assumption): [claim]` is a judgement that nobody published
 
-Of the 156 labelled claims in the profiles, 106 (68%) are Observed and 50 (32%) Inferred. Of the Inferred claims, 39 are judgements, 10 are negatives backed by logged searches, and 1 is a fact that could not be confirmed, so 106 of the 107 factual claims carry a re-checked source. The deep profiles carry most of the inference (59 to 67% Observed), because their differentiator, risk and opportunity sections are judgement by design. The dashboard shows the same count, and the inferred cells in the comparison matrix are individually marked.
+106 of the 107 factual claims in the profiles (99%) carry a source checked against the page on 3 October 2026. The other 49 labelled claims are 39 judgements, which can't have a source and stay Inferred however well argued, and 10 negatives backed by logged searches. Counted as labels, that is 106 Observed and 50 Inferred out of 156 (68% and 32%). The deep profiles carry most of the inference (59 to 67% Observed), because their differentiator, risk and opportunity sections are judgement by design. The dashboard shows the same count, and the inferred cells in the comparison matrix are individually marked.
 
 ## Layout
 

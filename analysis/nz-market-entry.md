@@ -59,7 +59,7 @@ The better match is event sport tied to travel. Queenstown, where Mevo now runs,
 
 ## Data Confidence
 
-- **Overall:** 156 labelled claims across the six profiles, 106 Observed (68%) and 50 Inferred (32%).
+- **Overall:** 106 of the 107 factual claims (99%) carry a source checked against the page on 3 October 2026. Across all 156 labelled claims, including judgements, that is 106 Observed (68%) and 50 Inferred (32%).
 - **Facts against judgements:** of the 50 Inferred claims, 39 are judgements (the Differentiators, Risks and Opportunities sections, by design), 10 are negatives backed by logged searches, and 1 is a fact that could not be confirmed (a NZ$99/week Zilch subscription price quoted by secondary sources). So 106 of the 107 factual claims carry a source that was re-checked against the page on 3 October 2026. By profile: Mevo 29 of 43 Observed, Cityhop 19 of 32, Zilch 23 of 38, Camplify 14 of 16, GO Rentals 10 of 13, Getaround 11 of 14.
 - **What the re-check changed:** see `analysis/verification-note.md`. The largest changes were the reason Getaround failed, Cityhop's owner, Carbn's ownership, GO Rentals' satisfaction ranking, Turo's IAC stake (now about 33%, held by People Inc.), and the addition of Camplify.
 - **Limits:** New Zealand's transport regulator blocks automated access, so the licensing position comes from the Land Transport Act and an archived NZTA page; how NZTA treats a peer-to-peer platform specifically could not be confirmed from a primary source.
