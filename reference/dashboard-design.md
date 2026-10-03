@@ -36,35 +36,36 @@ The register is an analyst's briefing with exhibits. Real screenshots do the vis
 
 ## 3. Page architecture
 
-**One page, two parts, no tabs.** v1 hid the method behind a second tab, which meant the "why this compounds" pitch was the least-seen part of the page. v2 is a single scroll. Part 2 opens with a full-width band that changes register, and the masthead links straight to it. Deep links are plain anchors. The only script left is the theme toggle.
+**Two tabs: Analysis and Evidence and method.** Reversed on 3 Oct 2026 after the single scroll read as overwhelming on first view. Tab 1 carries the argument and ends on the ask (going broader). Tab 2 carries the evidence and how the page was built. Discovery of tab 2 relies on three routes: the masthead tab, the trust panel's link, and the Next row that ends tab 1. Every anchor deep-links, and the tab follows the hash (spec in 9.1a). Scripts: the theme toggle and the tab router.
 
 Order and anchors:
 
-| # | Section | Anchor | Content source |
-|---|---|---|---|
-| 0 | Masthead (sticky) | | fixed |
-| 1 | Hero: eyebrow, headline, standfirst, trust panel, cast strip | `#top` | analysis summary, counts, asset manifest |
-| 2 | Findings, each paired with at most one exhibit | `#findings` | executive summary |
-| 3 | The field: a roster grid of player cards, each labelled with its cluster (D6); falls back to clusters, each holding player cards, only when most clusters hold more than one card | `#field` | clusters + profiles |
-| 4 | Comparison matrix | `#compare` | analysis matrix |
-| 5 | Where the target stands: strengths, gaps, open ground | `#position` | positioning section |
-| 6 | Lens deep-dive (optional; only when the analysis has one) | `#options` | e.g. "what a sports partnership could look like" |
-| 7 | Recommendations (F8: optional, only when the analysis has a ranked recommendations section; drop its nav item when absent) | `#recommendations` | analysis |
-| 8 | Evidence: confidence bars, per-profile bars, verification line | `#evidence` | label counts + verification note |
-| 9 | Open questions and going broader (F8: when the analysis has no separate open-questions list, it merges into this section instead of running twice) | `#next` | analysis |
-| 10 | Part 2 opener band | `#method` | fixed + repo state |
-| 11 | Process rail, why this compounds, labelling, material change, trust boundary, limits | `#process`, `#compounds`, `#labels`, `#material`, `#trust`, `#limits` | skills + README |
-| 12 | Footer and colophon | `#colophon` | fixed + per-run block |
+| # | Section | Tab | Anchor | Content source |
+|---|---|---|---|---|
+| 0 | Masthead (sticky) | both | | fixed |
+| 1 | Hero: eyebrow, headline, standfirst, trust panel, cast strip | Analysis | `#top` | analysis summary, counts, asset manifest |
+| 2 | Findings, each paired with at most one exhibit | Analysis | `#findings` | executive summary |
+| 3 | The field: a roster grid of player cards, each labelled with its cluster (D6); falls back to clusters, each holding player cards, only when most clusters hold more than one card | Analysis | `#field` | clusters + profiles |
+| 4 | Comparison matrix | Analysis | `#compare` | analysis matrix |
+| 5 | Where the target stands: strengths, gaps, open ground | Analysis | `#position` | positioning section |
+| 6 | Lens deep-dive (optional; only when the analysis has one) | Analysis | `#options` | e.g. "what a sports partnership could look like" |
+| 7 | Recommendations (F8: optional, only when the analysis has a ranked recommendations section) | Analysis | `#recommendations` | analysis |
+| 8 | Open questions and going broader (F8: when the analysis has no separate open-questions list, it merges into this section instead of running twice), ending with the Next row into tab 2 | Analysis | `#next` | analysis |
+| 9 | Evidence: confidence bars, per-profile bars, verification line | Evidence and method | `#evidence` | label counts + verification note |
+| 10 | Part 2 opener band | Evidence and method | `#method` | fixed + repo state |
+| 11 | Process rail, why this compounds, labelling, material change, trust boundary, limits; ends with a link back to tab 1 | Evidence and method | `#process`, `#compounds`, `#labels`, `#material`, `#trust`, `#limits` | skills + README |
+| 12 | Footer and colophon | both | `#colophon` | fixed + per-run block |
 
-Every piece of content the v1 structure covered is still here. Merges: v1's archetype cards and competitor-detail disclosures become section 3 (cards grouped by cluster). v1's confidence bar grows into section 8.
+Every piece of content the v1 structure covered is still here. Merges: v1's archetype cards and competitor-detail disclosures become section 3 (cards grouped by cluster). v1's confidence bar grows into section 9.
 
 **Cut from v1, on purpose:**
 - **Category hues.** Screenshots and logos already bring six or more foreign colours onto the page, so four chart hues on top would make a carnival. The hue-collision fallback was also the most fragile rule in v1. Clusters are now shown by grouping and position.
-- **Tabs and their JS.**
 - **CSS-counter section numbers.** Numbering now appears only where order is real (section 5, rule 8).
 - **The ink-density strength grid.** The position board (section 9.13) is easier to read.
 
 ## 4. Fixed foundations
+
+- **Traps found on the Turo build.** The phone tab row is a second copy of the nav: the router sets state on both, with `aria-current` on the copy because its links have no `role="tab"`. Chrome blurs focus on fragment navigation, before and after `hashchange`, so the router refocuses the tab in a `requestAnimationFrame`. Panel-start anchors (`#top`, the first section of tab 2) carry `scroll-margin-top` equal to the phone row's height, or every route into a tab lands with the row cut in half under the sticky bar.
 
 ### 4.1 Grid and breakpoints
 
@@ -315,8 +316,19 @@ Each component lists anatomy, then sizes, then states, then responsive behaviour
 
 - Sticky, `top: env(safe-area-inset-top, 0px)`, height 64 (phone 56), `--bg` fill, 1px `--rule` bottom border, z-index above the matrix's sticky header.
 - Left: "Chris Schubert" in the brand face, 15px, 650, `--ink`, followed by the `label` "INDEPENDENT LANDSCAPE" in `--ink-3`, 12px gap. It links to the repo.
-- Right: nav anchors (Findings, The field, Compare, Recommendations, Evidence, How it was built) in 14px, 500, `--ink-2`, 24px apart; hover `--ink`. Then the theme toggle: 32px tall, 12px horizontal padding, `label` text naming the theme it switches to ("DARK"/"LIGHT"), 1px `--rule-strong` border, `--r-s`.
-- Phone: the nav moves into a second row that is not sticky. It is 44px tall, scrolls sideways inside its own container, uses 16px gaps, and fades out over 24px on the right with a mask. The sticky row keeps the author mark and the toggle.
+- Right: the tablist (9.1a) takes the slot the nav anchors used to hold, right-aligned before the theme toggle. Then the theme toggle: 32px tall, 12px horizontal padding, `label` text naming the theme it switches to ("DARK"/"LIGHT"), 1px `--rule-strong` border, `--r-s`.
+- Phone (below 720px): the tablist moves into a second row that is not sticky, two equal-width tabs, 44px tall, centred text, same underline as the masthead version, 1px `--rule` bottom border. It does not scroll sideways; two tabs always fit. The sticky row keeps the author mark and the toggle.
+
+### 9.1a Tabs
+
+- **Two tabs only: Analysis and Evidence and method.** A third nav system layered on top of two tabs would be the overload this split exists to remove, so the five old section anchors (Findings, The field, Compare, Evidence, How it was built) are gone from the masthead; every one of them still works as a deep link into whichever tab holds it.
+- **720px and up:** tabs sit in the masthead's right slot, 14px, 500, `--ink-2`, full masthead height, 24px apart. Selected: `--ink` with `box-shadow: inset 0 -2px 0 var(--ink)` on the bottom edge; weight never changes, so nothing shifts on selection. Hover `--ink`. Accent is never used on a tab, because accent means the target. Check the masthead fits at exactly 720px (author block, two tabs and the toggle in one row); if a future run's author block or tab labels are long enough to overflow, raise this floor rather than shortening the independence label.
+- **Under 720px:** the tabs fill the second row in place of the old scrolling nav list (9.1).
+- **Progressive enhancement.** Ship the tabs as plain links (`<nav class="tabs" aria-label="Page"><a class="tab" href="#top" data-panel="panel-analysis">Analysis</a><a class="tab" href="#evidence" data-panel="panel-method">Evidence and method</a></nav>`), with each tab's sections wrapped in a `<div class="panel">`. Neither panel carries `hidden` in the markup; the router adds it. `role="tablist"`, `role="tab"`, `aria-selected`, `aria-controls`, `role="tabpanel"` and `aria-labelledby` are all added by the script, so a no-JS reader gets ordinary links and both panels simply show, stacked in tab order.
+- **One rule for every hash:** the hash names an element, the tab containing it is shown, then the element is scrolled into view. Tab clicks, masthead links, the trust panel, cast cards and back/forward all share this one code path (`hashchange`). Back/forward uses native hash history only, no `pushState`, no `localStorage`; if the target is already in the showing tab, the script does nothing and lets the browser restore scroll natively. Route synchronously at the end of `<body>`, before first paint, so loading a tab-2 link never flashes tab 1.
+- **Keyboard and ARIA:** roving tabindex, selected tab is 0, the other is −1. Arrow keys, Home and End move focus and activate in the same step, which is safe because both panels are static. Enter follows the link natively; Space is handled by the script. Focus stays on the tab after activation; after a cross-tab jump from any other link, focus moves to the target element with `preventScroll`, and `.panel [tabindex="-1"]:focus{outline:none}` keeps that invisible (the target is a heading or section, not a control). The masthead's `scroll-padding-top:80px` already clears the sticky bar for any of this.
+- **Print:** both panels print; tab 2 starts a new page (`break-before:page`); the tabs, the mobile nav row, the toggle and the two end-of-tab links are hidden.
+- **End-of-tab links**, most useful on a phone where the tab row scrolls away: a `.tab-next` block closes tab 1, after going broader's ask (9.17); a `data` link "Back to the analysis" closes tab 2, after limits (9.19 area).
 
 ### 9.2 Hero
 
@@ -330,7 +342,7 @@ Each component lists anatomy, then sizes, then states, then responsive behaviour
   - Confidence bar, compact version (9.16): height 10.
   - `data`: "{o}% observed · {i}% inferred" on one line and "{n} claims" on the next, so a wrap never strands a separator at a line end.
   - Three to four `small` lines: "{n} competitors, {k} profiled in full"; "Deep profiles re-checked against the pages they cite on {date}"; "Desk research. No interviews or customer calls."
-  - A link, "How this was built", to `#method`.
+  - A link, "Evidence and method", to `#evidence`. This is the hero's only link into tab 2, and it names the tab it lands on, so the reader knows where they've gone.
   - Last line, 13px `--ink-3`: "Not affiliated with {Target}."
 - **Cast strip**: 48px below the text block (phone 32). Header row: `label` "THE FIELD" on the left, and `data` "Homepages captured {date}" in `--ink-3` on the right. Then the cast cards (9.3).
 
@@ -389,9 +401,9 @@ See 8.4. Class `.tile.tile-s` or `.tile.tile-m`, background from `--tile` and `-
 - Header: `label` "EXHIBIT {n}" in `--ink-3`, then the title (15/22, 650, `--ink`) on the next line, 20px above the body.
 - `<figcaption>`: 20px above, 12px top padding, 1px `--rule` top border, `data` 11.5/18 in `--ink-3`. It holds the source(s), the Observed/Inferred status, and the legend if the exhibit uses a texture.
 - **D4. Captions are for readers.** A caption explains the data: what was computed, what's missing and why. It never states an encoding rule ("losses are ink"), a build fact ("gets monogram tiles", "is now sourced to"), or where something sits on the page ("the card sits above"). `check.py` greps for `never alert|monogram tile|now sourced|sits above|per the current profiles` and fails the build if a caption matches.
-- Exhibits are numbered in order of appearance across Part 1, and the text refers to them by number.
+- Exhibits are numbered in order of appearance on the Analysis tab, and the text refers to them by number.
 - At most one exhibit per finding and six in total (the matrix and player cards don't count).
-- **Only the six exhibit types below exist.** A builder may not invent a new chart type. If none fits, the finding runs without one.
+- **Only the eight exhibit types below exist (E1 to E8).** A builder may not invent a new chart type. If none fits, the finding runs without one.
 
 ### 9.9 Exhibit types
 
@@ -453,7 +465,18 @@ See 8.4. Class `.tile.tile-s` or `.tile.tile-m`, background from `--tile` and `-
 - The target's bars are `--accent-fill`; every other company's bars are `--ink-2`. Losses are never alert colour, because alert is reserved for ending events, which the chip already carries.
 - A bar too thin to read (a result near zero) gets a `min-width` floor so it still shows as a bar with its label, not a sliver that vanishes.
 - Rows with no public result stay in the list with an en dash in the value position and "no accounts published" (or equivalent) in the inputs line, so survivorship isn't hidden by omission.
-- No other exhibit type may be used to show a ratio that goes negative for some companies and positive for others; that comparison belongs to E7 alone.
+- No other exhibit type may be used to show a ratio that goes negative for some companies and positive for others; that comparison belongs to E7, or to E8 when revenue size is part of the argument.
+
+**E8 Scale against margin**: for a finding about whether a model makes money at scale. x = revenue, log10; y = net result ÷ revenue, linear; one dot per company-year; a company's years joined by an arrow in time order.
+- Both coordinates are Observed. The ratio is computed at build time, and the caption says so.
+- The log scale is always named in the axis title. Ticks fall on 1-3-10 values, and every tick is labelled.
+- y is linear and never broken. Zero is always in the domain and is the strongest line. The domain sits on the 25-point grid and covers every point.
+- No trend line, fitted curve, bubble size or third encoding. Three to eight points cannot carry a trend.
+- The target is in accent (dots, arrow, name). Others are in ink. Losses are never alert; an ending event is an alert glyph-and-text line under the label.
+- Labels go direct on the chart, haloed in `--surface`, and there is no legend. A positive point's label never sits under the zero line.
+- Mixed currencies: plot at face value only when no sourced rate exists. Put the currency on every point label and in the caption, and leave the tick labels currency-free. If a plausible conversion could reverse the order the finding rests on (points within a third of a decade), leave that point out and list it in the note.
+- Companies with no accounts are named in a one-line note under the chart, so survivorship isn't hidden.
+- Build two fixed-geometry SVGs (wide 560×392 at 720px and up, narrow 320×392 below), generated from the data by the scale formulas and swapped with CSS. The narrow version drops the PROFIT/LOSS words.
 
 ### 9.10 Player card and screenshot frame
 
@@ -529,11 +552,12 @@ See 8.4. Class `.tile.tile-s` or `.tile.tile-m`, background from `--tile` and `-
 - Open questions: an unnumbered list in `body`, at most 6.
 - **Going broader**: an `h3` sentence, then one card per survey-depth competitor: a 1px **dashed** `--rule-strong` border (dashed means not done yet), `--r-l`, padding 20. Each card: tile M, the name, and a depth chip; then "A full profile would answer:" with a `body-s` list.
 - Close with a `body` line: "A full profile with the same citation check takes a few hours. Ask: {contact}". The contact is shown as selectable text and also linked.
+- **Going broader ends tab 1**, followed by the Next row (9.1a) into tab 2.
 
 ### 9.18 Part 2 opener band
 
 - Full bleed, `--surface-2` fill, `padding-block: 96px` (phone 64), 1px `--rule` top and bottom.
-- Contents: the `label` "PART 2 · HOW THIS WAS BUILT", a `display-l` headline (a sentence about the process as an asset), and a `lede` standfirst.
+- Contents: the `label` "HOW THIS WAS BUILT" (no "Part 2", since the tab now does the parting), a `display-l` headline (a sentence about the process as an asset), and a `lede` standfirst. The standfirst and everything after it in tab 2 never says "above" or "below" to mean a position on the page; tab 2 doesn't share a scroll position with tab 1, so say "on the Analysis tab" instead.
 - This is the one register change on the page.
 
 ### 9.19 Process rail
@@ -571,14 +595,16 @@ See 8.4. Class `.tile.tile-s` or `.tile.tile-m`, background from `--tile` and `-
 
 ## 10. Deliberately not charted, and banned
 
-- Not charted: geography (no maps), incommensurable scale markers, recommendation timelines (no dates exist), radar charts, sparklines, donuts or any angle-encoded proportion, and scatter plots of inferred positions on numeric axes.
+- Not charted: geography (no maps), incommensurable scale markers, recommendation timelines (no dates exist), radar charts, sparklines, donuts or any angle-encoded proportion, and scatter plots of inferred positions on numeric axes (an Observed scatter is allowed only as E8). Mixed currencies plotted on one axis are allowed only under E8's rule (9.9): face value, no sourced conversion, and never where a plausible rate could reverse the finding.
 - Banned styling: gradients on grounds, glassmorphism or backdrop blur, drop shadows, emoji, decorative icons, centred hero layouts, accent bars on rounded cards, and full-bleed brand colour.
 - Banned content moves: invented exhibits, callouts drawn onto screenshots, recoloured or inverted logos, and taglines or imagery lifted from the target.
 
 ## 11. Build and verify
 
+Tabs: after one arrow-key press the focus ring is still on a tab, and a phone tab tap shows the whole tab row with its underline.
+
 1. `python3 check.py`: the self-contained and em-dash gates, plus the size gate (warn at 2.0 MB, fail above 2.5 MB).
-2. Capture and look at: 1440x900 light, 1440x900 dark (the 10-second test, both themes); a full page at 1440 light; a full page at 1280, 1100 and 1024 (**D9**: the F1 7-up minimum and the 4-up band and matrix-fit floor, both of which only show their bugs at these sizes); and a full page at 390 in light and dark. Use `?theme=` to force the theme.
+2. Capture and look at: 1440x900 light, 1440x900 dark (the 10-second test, both themes); a full page at 1440 light; a full page at 1280, 1100 and 1024 (**D9**: the F1 7-up minimum and the 4-up band and matrix-fit floor, both of which only show their bugs at these sizes); and a full page at 390 in light and dark. Use `?theme=` to force the theme. **Since the two-tab split:** `#evidence` at 1440 and 390; `#method` at 390 (it must land on the band, under the sticky bar, with no flash of tab 1); one keyboard pass (Tab into the tablist, then arrows, then Enter); back and forward across a tab change; a JS-disabled capture; and print emulation (tab 2 starts a new page).
 3. On the captures, check that nothing overlaps (event-rail labels, ownership brackets, chips wrapping), that every tile is square and sharp, that no screenshot shows a blocked page or broken image, and that the target column's wash reads in dark.
 4. Confirm the Observed/Inferred numbers in the hero, the evidence section and the README are the same count.
 5. Read the Part 1 copy straight through against `dashboard-voice.md`.

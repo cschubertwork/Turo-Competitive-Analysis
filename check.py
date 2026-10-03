@@ -245,6 +245,20 @@ def check_self_contained(root):
         warn("index.html", "page-weight", f"{size / 1e6:.2f} MB is over the {PAGE_WARN_BYTES / 1e6:.1f} MB warning line")
 
 
+def check_dead_anchors(root):
+    """A tab bar sends an unknown hash to tab 1 silently, which hides a dead link that a plain
+    page would just fail to jump for. Catch it here instead."""
+    index = root / "index.html"
+    if not index.exists():
+        return
+    text = index.read_text(encoding="utf-8", errors="replace")
+    ids = set(re.findall(r'\bid=["\']([^"\']+)["\']', text))
+    for m in re.finditer(r'href=["\']#([^"\']+)["\']', text):
+        target = m.group(1)
+        if target and target not in ids:
+            fail("index.html", "dead-anchor", f'href="#{target}" has no matching id')
+
+
 def main():
     root = Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else Path.cwd()
     if not root.is_dir():
@@ -260,6 +274,7 @@ def main():
     check_claims(root, patterns)
     check_readme(root)
     check_self_contained(root)
+    check_dead_anchors(root)
 
     for w in warnings:
         print(f"WARN  {w}")
